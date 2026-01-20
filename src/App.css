@@ -34,3 +34,10 @@
     box-shadow: 0 4px 12px rgba(245, 163, 163, 0.3);
     animation: slideIn 0.3s ease;
 }
+
+.fullContainer {
+    width: 100%;
+    background: darkgreen;
+    height: 3.7em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

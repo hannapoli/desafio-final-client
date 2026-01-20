@@ -6,6 +6,12 @@
     -moz-box-sizing: border-box;
 }
 
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
 a, button {
     cursor: pointer;
 }

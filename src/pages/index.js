@@ -3,3 +3,13 @@ export * from './RegisterPage.jsx';
 export * from './LoginPage.jsx';
 
 export * from './ProducerDashboard.jsx';
+export * from './DistributorDashboard.jsx';
+export * from './ConsultantDashboard.jsx';
+export * from './AnalystDashboard.jsx';
+export * from './DirectorDashboard.jsx';
+
+export * from './templates/ProducerLayout.jsx';
+export * from './templates/DistributorLayout.jsx';
+export * from './templates/ConsultantLayout.jsx';
+export * from './templates/AnalystLayout.jsx';
+export * from './templates/DirectorLayout.jsx';

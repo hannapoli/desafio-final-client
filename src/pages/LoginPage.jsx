@@ -18,16 +18,28 @@ export const LoginPage = () => {
     setAuthError(null);
   }, [setAuthError]);
 
-  // Redirigir ul usuario autenticado a su dashboard según su rol
+  // Redirigir al usuario autenticado a su dashboard según su rol
   useEffect(() => {
-    console.log('Verificando redirección: user:', user, 'role:', role);
+    console.log(`Redirección de ${user}, con role: ${role}`);
     if (user && role) {
-      if (role === 'producer') {
-        navigate('/producer/dashboard');
-      } else if (role === 'director') {
-        navigate('/director/dashboard');
-      } else {
-        navigate('/');
+      switch (role) {
+        case 'productor':
+          navigate('/producer/dashboard');
+          break;
+        case 'distribuidor':
+          navigate('/distributor/dashboard');
+          break;
+        case 'asesor':
+          navigate('/consultant/dashboard');
+          break;
+        case 'analista':
+          navigate('/analyst/dashboard');
+          break;
+        case 'director':
+          navigate('/director/dashboard');
+          break;
+        default:
+          navigate('/');
       }
     }
   }, [user, role, navigate]);
@@ -78,9 +90,9 @@ export const LoginPage = () => {
               noValidate
             />
           </div>
-            <button type='submit' disabled={loading}>
-              {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-            </button>
+          <button type='submit' disabled={loading}>
+            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          </button>
         </form>
         <div>
           ¿No tienes una cuenta? <Link to='/auth/register'>Regístrate</Link>

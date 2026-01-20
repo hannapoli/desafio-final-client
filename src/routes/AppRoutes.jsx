@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard  } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout } from '../pages'
+import { PrivateRoutes } from './PrivateRoutes'
 
 export const AppRoutes = () => {
   return (
@@ -10,7 +11,66 @@ export const AppRoutes = () => {
         <Route path='/auth/register' element={<RegisterPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
 
-        <Route path='/producer/dashboard' element={<ProducerDashboard />} />
+        {/* Rutas protegidas para cada rol */}
+        <Route
+          path='/producer'
+          element={
+            <PrivateRoutes allowedRoles={['productor']}>
+              <ProducerLayout />
+            </PrivateRoutes>
+          }>
+
+          <Route path='dashboard' element={<ProducerDashboard />} />
+
+        </Route>
+
+        <Route
+          path='/distributor'
+          element={
+            <PrivateRoutes allowedRoles={['distribuidor']}>
+              <DistributorLayout />
+            </PrivateRoutes>
+          }>
+          <Route path='dashboard' element={<DistributorDashboard />} />
+
+        </Route>
+
+        <Route
+          path='/consultant'
+          element={
+            <PrivateRoutes allowedRoles={['asesor']}>
+              <ConsultantLayout />
+            </PrivateRoutes>
+          }>
+
+          <Route path='dashboard' element={<ConsultantDashboard />} />
+        </Route>
+
+        <Route
+          path='/analyst'
+          element={
+            <PrivateRoutes allowedRoles={['analista']}>
+              <AnalystLayout />
+            </PrivateRoutes>
+          }>
+
+          <Route path='dashboard' element={<AnalystDashboard />} />
+
+        </Route>
+
+        <Route
+          path='/director'
+          element={
+            <PrivateRoutes allowedRoles={['director']}>
+              <DirectorLayout />
+            </PrivateRoutes>
+          }>
+
+          <Route path='dashboard' element={<DirectorDashboard />} />
+
+        </Route>
+
+
 
         {/* Ruta de redirección */}
         <Route path='/*' element={<Navigate to={'/'} />} />
