@@ -1,7 +1,7 @@
 import { getFirebaseErrorMessage } from '../helpers/firebaseErrorMessage';
 import { useEffect, useState } from 'react';
 import { auth } from '../firebase/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updatePassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { AuthContext } from './AuthContext';
 import { useFetch } from '../hooks/useFetch';
 
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
                         name: userData.name,
                         role: userData.role
                     };
-                    console.log('Usuario completo con rol:', newUser);
+                    // console.log('Usuario completo con rol:', newUser);
                     setUser(newUser);
                 } catch (error) {
                     console.error('Error al obtener datos del usuario:', error);
@@ -145,17 +145,33 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
+            // console.log('Logeando:', formData.email);
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             const firebaseUser = userCredential.user;
             console.log({ firebaseUser })
 
         } catch (error) {
+            console.error('Error de login:', error);
             setAuthError(getFirebaseErrorMessage(error));
         } finally {
             setLoading(false);
         }
     };
 
+    const loginWithGoogle = async () => {
+        setAuthError(null);
+        setLoading(true);
+
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            setAuthError(getFirebaseErrorMessage(error));
+        } finally {
+            setLoading(false);
+        }
+    };
+    
     /**
      * Cierra la sesión del usuario actual
      * @returns {Promise<void>}
@@ -177,17 +193,18 @@ export const AuthProvider = ({ children }) => {
      * @param {string} email - Email del usuario
      * @returns {Promise<void>}
      */
-    const resetPassword = (email) => {
-        return sendPasswordResetEmail(auth, email);
-    };
+    const resetPassword = async (email) => {
+        setAuthError(null);
+        setLoading(true);
 
-    /**
-     * Cambia la contraseña del usuario actual
-     * @param {string} newPassword - Nueva contraseña
-     * @returns {Promise<void>}
-     */
-    const changePassword = (newPassword) => {
-        return updatePassword(auth.currentUser, newPassword);
+        try {
+            await sendPasswordResetEmail(auth, email);
+        } catch (error) {
+            setAuthError(getFirebaseErrorMessage(error));
+            throw error;
+        } finally {
+            setLoading(false);
+        }
     };
 
     const value = {
@@ -200,9 +217,9 @@ export const AuthProvider = ({ children }) => {
         setAuthError,
         register,
         login,
+        loginWithGoogle,
         logout,
-        resetPassword,
-        changePassword
+        resetPassword
     };
 
     return (

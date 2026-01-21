@@ -40,7 +40,7 @@ export const RegisterPage = () => {
   return (
     <>
       <section className='flexColumn centeredContent'>
-      <h1>AgroSync</h1>
+        <h1>AgroSync</h1>
         <h2>Registrarse</h2>
 
         {authError && <p className='errorMessage'>{authError}</p>}
@@ -87,15 +87,15 @@ export const RegisterPage = () => {
 
           <div className='flexColumn'>
             <label htmlFor='role'>Rol:</label>
-            <input
-              type='text'
-              name='role'
-              id='role'
-              placeholder='Escribe tu rol...'
-              value={formData.role}
-              onChange={handleChange}
-              noValidate
-            />
+            <select name='role' id='role' value={formData.role} onChange={handleChange}>
+              <option value='' disabled>--Selecciona tu rol--</option>
+              <option value='productor' name='productor' id='productor'>Productor/a</option>
+              <option value='distribuidor' name='distribuidor' id='distribuidor'>Distribuidor/a</option>
+              <option value='asesor' name='asesor' id='asesor'>Asesor/a</option>
+              <option value='analista' name='analista' id='analista'>Analista</option>
+              <option value='director' name='director' id='director'>Director/a</option>
+            </select>
+
           </div>
           <button type='submit' disabled={loading}>
             {loading ? 'Registrando...' : 'Registrarse'}

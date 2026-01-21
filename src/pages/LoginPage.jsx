@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
+import { getFirebaseErrorMessage } from '../helpers/firebaseErrorMessage';
+import { PopUp } from '../components/PopUp';
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
 
-  const { login, loading, authError, setAuthError, user, role } = useAuth();
+  const { login, loginWithGoogle, resetPassword, loading, authError, setAuthError, user, role } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const message = location.state?.message || null;
@@ -16,7 +21,11 @@ export const LoginPage = () => {
   //Limpiar error al cambiar datos del formulario
   useEffect(() => {
     setAuthError(null);
-  }, [setAuthError]);
+    if (showPopUp) {
+      setResetEmail('');
+      setResetSent(false);
+    }
+  }, [setAuthError, showPopUp]);
 
   // Redirigir al usuario autenticado a su dashboard según su rol
   useEffect(() => {
@@ -54,7 +63,17 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(formData);
-  }
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      await resetPassword(resetEmail);
+      setResetSent(true);
+    } catch (error) {
+      setAuthError(getFirebaseErrorMessage(error));
+    }
+  };
+
   return (
     <>
       <section className='flexColumn centeredContent'>
@@ -94,10 +113,32 @@ export const LoginPage = () => {
             {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
           </button>
         </form>
+        <button onClick={loginWithGoogle} disabled={loading}>Iniciar sesión con Google</button>
         <div>
           ¿No tienes una cuenta? <Link to='/auth/register'>Regístrate</Link>
         </div>
+        <button onClick={() => setShowPopUp(true)} disabled={loading}>¿Olvidaste tu contraseña?</button>
       </section>
+
+      {/* PopUp para reestablecer contraseña */}
+      <PopUp isOpen={showPopUp} onClose={() => setShowPopUp(false)}>
+        <h3>Restablecer contraseña</h3>
+        <div className='flexColumn'>
+          <input
+            type='email'
+            name='resetEmail'
+            id='resetEmail'
+            placeholder='Introduce tu email'
+            value={resetEmail}
+            onChange={(e) => setResetEmail(e.target.value)}
+            noValidate
+          />
+        </div>
+        <button onClick={handleResetPassword} disabled={loading}>
+          {loading ? 'Enviando email...' : 'Reestablecer contraseña'}
+        </button>
+        {resetSent && <p className='successMessage'>Se ha enviado un email para restablecer la contraseña.</p>}
+      </PopUp>
     </>
   )
 }
