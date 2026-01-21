@@ -1,0 +1,61 @@
+/* Contenedor general del visor */
+.viewer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja que envuelve el <a-scene> */
+.viewer-box {
+  width: 600px;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Panel */
+.viewer-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+/*Botón de cerrar*/
+.viewer-close-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.hotspot {
+  animation: pulse 2s infinite;
+  cursor: pointer;
+}
+
+.hotspot--sky {
+  color: #ffcc00;
+}
+
+.hotspot--soil {
+  color: #00aaff;
+}
+
+.hotspot--crop {
+  color: #4caf50;
+}
+
+@keyframes pulse {
+  0% { scale: 1; }
+  50% { scale: 1.2; }
+  100% { scale: 1; }
+}
