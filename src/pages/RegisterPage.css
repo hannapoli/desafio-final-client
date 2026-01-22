@@ -1,0 +1,252 @@
+/* ========== Base (Móvil) ========== */
+
+.register-container {
+  min-height: calc(100vh - 60px);
+  background-image: url("/planta-mobile.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+
+  /* Padding superior para que no esté al ras del borde */
+  padding: 10vh 16px 24px;
+  position: relative;
+}
+
+/* Forzamos el box-sizing en todo el contenedor para evitar descuadres por padding */
+.register-container * {
+  box-sizing: border-box;
+}
+
+.glass {
+  width: 100%;
+  max-width: 320px;
+  padding: 1.5rem 1rem; 
+
+  background: rgba(255, 255, 255, 0.486);
+  backdrop-filter: blur(2px);
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= LOGO ================= */
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.logo-login {
+  width: 3rem;
+}
+
+.brand-name-login {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, #308a55 53%, #1b5e20 47%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ================= TITULO ================= */
+
+.login-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #2b701a;
+  margin: 16px 0;
+}
+
+/* ================= FORM ================= */
+
+.register-form {
+  width: 100%;
+  max-width: 320px; /* Sincronizado con el ancho del login */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto;
+}
+
+.register-form .flexColumn {
+  width: 100%;
+}
+
+/* ================= INPUTS ================= */
+
+.register-input {
+  width: 100%;
+  height: 48px;
+  padding-left: 44px;
+
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  transition: border-color 0.2s;
+}
+
+.register-input:focus {
+  outline: none;
+  border-color: #2b701a;
+}
+
+.register-name { background-image: url("/user.png"); background-size: 26px 26px; }
+.register-email { background-image: url("/email.png"); background-size: 28px 28px; }
+.register-password { background-image: url("/password.png"); background-size: 30px 30px; }
+
+/* ================= SELECT ================= */
+
+.register-select select {
+  width: 100%;
+  height: 48px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+  background-color: white;
+  padding: 0 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= BOTON ================= */
+
+.register-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 14px; /* Mismo radio que el botón de Google/Login */
+  border: none;
+  background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.register-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(47, 125, 58, 0.3);
+}
+
+.register-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ================= TEXTOS Y ERRORES ================= */
+
+.link-login {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.link-login a {
+  color: #2f7d3a;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.link-login a:hover {
+  text-decoration: underline;
+}
+
+.errorMessage {
+  color: #b00020;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* ==== tablet 600px en adelante (Sincronizado con Login) ====*/
+@media (min-width: 600px) {
+  .register-container {
+    background-position: center bottom;
+    padding: 8vh 24px 32px;
+    justify-content: center; /* Centra la tarjeta verticalmente */
+  }
+
+  .glass {
+    max-width: 480px;
+    margin-top: 0;
+  }
+
+  .register-form {
+    max-width: 400px;
+  }
+
+  .brand-name-login {
+    font-size: 55px;
+  }
+}
+
+/* ==== laptop 1024px en adelante ====*/
+@media (min-width: 1024px) {
+  .register-container {
+    background-position: right bottom;
+  }
+
+  .glass {
+    max-width: 560px;
+    padding: 3.5rem 3rem; 
+  }
+
+  .register-form {
+    max-width: 480px;
+  }
+
+  .login-title {
+    font-size: 40px;
+  }
+
+  .brand-name-login {
+    font-size: 65px;
+  }
+}
+
+/* ==== pantallas grandes 1440px en adelante ====*/
+@media (min-width: 1440px) {
+  .glass {
+    max-width: 640px;
+    padding: 3rem 7rem;
+  }
+
+  .register-form {
+    max-width: 420px; /* Mantener la proporción estética */
+  }
+
+  .login-title {
+    font-size: 46px;
+  }
+
+  .brand-name-login {
+    font-size: 80px;
+  }
+}
+

@@ -1,19 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
-import { useAuth } from '../hooks/useAuth';
-import { getFirebaseErrorMessage } from '../helpers/firebaseErrorMessage';
-import { PopUp } from '../components/PopUp';
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
+import { getFirebaseErrorMessage } from "../helpers/firebaseErrorMessage";
+import { PopUp } from "../components/PopUp";
+
+import "./LoginPage.css";
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  const [resetEmail, setResetEmail] = useState('');
+  const [resetEmail, setResetEmail] = useState("");
   const [resetSent, setResetSent] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
 
-  const { login, loginWithGoogle, resetPassword, loading, authError, setAuthError, user, role } = useAuth();
+  const {
+    login,
+    loginWithGoogle,
+    resetPassword,
+    loading,
+    authError,
+    setAuthError,
+    user,
+    role,
+  } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const message = location.state?.message || null;
@@ -22,7 +33,7 @@ export const LoginPage = () => {
   useEffect(() => {
     setAuthError(null);
     if (showPopUp) {
-      setResetEmail('');
+      setResetEmail("");
       setResetSent(false);
     }
   }, [setAuthError, showPopUp]);
@@ -32,23 +43,23 @@ export const LoginPage = () => {
     console.log(`Redirección de ${user}, con role: ${role}`);
     if (user && role) {
       switch (role) {
-        case 'productor':
-          navigate('/producer/dashboard');
+        case "productor":
+          navigate("/producer/dashboard");
           break;
-        case 'distribuidor':
-          navigate('/distributor/dashboard');
+        case "distribuidor":
+          navigate("/distributor/dashboard");
           break;
-        case 'asesor':
-          navigate('/consultant/dashboard');
+        case "asesor":
+          navigate("/consultant/dashboard");
           break;
-        case 'analista':
-          navigate('/analyst/dashboard');
+        case "analista":
+          navigate("/analyst/dashboard");
           break;
-        case 'director':
-          navigate('/director/dashboard');
+        case "director":
+          navigate("/director/dashboard");
           break;
         default:
-          navigate('/');
+          navigate("/");
       }
     }
   }, [user, role, navigate]);
@@ -56,8 +67,8 @@ export const LoginPage = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -76,69 +87,102 @@ export const LoginPage = () => {
 
   return (
     <>
-      <section className='flexColumn centeredContent'>
-        <h1>AgroSync</h1>
-        <h2>Iniciar sesión</h2>
-
-        {message && <p className='successMessage'>{message}</p>}
-        {authError && <p className='errorMessage'>{authError}</p>}
-
-        <form onSubmit={handleSubmit} className='flexColumn centeredContent'>
-          <div className='flexColumn'>
-            <label htmlFor='email'>Email:</label>
-            <input
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Email'
-              value={formData.email}
-              onChange={handleChange}
-              noValidate
+      <main className="login-body-container">
+        <section className="login-glass flexColumn centeredContent">
+          <div className="login-brand">
+            <img
+              className="logo-login"
+              src="/logo.png"
+              alt="AgroSync"
             />
+            <span className="brand-name-login">AgroSync</span>
           </div>
+          <h2 className="login-title">Bienvenido</h2>
 
-          <div className='flexColumn'>
-            <label htmlFor='password'>Contraseña:</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              placeholder='Contraseña'
-              value={formData.password}
-              onChange={handleChange}
-              noValidate
-            />
-          </div>
-          <button type='submit' disabled={loading}>
-            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-          </button>
-        </form>
-        <button onClick={loginWithGoogle} disabled={loading}>Iniciar sesión con Google</button>
-        <div>
-          ¿No tienes una cuenta? <Link to='/auth/register'>Regístrate</Link>
-        </div>
-        <button onClick={() => setShowPopUp(true)} disabled={loading}>¿Olvidaste tu contraseña?</button>
-      </section>
+          {message && <p className="successMessage">{message}</p>}
+          {authError && <p className="errorMessage">{authError}</p>}
 
-      {/* PopUp para reestablecer contraseña */}
-      <PopUp isOpen={showPopUp} onClose={() => setShowPopUp(false)}>
-        <h3>Restablecer contraseña</h3>
-        <div className='flexColumn'>
-          <input
-            type='email'
-            name='resetEmail'
-            id='resetEmail'
-            placeholder='Introduce tu email'
-            value={resetEmail}
-            onChange={(e) => setResetEmail(e.target.value)}
-            noValidate
-          />
-        </div>
-        <button onClick={handleResetPassword} disabled={loading}>
-          {loading ? 'Enviando email...' : 'Reestablecer contraseña'}
-        </button>
-        {resetSent && <p className='successMessage'>Se ha enviado un email para restablecer la contraseña.</p>}
-      </PopUp>
+          <form
+            onSubmit={handleSubmit}
+            className="login-form flexColumn centeredContent"
+          >
+            <div className="input-container input-group flexColumn">
+              <label htmlFor="email"></label>
+              <input
+                class="email-input"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                noValidate
+              />
+            </div>
+
+            <div className="input-container input-group flexColumn">
+              <label htmlFor="password"></label>
+              <input
+                class="password-input"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Contraseña"
+                value={formData.password}
+                onChange={handleChange}
+                noValidate
+              />
+            </div>
+
+            <button className="login-button" type="submit" disabled={loading}>
+              {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+            </button>
+          </form>
+          
+          <section className="google-container">
+            <button
+              className="login-google"
+              onClick={loginWithGoogle}
+              disabled={loading}
+            >
+                Iniciar sesión con Google
+            </button>
+
+            <p className="login-register">
+              ¿No tienes una cuenta? <Link to="/auth/register">Regístrate</Link>
+            </p>
+
+            <p className="login-forgot" onClick={() => setShowPopUp(true)}>
+              ¿Olvidaste tu contraseña?
+            </p>
+          </section>
+        </section>
+
+
+          {/* PopUp para reestablecer contraseña */}
+          <PopUp isOpen={showPopUp} onClose={() => setShowPopUp(false)}>
+            <h3>Restablecer contraseña</h3>
+            <div className="flexColumn">
+              <input
+                type="email"
+                name="resetEmail"
+                id="resetEmail"
+                placeholder="Introduce tu email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                noValidate
+              />
+            </div>
+            <button onClick={handleResetPassword} disabled={loading}>
+              {loading ? "Enviando email..." : "Reestablecer contraseña"}
+            </button>
+            {resetSent && (
+              <p className="successMessage">
+                Se ha enviado un email para restablecer la contraseña.
+              </p>
+            )}
+          </PopUp>
+      </main>
     </>
-  )
-}
+  );
+};
