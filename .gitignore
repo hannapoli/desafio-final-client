@@ -27,3 +27,5 @@ dist-ssr
 
 
 map.txt
+
+.yarn/install-state.gz
