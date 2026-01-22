@@ -2838,8 +2838,8 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:e426afeacf914b5bf58dae7cf7cd76bf78be254e03b94e4a92e9c2b0226626f65c7431ea500d2321d9c0a431f45ed64b60ab02116d77b5064e6e0918b0a30bca#npm:4.4.3", {\
-        "packageLocation": "./.yarn/__virtual__/debug-virtual-7e33ae388e/6/Users/Esther/AppData/Local/Yarn/Berry/cache/debug-npm-4.4.3-0105c6123a-10c0.zip/node_modules/debug/",\
+      ["virtual:ca592d0a3b91bc3b6c982aedcfd2cf6e96971cf9947ebce3cafeb2c14cb53d194917891d901c3b54ccb290905214de7dce517777f18c4b77b68c104be43812f9#npm:4.4.3", {\
+        "packageLocation": "./.yarn/__virtual__/debug-virtual-0364678a38/6/Users/Esther/AppData/Local/Yarn/Berry/cache/debug-npm-4.4.3-0105c6123a-10c0.zip/node_modules/debug/",\
         "packageDependencies": [\
           ["@types/supports-color", null],\
           ["debug", "virtual:ca592d0a3b91bc3b6c982aedcfd2cf6e96971cf9947ebce3cafeb2c14cb53d194917891d901c3b54ccb290905214de7dce517777f18c4b77b68c104be43812f9#npm:4.4.3"],\
@@ -3730,6 +3730,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["is-obj", [\
+      ["npm:1.0.1", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/is-obj-npm-1.0.1-7d391539d7-10c0.zip/node_modules/is-obj/",\
+        "packageDependencies": [\
+          ["is-obj", "npm:1.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["isarray", [\
       ["npm:1.0.0", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/isarray-npm-1.0.0-db4f547720-10c0.zip/node_modules/isarray/",\
@@ -3840,6 +3849,18 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["json-buffer", "npm:3.0.1"],\
           ["keyv", "npm:4.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["layout-bmfont-text", [\
+      ["npm:1.3.4", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/layout-bmfont-text-npm-1.3.4-779a938850-10c0.zip/node_modules/layout-bmfont-text/",\
+        "packageDependencies": [\
+          ["as-number", "npm:1.0.0"],\
+          ["layout-bmfont-text", "npm:1.3.4"],\
+          ["word-wrapper", "npm:1.0.7"],\
+          ["xtend", "npm:4.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4450,6 +4471,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/proc-log-npm-6.1.0-84e609b3f4-10c0.zip/node_modules/proc-log/",\
         "packageDependencies": [\
           ["proc-log", "npm:6.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["process", [\
+      ["npm:0.11.10", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/process-npm-0.11.10-aeb3b641ae-10c0.zip/node_modules/process/",\
+        "packageDependencies": [\
+          ["process", "npm:0.11.10"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5088,6 +5118,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["punycode", "npm:2.3.1"],\
           ["uri-js", "npm:4.4.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["url-parse-lax", [\
+      ["npm:3.0.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/url-parse-lax-npm-3.0.0-92aa8effa0-10c0.zip/node_modules/url-parse-lax/",\
+        "packageDependencies": [\
+          ["prepend-http", "npm:2.0.0"],\
+          ["url-parse-lax", "npm:3.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
