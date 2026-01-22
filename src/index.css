@@ -12,6 +12,10 @@ body {
     overflow-x: hidden;
 }
 
-a, button {
+a, button, .clickable {
     cursor: pointer;
+}
+
+main {
+    margin-block: 2.5em 5em;
 }

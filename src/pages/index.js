@@ -13,3 +13,9 @@ export * from './templates/DistributorLayout.jsx';
 export * from './templates/ConsultantLayout.jsx';
 export * from './templates/AnalystLayout.jsx';
 export * from './templates/DirectorLayout.jsx';
+
+//Pájinas Productor
+export * from './ProducerSeeFields.jsx';
+export * from './ProducerFieldInfo.jsx';
+export * from './ProducerManageFields.jsx';
+export * from './ProducerMessages.jsx';

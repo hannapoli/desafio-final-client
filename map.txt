@@ -1,0 +1,143 @@
+user
+ ├─ user_name
+ ├─ uid
+ └─ farms
+     └─ farmId
+         ├─ id
+         ├─ uuid
+         ├─ bbox (WKT)
+         ├─ fields
+         │   └─ fieldId
+         │       ├─ name
+         │       ├─ id
+         │       ├─ uuid
+         │       └─ shapes
+         │           └─ current
+         │               ├─ centroid (POINT)
+         │               ├─ bbox (POLYGON)
+         │               └─ polygon (POLYGON | MULTIPOLYGON)
+         └─ permissions[]
+
+
+const farms = Object.values(data.user.farms);
+
+farms.forEach(farm => {
+  const fields = Object.values(farm.fields);
+
+  fields.forEach(field => {
+    const shape = field.shapes.current;
+    console.log(field.name, shape.polygon);
+  });
+});
+
+
+¡Perfecto! Ese es un **FeatureCollection GeoJSON válido**. Ahora podemos dibujarlo en React-Leaflet usando **`L.geoJSON()`**, porque como vimos antes, **React-Leaflet no exporta `<GeoJSON>`**.
+
+Te muestro un ejemplo completo:
+
+---
+
+### 1️⃣ Componente `GeoJSONLayer` para dibujar cualquier GeoJSON
+
+```jsx
+import { useMap } from 'react-leaflet';
+import L from 'leaflet';
+import React from 'react';
+
+export function GeoJSONLayer({ data }) {
+  const map = useMap();
+
+  React.useEffect(() => {
+    if (!data) return;
+
+    // Crear la capa GeoJSON
+    const layer = L.geoJSON(data, {
+      onEachFeature: (feature, layer) => {
+        // Mostrar un popup con el nombre
+        if (feature.properties?.name) {
+          layer.bindPopup(feature.properties.name);
+        }
+
+        // Zoom al hacer click en el polígono
+        layer.on('click', () => {
+          map.fitBounds(layer.getBounds());
+        });
+      },
+      style: {
+        color: 'green',    // borde del polígono
+        fillColor: 'lightgreen', // relleno
+        fillOpacity: 0.5,
+        weight: 2
+      }
+    }).addTo(map);
+
+    // Limpiar cuando el componente se desmonte
+    return () => {
+      map.removeLayer(layer);
+    };
+  }, [data, map]);
+
+  return null;
+}
+```
+
+---
+
+### 2️⃣ Componente principal del mapa
+
+```jsx
+import { MapContainer, TileLayer } from 'react-leaflet';
+import farmsData from '../data/agro.json';
+import { GeoJSONLayer } from './GeoJSONLayer';
+import wellknown from 'wellknown';
+
+export default function MapView() {
+  // Extraer los fields de la granja
+  const farm = farmsData.user.farms["227689"];
+  const fields = Object.values(farm.fields);
+
+  // Convertir todos los polígonos WKT a GeoJSON FeatureCollection
+  const geojson = {
+    type: "FeatureCollection",
+    features: fields.map(field => ({
+      type: "Feature",
+      geometry: wellknown.parse(field.shapes.current.polygon),
+      properties: { name: field.name, id: field.id },
+    }))
+  };
+
+  // Centrar el mapa en el primer campo
+  const firstField = wellknown.parse(fields[0].shapes.current.polygon);
+  const center = [firstField.coordinates[0][0][1], firstField.coordinates[0][0][0]];
+
+  return (
+    <MapContainer center={center} zoom={13} style={{ height: '500px', width: '100%' }}>
+      <TileLayer
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap"
+      />
+      <GeoJSONLayer data={geojson} />
+    </MapContainer>
+  );
+}
+```
+
+---
+
+### ✅ Qué hace este código
+
+1. Convierte todos los polígonos de WKT a **GeoJSON Features**.
+2. Agrupa todo en un **FeatureCollection**.
+3. Dibuja cada polígono en el mapa con un color y relleno.
+4. Al hacer click en un polígono:
+
+   * Se hace zoom a sus límites (`fitBounds`).
+   * Se muestra un popup con su nombre.
+5. Funciona para **cualquier cantidad de campos** dentro de tu granja.
+
+---
+
+Si quieres, puedo hacer una versión **mejorada** que dibuje **todos los polígonos de todas las granjas automáticamente** y diferencie cada granja con colores distintos. Eso te deja un mapa completo listo para producción.
+
+¿Quieres que haga eso?
+

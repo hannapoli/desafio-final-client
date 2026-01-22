@@ -8,7 +8,7 @@ export const ProducerLayout = () => {
             <Header>
                 <ProducerNav />
             </Header>
-            <main className='flexColumn'>
+            <main>
                 <Outlet />
             </main>
         </>
