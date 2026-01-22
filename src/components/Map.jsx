@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useContext, useEffect} from 'react'
 import MapView from './Map/MapView'
 import wellknown from 'wellknown';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import { userMap } from '../hooks/userMap';
+import { MapsContext } from '../contexts/MapsContext';
 
 
 export const Map = () => {
 
+   const {simulacionLlamadaBack} = userMap()
+  const {havePolygons} = useContext(MapsContext)
+   
+
+  useEffect(() => {
+        const respuesta = simulacionLlamadaBack()
+        // Parsear y validar polígonos, asegurando formato [lat, lng]
+        havePolygons(respuesta)
+    }, [])
+
+
   return (
     <div>
         {/* <MapView geojson={geojson}/> */}
-        <MapView  centroid={centroid}
+        <MapView 
         //  bboxPolygon={bboxPolygon}
          />
        
