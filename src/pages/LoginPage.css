@@ -1,0 +1,284 @@
+/* ================= LOGIN FONDO ================= */
+
+.login-body-container {
+  min-height: calc(100vh - 60px); /* min-height para que no se corte el fondo */
+  background-image: url("/tractor1.png");
+  background-repeat: no-repeat;
+  background-size: 180%;
+  background-position: 60% 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 16px; /* Evita que la tarjeta toque los bordes en móviles */
+}
+
+/* ================= BLOQUE LOGIN (MOBILE) ================= */
+
+/* tarjeta glass */
+.login-glass {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 10vh;
+  padding: 24px 16px;
+
+  background: rgba(255, 255, 255, 0.486);
+  backdrop-filter: blur(2px);
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= LOGO ================= */
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.logo-login {
+  width: 3rem;
+}
+
+.brand-name-login {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, #308a55 53%, #1b5e20 47%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ================= TITULO ================= */
+
+.login-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #2b701a;
+  margin: 16px 0;
+}
+
+/* ================= CONTENEDORES UNIFICADOS (FORM Y GOOGLE) ================= */
+
+/* Forzamos que ambos contenedores midan lo mismo para que los botones sean gemelos */
+.login-form, 
+.google-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* ================= INPUTS ================= */
+
+.input-container {
+  width: 100%;
+}
+
+.email-input,
+.password-input {
+  width: 100%;
+  height: 48px;
+  padding-left: 44px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-color: white;
+  box-sizing: border-box; /* Crucial para que el padding no desplace el ancho */
+}
+
+.email-input {
+  background-image: url("/email.png");
+  background-size: 28px 28px;
+}
+
+.password-input {
+  background-image: url("/password.png");
+  background-size: 30px 30px;
+}
+
+/* ================= BOTONES (BASE COMÚN) ================= */
+
+.login-button,
+.login-google {
+  width: 100%;
+  height: 50px;
+  border-radius: 14px; /* Unificado para ambos */
+  font-size: 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  border: none;
+}
+
+/* ================= BOTÓN INICIAR SESIÓN ================= */
+
+.login-button {
+  background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+  color: white;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.login-button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 15px rgba(47, 125, 58, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ================= BOTÓN GOOGLE ================= */
+
+.login-google {
+  font-weight: 600;
+  background-image: url("/google.png");
+  background-size: 24px 24px;
+  background-position: 12px center;
+  background-repeat: no-repeat;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 30px; /* Compensación para centrar texto con el icono */
+}
+
+.login-google:hover {
+  background-color: #fcfcfc;
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.login-button:active, .login-google:active {
+  transform: translateY(0);
+}
+
+/* ================= TEXTOS Y ACCIONES ================= */
+
+.login-forgot,
+.login-register {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.login-register {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.login-register a {
+  margin-left: 4px;
+  color: #2f7d3a;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.login-register a:hover {
+  text-decoration: underline;
+}
+
+.login-forgot {
+  margin-top: 14px;
+  color: #2b701a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.login-forgot:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* ==== tablet 600px en adelante ====*/
+
+@media (min-width: 600px) {
+  .login-body-container {
+    background-image: url("/tractor.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    align-items: center;
+  }
+
+  .login-body-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(1px);
+    z-index: 0;
+  }
+
+  .login-glass {
+    max-width: 480px;
+    margin-top: 0;
+  }
+
+  .login-form, 
+  .google-container {
+    max-width: 400px;
+  }
+
+  .brand-name-login {
+    font-size: 55px;
+  }
+}
+
+/* ==== laptop 1024px en adelante ====*/
+
+@media (min-width: 1024px) {
+  .login-glass {
+    max-width: 560px;
+  }
+
+  .login-form, 
+  .google-container {
+    max-width: 480px;
+  }
+
+  .login-title {
+    font-size: 40px;
+  }
+
+  .brand-name-login {
+    font-size: 65px;
+  }
+}
+
+/* ==== pantallas grandes 1440px en adelante ====*/
+
+@media (min-width: 1440px) {
+  .login-glass {
+    max-width: 640px;
+    padding: 3rem 7rem;
+  }
+
+  .login-form, 
+  .google-container {
+    max-width: 420px; /* Reducción ligera para legibilidad */
+  }
+
+  .login-title {
+    font-size: 46px;
+  }
+
+  .brand-name-login {
+    font-size: 80px;
+  }
+}

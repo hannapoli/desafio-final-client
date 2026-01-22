@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 
+import "./RegisterPage.css"
+
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -39,70 +41,82 @@ export const RegisterPage = () => {
 
   return (
     <>
-      <section className='flexColumn centeredContent'>
-        <h1>AgroSync</h1>
-        <h2>Registrarse</h2>
+      <section className='register-container flexColumn centeredContent'>
+        <div className="glass register-glass">
+          <div className="login-brand">
+              <img
+                className="logo-login"
+                src="/logo.png"
+                alt="AgroSync"
+              />
+              <span className="brand-name-login">AgroSync</span>
+            </div>
+          <h2 className="login-title">Regístrate</h2>
 
-        {authError && <p className='errorMessage'>{authError}</p>}
+          {authError && <p className='errorMessage'>{authError}</p>}
 
-        <form onSubmit={handleSubmit} className='flexColumn centeredContent'>
-          <div className='flexColumn'>
-            <label htmlFor='name'>Nombre:</label>
-            <input
-              type='text'
-              name='name'
-              id='name'
-              placeholder='Escribe tu nombre...'
-              value={formData.name}
-              onChange={handleChange}
-              noValidate
-            />
+          <form onSubmit={handleSubmit} className='register-form flexColumn centeredContent'>
+            <div className='flexColumn'>
+              <label htmlFor='name'></label>
+              <input
+                className='register-input register-name'
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Nombre y Apellido'
+                value={formData.name}
+                onChange={handleChange}
+                noValidate
+              />
+            </div>
+
+            <div className='flexColumn'>
+              <label htmlFor='email'></label>
+              <input
+                className='register-input register-email'
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Email'
+                value={formData.email}
+                onChange={handleChange}
+                noValidate
+              />
+            </div>
+
+            <div className='flexColumn'>
+              <label htmlFor='password'></label>
+              <input
+                className='register-input register-password'
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Contraseña'
+                value={formData.password}
+                onChange={handleChange}
+                noValidate
+              />
+            </div>
+
+            <div className='register-select flexColumn'>
+              <label htmlFor='role'></label>
+              <select name='role' id='role' value={formData.role} onChange={handleChange}>
+                <option value='' disabled>--Selecciona tu rol--</option>
+                <option value='productor' name='productor' id='productor'>Productor/a</option>
+                <option value='distribuidor' name='distribuidor' id='distribuidor'>Distribuidor/a</option>
+                <option value='asesor' name='asesor' id='asesor'>Asesor/a</option>
+                <option value='analista' name='analista' id='analista'>Analista</option>
+                <option value='director' name='director' id='director'>Director/a</option>
+              </select>
+
+            </div>
+            <button className='register-btn' type='submit' disabled={loading}>
+              {loading ? 'Registrando...' : 'Registrarse'}
+            </button>
+          </form>
+          <div className="link-login">
+            Ya tienes una cuenta? <Link to='/auth/login'>Inicia sesión</Link>
           </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='email'>Email:</label>
-            <input
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Escribe tu correo electrónico...'
-              value={formData.email}
-              onChange={handleChange}
-              noValidate
-            />
-          </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='password'>Contraseña:</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              placeholder='Crea una contraseña segura...'
-              value={formData.password}
-              onChange={handleChange}
-              noValidate
-            />
-          </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='role'>Rol:</label>
-            <select name='role' id='role' value={formData.role} onChange={handleChange}>
-              <option value='' disabled>--Selecciona tu rol--</option>
-              <option value='productor' name='productor' id='productor'>Productor/a</option>
-              <option value='distribuidor' name='distribuidor' id='distribuidor'>Distribuidor/a</option>
-              <option value='asesor' name='asesor' id='asesor'>Asesor/a</option>
-              <option value='analista' name='analista' id='analista'>Analista</option>
-              <option value='director' name='director' id='director'>Director/a</option>
-            </select>
-
-          </div>
-          <button type='submit' disabled={loading}>
-            {loading ? 'Registrando...' : 'Registrarse'}
-          </button>
-        </form>
-        <div>
-          Ya tienes una cuenta? <Link to='/auth/login'>Inicia sesión</Link>
         </div>
       </section>
     </>
