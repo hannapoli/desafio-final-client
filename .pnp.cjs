@@ -39,10 +39,15 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.4.26"],\
           ["firebase", "npm:12.8.0"],\
           ["globals", "npm:16.5.0"],\
+          ["leaflet", "npm:1.9.4"],\
+          ["leaflet-draw", "npm:1.0.4"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"],\
+          ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"],\
+          ["react-leaflet-draw", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0"],\
           ["react-router", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.12.0"],\
-          ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"]\
+          ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"],\
+          ["wellknown", "npm:0.5.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -1989,6 +1994,36 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@react-leaflet/core", [\
+      ["npm:3.0.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/@react-leaflet-core-npm-3.0.0-4e3f2d62b5-10c0.zip/node_modules/@react-leaflet/core/",\
+        "packageDependencies": [\
+          ["@react-leaflet/core", "npm:3.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:71bb6da86c0637df3c24f5782f2102777fd0ba292bbb5320d5f8de9fae0f7bcb7459d570469b403586e7c069b49e07e2ad2f08998299baef0d39d4792dc5b347#npm:3.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/@react-leaflet-core-virtual-2321cb7ba8/6/Users/Esther/AppData/Local/Yarn/Berry/cache/@react-leaflet-core-npm-3.0.0-4e3f2d62b5-10c0.zip/node_modules/@react-leaflet/core/",\
+        "packageDependencies": [\
+          ["@react-leaflet/core", "virtual:71bb6da86c0637df3c24f5782f2102777fd0ba292bbb5320d5f8de9fae0f7bcb7459d570469b403586e7c069b49e07e2ad2f08998299baef0d39d4792dc5b347#npm:3.0.0"],\
+          ["@types/leaflet", null],\
+          ["@types/react", "npm:19.2.8"],\
+          ["@types/react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"],\
+          ["leaflet", "npm:1.9.4"],\
+          ["react", "npm:19.2.3"],\
+          ["react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "@types/react-dom",\
+          "@types/react",\
+          "leaflet",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@rolldown/pluginutils", [\
       ["npm:1.0.0-beta.53", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/@rolldown-pluginutils-npm-1.0.0-beta.53-0e2b6fa8ac-10c0.zip/node_modules/@rolldown/pluginutils/",\
@@ -2735,6 +2770,18 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["concat-stream", [\
+      ["npm:1.5.2", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/concat-stream-npm-1.5.2-aee69084db-10c0.zip/node_modules/concat-stream/",\
+        "packageDependencies": [\
+          ["concat-stream", "npm:1.5.2"],\
+          ["inherits", "npm:2.0.4"],\
+          ["readable-stream", "npm:2.0.6"],\
+          ["typedarray", "npm:0.0.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["convert-source-map", [\
       ["npm:2.0.0", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/convert-source-map-npm-2.0.0-7ab664dc4e-10c0.zip/node_modules/convert-source-map/",\
@@ -2749,6 +2796,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/cookie-npm-1.1.1-881103ddeb-10c0.zip/node_modules/cookie/",\
         "packageDependencies": [\
           ["cookie", "npm:1.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["core-util-is", [\
+      ["npm:1.0.3", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/core-util-is-npm-1.0.3-ca74b76c90-10c0.zip/node_modules/core-util-is/",\
+        "packageDependencies": [\
+          ["core-util-is", "npm:1.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2782,8 +2838,8 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:ca592d0a3b91bc3b6c982aedcfd2cf6e96971cf9947ebce3cafeb2c14cb53d194917891d901c3b54ccb290905214de7dce517777f18c4b77b68c104be43812f9#npm:4.4.3", {\
-        "packageLocation": "./.yarn/__virtual__/debug-virtual-0364678a38/6/Users/Esther/AppData/Local/Yarn/Berry/cache/debug-npm-4.4.3-0105c6123a-10c0.zip/node_modules/debug/",\
+      ["virtual:e426afeacf914b5bf58dae7cf7cd76bf78be254e03b94e4a92e9c2b0226626f65c7431ea500d2321d9c0a431f45ed64b60ab02116d77b5064e6e0918b0a30bca#npm:4.4.3", {\
+        "packageLocation": "./.yarn/__virtual__/debug-virtual-7e33ae388e/6/Users/Esther/AppData/Local/Yarn/Berry/cache/debug-npm-4.4.3-0105c6123a-10c0.zip/node_modules/debug/",\
         "packageDependencies": [\
           ["@types/supports-color", null],\
           ["debug", "virtual:ca592d0a3b91bc3b6c982aedcfd2cf6e96971cf9947ebce3cafeb2c14cb53d194917891d901c3b54ccb290905214de7dce517777f18c4b77b68c104be43812f9#npm:4.4.3"],\
@@ -2850,10 +2906,15 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.4.26"],\
           ["firebase", "npm:12.8.0"],\
           ["globals", "npm:16.5.0"],\
+          ["leaflet", "npm:1.9.4"],\
+          ["leaflet-draw", "npm:1.0.4"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"],\
+          ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"],\
+          ["react-leaflet-draw", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0"],\
           ["react-router", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.12.0"],\
-          ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"]\
+          ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"],\
+          ["wellknown", "npm:0.5.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -3605,6 +3666,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["inherits", [\
+      ["npm:2.0.4", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/inherits-npm-2.0.4-c66b3957a0-10c0.zip/node_modules/inherits/",\
+        "packageDependencies": [\
+          ["inherits", "npm:2.0.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["ip-address", [\
       ["npm:10.1.0", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/ip-address-npm-10.1.0-d5d5693401-10c0.zip/node_modules/ip-address/",\
@@ -3660,11 +3730,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["is-obj", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/is-obj-npm-1.0.1-7d391539d7-10c0.zip/node_modules/is-obj/",\
+    ["isarray", [\
+      ["npm:1.0.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/isarray-npm-1.0.0-db4f547720-10c0.zip/node_modules/isarray/",\
         "packageDependencies": [\
-          ["is-obj", "npm:1.0.1"]\
+          ["isarray", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3774,14 +3844,20 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["layout-bmfont-text", [\
-      ["npm:1.3.4", {\
-        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/layout-bmfont-text-npm-1.3.4-779a938850-10c0.zip/node_modules/layout-bmfont-text/",\
+    ["leaflet", [\
+      ["npm:1.9.4", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/leaflet-npm-1.9.4-8d372b0fe6-10c0.zip/node_modules/leaflet/",\
         "packageDependencies": [\
-          ["as-number", "npm:1.0.0"],\
-          ["layout-bmfont-text", "npm:1.3.4"],\
-          ["word-wrapper", "npm:1.0.7"],\
-          ["xtend", "npm:4.0.2"]\
+          ["leaflet", "npm:1.9.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["leaflet-draw", [\
+      ["npm:1.0.4", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/leaflet-draw-npm-1.0.4-0ca0ebcf65-10c0.zip/node_modules/leaflet-draw/",\
+        "packageDependencies": [\
+          ["leaflet-draw", "npm:1.0.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3820,6 +3896,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["locate-path", "npm:6.0.0"],\
           ["p-locate", "npm:5.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash-es", [\
+      ["npm:4.17.22", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/lodash-es-npm-4.17.22-2fc5a201e5-10c0.zip/node_modules/lodash-es/",\
+        "packageDependencies": [\
+          ["lodash-es", "npm:4.17.22"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4369,11 +4454,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["process", [\
-      ["npm:0.11.10", {\
-        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/process-npm-0.11.10-aeb3b641ae-10c0.zip/node_modules/process/",\
+    ["process-nextick-args", [\
+      ["npm:1.0.7", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/process-nextick-args-npm-1.0.7-25caefb517-10c0.zip/node_modules/process-nextick-args/",\
         "packageDependencies": [\
-          ["process", "npm:0.11.10"]\
+          ["process-nextick-args", "npm:1.0.7"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4474,6 +4559,77 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-leaflet", [\
+      ["npm:5.0.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/react-leaflet-npm-5.0.0-5b3e60bcbf-10c0.zip/node_modules/react-leaflet/",\
+        "packageDependencies": [\
+          ["react-leaflet", "npm:5.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-leaflet-virtual-71bb6da86c/6/Users/Esther/AppData/Local/Yarn/Berry/cache/react-leaflet-npm-5.0.0-5b3e60bcbf-10c0.zip/node_modules/react-leaflet/",\
+        "packageDependencies": [\
+          ["@react-leaflet/core", "virtual:71bb6da86c0637df3c24f5782f2102777fd0ba292bbb5320d5f8de9fae0f7bcb7459d570469b403586e7c069b49e07e2ad2f08998299baef0d39d4792dc5b347#npm:3.0.0"],\
+          ["@types/leaflet", null],\
+          ["@types/react", "npm:19.2.8"],\
+          ["@types/react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"],\
+          ["leaflet", "npm:1.9.4"],\
+          ["react", "npm:19.2.3"],\
+          ["react-dom", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:19.2.3"],\
+          ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "@types/react-dom",\
+          "@types/react",\
+          "leaflet",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-leaflet-draw", [\
+      ["npm:0.21.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/react-leaflet-draw-npm-0.21.0-3dc53c6f20-10c0.zip/node_modules/react-leaflet-draw/",\
+        "packageDependencies": [\
+          ["react-leaflet-draw", "npm:0.21.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-leaflet-draw-virtual-7c32e49a20/6/Users/Esther/AppData/Local/Yarn/Berry/cache/react-leaflet-draw-npm-0.21.0-3dc53c6f20-10c0.zip/node_modules/react-leaflet-draw/",\
+        "packageDependencies": [\
+          ["@types/leaflet", null],\
+          ["@types/leaflet-draw", null],\
+          ["@types/prop-types", null],\
+          ["@types/react", "npm:19.2.8"],\
+          ["@types/react-leaflet", null],\
+          ["fast-deep-equal", "npm:3.1.3"],\
+          ["leaflet", "npm:1.9.4"],\
+          ["leaflet-draw", "npm:1.0.4"],\
+          ["lodash-es", "npm:4.17.22"],\
+          ["prop-types", null],\
+          ["react", "npm:19.2.3"],\
+          ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"],\
+          ["react-leaflet-draw", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet-draw",\
+          "@types/leaflet",\
+          "@types/prop-types",\
+          "@types/react-leaflet",\
+          "@types/react",\
+          "leaflet-draw",\
+          "leaflet",\
+          "prop-types",\
+          "react-leaflet",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-refresh", [\
       ["npm:0.18.0", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/react-refresh-npm-0.18.0-5576c3f4a3-10c0.zip/node_modules/react-refresh/",\
@@ -4507,6 +4663,21 @@ const RAW_RUNTIME_STATE =
           "@types/react",\
           "react-dom",\
           "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["readable-stream", [\
+      ["npm:2.0.6", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/readable-stream-npm-2.0.6-1ac9d8935e-10c0.zip/node_modules/readable-stream/",\
+        "packageDependencies": [\
+          ["core-util-is", "npm:1.0.3"],\
+          ["inherits", "npm:2.0.4"],\
+          ["isarray", "npm:1.0.0"],\
+          ["process-nextick-args", "npm:1.0.7"],\
+          ["readable-stream", "npm:2.0.6"],\
+          ["string_decoder", "npm:0.10.31"],\
+          ["util-deprecate", "npm:1.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4727,6 +4898,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["string_decoder", [\
+      ["npm:0.10.31", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/string_decoder-npm-0.10.31-851f3f7302-10c0.zip/node_modules/string_decoder/",\
+        "packageDependencies": [\
+          ["string_decoder", "npm:0.10.31"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["strip-ansi", [\
       ["npm:6.0.1", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/strip-ansi-npm-6.0.1-caddc7cb40-10c0.zip/node_modules/strip-ansi/",\
@@ -4840,6 +5020,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["typedarray", [\
+      ["npm:0.0.7", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/typedarray-npm-0.0.7-0ffd2f16c7-10c0.zip/node_modules/typedarray/",\
+        "packageDependencies": [\
+          ["typedarray", "npm:0.0.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["undici-types", [\
       ["npm:7.16.0", {\
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/undici-types-npm-7.16.0-0e23b08124-10c0.zip/node_modules/undici-types/",\
@@ -4903,12 +5092,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["url-parse-lax", [\
-      ["npm:3.0.0", {\
-        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/url-parse-lax-npm-3.0.0-92aa8effa0-10c0.zip/node_modules/url-parse-lax/",\
+    ["util-deprecate", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/util-deprecate-npm-1.0.2-e3fe1a219c-10c0.zip/node_modules/util-deprecate/",\
         "packageDependencies": [\
-          ["prepend-http", "npm:2.0.0"],\
-          ["url-parse-lax", "npm:3.0.0"]\
+          ["util-deprecate", "npm:1.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5006,6 +5194,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/websocket-extensions-npm-0.1.4-be839a9e56-10c0.zip/node_modules/websocket-extensions/",\
         "packageDependencies": [\
           ["websocket-extensions", "npm:0.1.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["wellknown", [\
+      ["npm:0.5.0", {\
+        "packageLocation": "../../../../../Users/Esther/AppData/Local/Yarn/Berry/cache/wellknown-npm-0.5.0-3b1bbfd6cd-10c0.zip/node_modules/wellknown/",\
+        "packageDependencies": [\
+          ["concat-stream", "npm:1.5.2"],\
+          ["minimist", "npm:1.2.8"],\
+          ["wellknown", "npm:0.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
