@@ -31,18 +31,34 @@ export const ProducerNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
-                        to='/producer/fields'
+                        to='/producer/dashboard'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mis granjas
+                        Inicio
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
-                        to='/producer/crops'
+                        to='/producer/fields/all'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Cultivos
+                        Mis parcelas
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to='/producer/fields/manage'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Gestionar parcelas
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to='/producer/messages'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mensajes
+                    </NavLink>
+                </li>
+
                 <li>
                     <Link to='/' onClick={handleLogout}>Logout</Link>
                 </li>

@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
 import { PrivateRoutes } from './PrivateRoutes'
 
 export const AppRoutes = () => {
@@ -21,6 +21,10 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<ProducerDashboard />} />
+          <Route path='fields/all' element={<ProducerSeeFields />} />
+          <Route path='fields/manage' element={<ProducerManageFields />} />
+          <Route path='fields/:id' element={<ProducerFieldInfo />} />
+          <Route path='messages' element={<ProducerMessages />} />
 
         </Route>
 

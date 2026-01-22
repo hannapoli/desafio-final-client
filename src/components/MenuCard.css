@@ -1,0 +1,71 @@
+.menu-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 0.3em 1em 0;
+    text-decoration: none;
+    color: #222;
+    transition: box-shadow 0.2s, transform 0.2s;
+    width: 20em;
+    height: 20em;
+    min-height: 18em;
+    min-width: 12em;
+}
+
+.menu-card:hover {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+    transform: translateY(-4px) scale(1.03);
+}
+
+.menu-card-logo {
+    font-size: 2em;
+    margin-block: 0.3em;
+}
+
+.menu-card-text {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.7em;
+    text-align: center;
+}
+
+.img-container {
+    width: 90%;
+    min-height: 8em;
+    max-height: 12em;
+}
+
+.menu-card-image {
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+    display: block;
+}
+
+.menu-card-list {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5em;
+    margin: 2em 0;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .menu-card-list {
+        flex-direction: row;
+        gap: 2em;
+        margin: 3em 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .menu-card-list {
+        margin: 4em 0;
+    }
+    .menu-card {
+        margin: 0;
+        width: 20em;
+    }
+}
