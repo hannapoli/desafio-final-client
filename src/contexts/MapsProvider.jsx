@@ -4,42 +4,52 @@ import { MapsContext} from './MapsContext'
 
 export const MapsProvider = ({ children }) => {
     const [polygons, setPolygons] = useState([])
-    const [center, setCenter] = useState([-72.60537, -37.21619])
+    const [center, setCenter] = useState([-37.21619, -72.60537 ])
+    const [geoPng, setGeoPng] = useState('')
 
-    useEffect(() => {
-        // Simulación de respuesta
-        const respuesta = {
-            ok: true,
-            msg: "TODO OK",
-            data: [
-                {
-                    uid_parcel: "parcel002",
-                    uid_producer: "0ZodTLyMMaQ49pecJsthqPzfdh03",
-                    name_parcel: "Parcela A",
-                    product_parcel: "Maíz",
-                    // Formato correcto: [[lat, lng], ...]
-                    coordinates_parcel: "[[-37.21619, -72.60537], [-37.22059, -72.60284], [-37.22059, -72.59610], [-37.21879, -72.59459], [-37.21619, -72.60537]]"
-                }
-            ]
-        };
-        // Parsear y validar polígonos, asegurando formato [lat, lng]
-        setPolygons(
-            respuesta.data
-                .map(parcel => {
-                    try {
-                        const coords = JSON.parse(parcel.coordinates_parcel);
-                        // Validar que sea array de arrays y no contenga null
-                        if (Array.isArray(coords) && coords.every(pair => Array.isArray(pair) && pair.length === 2 && pair.every(Number.isFinite))) {
-                            return coords;
-                        }
-                    } catch {
-                        return null;
-                    }
-                    return null;
-                })
-                .filter(Boolean)
-        );
-    }, [])
+
+    const havePolygons = (respuesta) => {
+    //     setPolygons(
+    //         respuesta.data
+    //             .map(parcel => {
+    //                 try {
+    //                     const coords = JSON.parse(parcel.coordinates_parcel);
+    //                     // Validar que sea array de arrays y no contenga null
+    //                     if (Array.isArray(coords) && coords.every(pair => Array.isArray(pair) && pair.length === 2 && pair.every(Number.isFinite))) {
+    //                         return coords;
+    //                     }
+    //                 } catch {
+    //                     return null;
+    //                 }
+    //                 return null;
+    //             })
+    //             .filter(Boolean)
+    //     )
+    // }
+    setPolygons(respuesta.data
+        .map(parcel => {
+            try {
+                const coords = typeof parcel.coordinates_parcel === 'string' 
+                    ? JSON.parse(parcel.coordinates_parcel) 
+                    : parcel.coordinates_parcel;
+
+                // Validación robusta
+                const isValid = Array.isArray(coords) && 
+                    coords.every(p => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite));
+
+                if (!isValid) return null;
+
+                // IMPORTANTE: Si tu API viene en [Lng, Lat], inviértelos para Leaflet:
+                // return coords.map(([lng, lat]) => [lat, lng]);
+                
+                return coords; 
+            } catch (e) {
+                console.error("Error parseando parcela:", parcel.id, e);
+                return null;
+            }
+        })
+        .filter(Boolean) // Elimina los null
+)}
 
     const addParcel = (polygono) => {
         setPolygons([...polygons, polygono])
@@ -53,7 +63,7 @@ export const MapsProvider = ({ children }) => {
 
     const bboxCenter = (polygons) =>{
           
-
+       if (polygons.length=== 0) return
         let minLat = Infinity, maxLat = -Infinity;
         let minLng = Infinity, maxLng = -Infinity;
 
@@ -75,7 +85,7 @@ export const MapsProvider = ({ children }) => {
 
 
      return (
-            <MapsContext.Provider value={{polygons, addParcel, deleteParcel, bboxCenter, center}}>
+            <MapsContext.Provider value={{polygons, addParcel, deleteParcel, bboxCenter, center, geoPng, havePolygons}}>
                 {children}
             </MapsContext.Provider>
         )
