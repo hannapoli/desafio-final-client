@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
                     // console.log('Usuario completo con rol:', newUser);
                     setUser(newUser);
                 } catch (error) {
-                    console.error('Error al obtener datos del usuario:', error);
                     setUser({
                         uid: firebaseUser.uid,
                         email: firebaseUser.email
@@ -151,7 +150,6 @@ export const AuthProvider = ({ children }) => {
             console.log({ firebaseUser })
 
         } catch (error) {
-            console.error('Error de login:', error);
             setAuthError(getFirebaseErrorMessage(error));
         } finally {
             setLoading(false);

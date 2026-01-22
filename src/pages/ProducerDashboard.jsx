@@ -1,17 +1,35 @@
-// IMPORTACIONES PROPIAS
-import { ViewerParcelProducer } from "../components/ViewerParcelProducer"
+import { MenuCard } from '../components/MenuCard';
+import fieldImg from '../assets/images/field.jpg';
+import cropImg from '../assets/images/fieldwork.jpg';
+import messageImg from '../assets/images/email.jpg';
 
 export const ProducerDashboard = () => {
 
-  const imageUrl = "https://res.cloudinary.com/dbi5thf23/image/upload/v1769010767/bloem_field_sunrise_4k_e3mlls.jpg"
-  // Pendiente fetch para traer la imagen
-  const points = { 
-    sky: { x: 2045, y: 513 }, 
-    soil: { x: 2047, y: 1523 }, 
-    crop: { x: 1024, y: 900 }, };
   return (
     <>
-    <ViewerParcelProducer imageUrl={imageUrl} points={points}/>
+    <section className='flexColumn centeredContent fullHeight'>
+      <h1 className='centeredText'>Panel de productor</h1>
+      <div className='menu-card-list flexContainer'>
+        <MenuCard
+          logo='🌾'
+          text='Mis parcelas'
+          image={fieldImg}
+          url='/producer/fields/all'
+        />
+        <MenuCard
+          logo='🌱'
+          text='Gestionar parcelas'
+          image={cropImg}
+          url='/producer/fields/manage'
+        />
+        <MenuCard
+          logo='✉️'
+          text='Mensajes'
+          image={messageImg}
+          url='/producer/messages'
+        />
+      </div>
+      </section>
     </>
-  )
-}
+  );
+};
