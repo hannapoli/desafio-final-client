@@ -16,14 +16,16 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
+.ntvs
 *.njsproj
 *.sln
 *.sw?
 
 .env
 
-
+yarn.lock
 
 
 map.txt
+
+.yarn/install-state.gz
