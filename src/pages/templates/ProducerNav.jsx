@@ -53,6 +53,14 @@ export const ProducerNav = () => {
 
                 <li>
                     <NavLink
+                        to='/producer/reports'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Reportes
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
                         to='/producer/messages'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Mensajes

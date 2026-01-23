@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports } from '../pages'
 import {Chats} from '../components/Chats'
 import { PrivateRoutes } from './PrivateRoutes'
 
@@ -26,18 +26,8 @@ export const AppRoutes = () => {
           <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
           <Route path='messages' element={<Chats />} />
+          <Route path='reports' element={<ProducerReports />} />
 
-        </Route>
-
-        <Route
-          path='/distributor'
-          element={
-            <PrivateRoutes allowedRoles={['distribuidor']}>
-              <DistributorLayout />
-            </PrivateRoutes>
-          }>
-          <Route path='dashboard' element={<DistributorDashboard />} />
-          <Route path='messages' element={<Chats />} />
         </Route>
 
         <Route
@@ -73,9 +63,19 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-          <Route path='messages' element={<Chats />} />
-        </Route>
+          <Route path='messages' element={<Chats />} />        </Route>
 
+        <Route
+          path='/distributor'
+          element={
+            <PrivateRoutes allowedRoles={['distribuidor']}>
+              <DistributorLayout />
+            </PrivateRoutes>
+          }>
+          <Route path='dashboard' element={<DistributorDashboard />} />
+          <Route path='messages' element={<Chats />} />
+
+        </Route>
 
 
         {/* Ruta de redirección */}

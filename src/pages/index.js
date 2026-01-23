@@ -18,4 +18,11 @@ export * from './templates/DirectorLayout.jsx';
 export * from './ProducerSeeFields.jsx';
 export * from './ProducerFieldInfo.jsx';
 export * from './ProducerManageFields.jsx';
-export * from './ProducerMessages.jsx';
+export * from './ProducerReports.jsx';
+
+//Páginas Asesor
+
+//Páginas Analista
+
+//Páginas Director
+

@@ -1,0 +1,65 @@
+.report-list {
+    display: grid;
+    grid-template-rows: repeat(1, auto);
+    max-width: 30em;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.report-list-item {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+}
+
+.report-list-item .report-actions {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 0.5em;
+}
+
+.report-list-item .report-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s;
+
+}
+
+.report-list-item .report-actions .edit-btn {
+    color: #fff;
+    background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+
+}
+
+.report-list-item .report-actions .delete-btn {
+    color: #fff;
+    background: linear-gradient(180deg, #b13434 0%, #7a1f1f 100%);
+}
+
+.report-list-item .report-actions .edit-btn:disabled,
+.report-list-item .report-actions .delete-btn:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+    .report-list {
+        grid-template-rows: repeat(2, auto);
+    }
+}
+
+@media (min-width: 992px) {
+    .report-list {
+        grid-template-rows: repeat(3, auto);
+    }
+}
