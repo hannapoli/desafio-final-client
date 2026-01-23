@@ -1,0 +1,116 @@
+/* ===== PRODUCER DASHBOARD CLEAN VERSION ===== */
+
+.dashboard-producer-container {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  background-image: url('/productor.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
+}
+
+.dashboard-producer-hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+
+.dashboard-logo-icon {
+  width: 80px; 
+  margin-bottom: 1rem;
+}
+
+.dashboard-title {
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  color: #ffffff;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+
+.dashboard-description {
+  color: #f0f0f0;
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.651);
+  background: rgba(86, 121, 83, 0.664); 
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+
+/* GRID Y CONTENIDO */
+.dashboard-producer-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4rem;
+}
+
+.dashboard-grid-cards {
+  display: flex;         
+  flex-wrap: wrap;       
+  justify-content: center; 
+  gap: 25px;
+  width: min(1200px, 95%);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+}
+
+/* envolver la MenuCard  */
+.producer-card-item {
+  width: 100%;
+  max-width: 320px; 
+  transition: transform 0.3s ease;
+}
+
+.producer-card-item:hover {
+  transform: translateY(-8px);
+}
+
+/* BOTÓN NUEVO */
+.dashboard-btn-new {
+  margin-top: 2.5rem;
+  background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+}
+
+.dashboard-btn-new:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  filter: brightness(1.1);
+}
+
+@media (min-width: 768px) {
+  .producer-card-item {
+    flex: 0 1 calc(45% - 25px); 
+    max-width: 340px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .producer-card-item {
+    flex: 0 1 calc(30% - 25px);
+    max-width: 350px;
+  }
+}

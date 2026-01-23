@@ -1,3 +1,5 @@
+import { AppLayout } from "../pages/templates/AppLayout"
+
 import { Route, Routes, Navigate } from 'react-router'
 import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
 import { PrivateRoutes } from './PrivateRoutes'
@@ -6,6 +8,7 @@ export const AppRoutes = () => {
   return (
     <>
       <Routes>
+        <Route path='/' element={<AppLayout />}> {/* <-- Nuevo contenedor padre */}
         {/* Rutas públicas */}
         <Route path='/' element={<HomePage />} />
         <Route path='/auth/register' element={<RegisterPage />} />
@@ -78,6 +81,7 @@ export const AppRoutes = () => {
 
         {/* Ruta de redirección */}
         <Route path='/*' element={<Navigate to={'/'} />} />
+          </Route> {/* <-- Cierra el contenedor padre */}
       </Routes>
     </>
   )

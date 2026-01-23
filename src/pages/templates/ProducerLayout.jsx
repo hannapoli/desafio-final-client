@@ -8,7 +8,7 @@ export const ProducerLayout = () => {
             <Header>
                 <ProducerNav />
             </Header>
-            <main>
+            <main className='producer-main'>
                 <Outlet />
             </main>
         </>

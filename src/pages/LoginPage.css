@@ -282,3 +282,52 @@
     font-size: 80px;
   }
 }
+
+/* ================= MODO OSCURO AUTOMÁTICO ================= */
+
+@media (prefers-color-scheme: dark) {
+  /* 1. Oscurecemos la tarjeta de cristal */
+  .login-glass {
+    background: rgba(30, 30, 30, 0.8) !important; /* Fondo gris muy oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* 2. El título y los textos generales pasan a blanco o verde claro */
+  .login-title, 
+  .login-forgot {
+    color: #81c784 !important; /* Un verde más claro para que resalte en negro */
+  }
+
+  .login-forgot:hover {
+    color: #a5d6a7 !important;
+  }
+
+  .login-register {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  /* 3. Inputs: Fondo oscuro y letra blanca */
+  .email-input,
+  .password-input {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Cambiamos el color del texto de sugerencia (placeholder) */
+  .email-input::placeholder,
+  .password-input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  /* 4. Botón de Google: Lo ponemos en tono oscuro para que no desentone */
+  .login-google {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .login-google:hover {
+    background-color: #444444 !important;
+  }
+}
