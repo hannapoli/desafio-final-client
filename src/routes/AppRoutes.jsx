@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router'
 import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
+import {Chats} from '../components/Chats'
 import { PrivateRoutes } from './PrivateRoutes'
 
 export const AppRoutes = () => {
@@ -24,7 +25,7 @@ export const AppRoutes = () => {
           <Route path='fields/all' element={<ProducerSeeFields />} />
           <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
-          <Route path='messages' element={<ProducerMessages />} />
+          <Route path='messages' element={<Chats />} />
 
         </Route>
 
@@ -36,7 +37,7 @@ export const AppRoutes = () => {
             </PrivateRoutes>
           }>
           <Route path='dashboard' element={<DistributorDashboard />} />
-
+          <Route path='messages' element={<Chats />} />
         </Route>
 
         <Route
@@ -48,6 +49,7 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<ConsultantDashboard />} />
+          <Route path='messages' element={<Chats />} />
         </Route>
 
         <Route
@@ -59,7 +61,7 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<AnalystDashboard />} />
-
+          <Route path='messages' element={<Chats />} />
         </Route>
 
         <Route
@@ -71,7 +73,7 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-
+          <Route path='messages' element={<Chats />} />
         </Route>
 
 
