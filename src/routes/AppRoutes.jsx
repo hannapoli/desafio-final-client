@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports } from '../pages'
 import { PrivateRoutes } from './PrivateRoutes'
 
 export const AppRoutes = () => {
@@ -24,18 +24,7 @@ export const AppRoutes = () => {
           <Route path='fields/all' element={<ProducerSeeFields />} />
           <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
-          <Route path='messages' element={<ProducerMessages />} />
-
-        </Route>
-
-        <Route
-          path='/distributor'
-          element={
-            <PrivateRoutes allowedRoles={['distribuidor']}>
-              <DistributorLayout />
-            </PrivateRoutes>
-          }>
-          <Route path='dashboard' element={<DistributorDashboard />} />
+          <Route path='reports' element={<ProducerReports />} />
 
         </Route>
 
@@ -71,9 +60,17 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-
         </Route>
 
+        <Route
+          path='/distributor'
+          element={
+            <PrivateRoutes allowedRoles={['distribuidor']}>
+              <DistributorLayout />
+            </PrivateRoutes>
+          }>
+          <Route path='dashboard' element={<DistributorDashboard />} />
+        </Route>
 
 
         {/* Ruta de redirección */}

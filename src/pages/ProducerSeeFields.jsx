@@ -34,7 +34,11 @@ export const ProducerSeeFields = () => {
         setParcels(response.data || []);
       } catch (err) {
         setParcels([]);
-        setError('Error al obtener parcelas');
+        if (err.message?.includes('403') || err.message?.includes('permiso')) {
+          setError('No tienes permiso para ver estas parcelas');
+        } else {
+          setError('Error al obtener parcelas');
+        }
       }
     };
 

@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
                         null,
                         token
                     );
-                    // console.log({ userData });
+                    console.log({ userData });
 
                     const newUser = {
                         uid: firebaseUser.uid,
