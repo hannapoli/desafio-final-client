@@ -21,7 +21,6 @@ export const ProducerFieldInfo = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-<<<<<<< HEAD
 
   /////////////////////////////////
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL;
@@ -63,20 +62,6 @@ export const ProducerFieldInfo = () => {
       }
     ]
     /////////////////////////////////
-=======
-
-  //========CLOUDINARY VIEWER PARCEL========//
-
-  const imageUrl = "https://res.cloudinary.com/dbi5thf23/image/upload/v1769010767/bloem_field_sunrise_4k_e3mlls.jpg"
-  // Pendiente fetch para traer la imagen
-  const points = {
-    sky: { x: 2045, y: 513 },
-    soil: { x: 2047, y: 1523 },
-    crop: { x: 1024, y: 900 },
-  };
-
-  //========CLOUDINARY VIEWER PARCEL========//
->>>>>>> 01893c9 (ADD: views for reports management by the producer.)
 
   useEffect(() => {
     const getParcel = async () => {
@@ -222,7 +207,7 @@ export const ProducerFieldInfo = () => {
           onFileChange={handleFileChange}
           onSubmit={handleSubmitReport}
           submitLoading={submitLoading}
-          submitLabel='Guardar Cambios'
+          submitLabel='Crear Reporte'
           disabledFields={{ email_creator: true }}
         />
       </article>

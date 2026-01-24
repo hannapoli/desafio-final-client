@@ -1,10 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router'
-<<<<<<< HEAD
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerMessages } from '../pages'
-import {Chats} from '../components/Chats'
-=======
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports } from '../pages'
->>>>>>> 01893c9 (ADD: views for reports management by the producer.)
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports } from '../pages'
+import { Chats } from '../components/Chats'
+
 import { PrivateRoutes } from './PrivateRoutes'
 
 export const AppRoutes = () => {
@@ -29,24 +26,9 @@ export const AppRoutes = () => {
           <Route path='fields/all' element={<ProducerSeeFields />} />
           <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
-<<<<<<< HEAD
           <Route path='messages' element={<Chats />} />
-
-        </Route>
-
-        <Route
-          path='/distributor'
-          element={
-            <PrivateRoutes allowedRoles={['distribuidor']}>
-              <DistributorLayout />
-            </PrivateRoutes>
-          }>
-          <Route path='dashboard' element={<DistributorDashboard />} />
-          <Route path='messages' element={<Chats />} />
-=======
           <Route path='reports' element={<ProducerReports />} />
 
->>>>>>> 01893c9 (ADD: views for reports management by the producer.)
         </Route>
 
         <Route
@@ -82,11 +64,11 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-<<<<<<< HEAD
+
           <Route path='messages' element={<Chats />} />
-=======
->>>>>>> 01893c9 (ADD: views for reports management by the producer.)
+          <Route path='reports' element={<DirectorReports />} />
         </Route>
+
 
         <Route
           path='/distributor'
@@ -96,6 +78,8 @@ export const AppRoutes = () => {
             </PrivateRoutes>
           }>
           <Route path='dashboard' element={<DistributorDashboard />} />
+          <Route path='messages' element={<Chats />} />
+
         </Route>
 
 

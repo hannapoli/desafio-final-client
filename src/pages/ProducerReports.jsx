@@ -115,14 +115,20 @@ export const ProducerReports = () => {
     }
   };
 
+  const sortedReports = [...reports].sort((a, b) => {
+    if (!a.created_at || !b.created_at) return 0;
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
   return (
     <section>
       <h1 className='centeredText'>Mis Reportes</h1>
       {loading && <p>Cargando reportes...</p>}
       {error && <p className='errorMessage'>{error}</p>}
       <ul className='report-list'>
-        {reports.map((report) => (
+        {sortedReports.map((report) => (
           <li className='report-list-item' key={report.uid_report}>
+            <div>Parcela: {report.uid_parcel}</div>
             <div>Para: {report.email_receiver}</div>
             <div>Mensaje: {report.content_message}</div>
             {report.attached && (

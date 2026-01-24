@@ -31,9 +31,9 @@ export const DirectorNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
-                        to='/director/producers'
+                        to='/director/reports'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mis productores
+                        Reportes
                     </NavLink>
                 </li>
                
