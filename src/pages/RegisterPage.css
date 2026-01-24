@@ -184,6 +184,12 @@
   margin-bottom: 8px;
 }
 
+.text-link {
+  color: #2f7d3a;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* ==== tablet 600px en adelante (Sincronizado con Login) ====*/
 @media (min-width: 600px) {
   .register-container {
