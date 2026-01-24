@@ -12,8 +12,6 @@ export const  ClickablePolygon = ({ positions })  => {
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
 
-
-
   const map = useMap();
 
   // CÁLCULO DE LA CAPA ACTIVA (Fuera de cualquier función para que el render la vea)
@@ -48,18 +46,11 @@ console.log("Bounds:", healthData?.image_bounds);
         }}
       >
       <Popup>
-        <button onClick={()=>deleteParcel(p)}>Eliminar</button>
-        <button onClick={()=>overLay(p)}>Detalles</button>
-        {healthData && (
-                <select 
-                  value={selectedLayerType} 
-                  onChange={(e) => setSelectedLayerType(e.target.value)}
-                >
-                  {healthData.layers.map(l => (
-                    <option key={l.type} value={l.type}>{l.type}</option>
-                  ))}
-                </select>
-              )}
+        {/* <button onClick={()=>deleteParcel(p)}>Eliminar</button>
+        <button onClick={()=>overLay(p)}>Detalles</button> */}
+        <p>Detalle del campo:</p>
+        <p>Nombre del campo</p>
+        <p>Temperatura: </p>
       </Popup>
       {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay
@@ -70,6 +61,21 @@ console.log("Bounds:", healthData?.image_bounds);
           zIndex={500}
         />
       )}
+      {healthData && (
+        <div style={{
+                      position: 'absolute', bottom: '160px', right: '20px', zIndex: 1001,
+                      padding: '10px', borderRadius: '5px'
+                    }}>
+                <select 
+                  value={selectedLayerType} 
+                  onChange={(e) => setSelectedLayerType(e.target.value)}
+                >
+                  {healthData.layers.map(l => (
+                    <option key={l.type} value={l.type}>{l.type}</option>
+                  ))}
+                </select>
+      </div>
+              )}
       {activeLayer && <Legend data={activeLayer.legend} />}
 
     </Polygon>))}

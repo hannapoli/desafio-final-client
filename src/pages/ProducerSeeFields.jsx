@@ -3,13 +3,14 @@ import { Link } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
+import {Map} from '../components/Map'
 
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();
   const [parcels, setParcels] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+//  console.log('antes del useeffet')
   useEffect(() => {
     const getParcels = async () => {
       if (!user?.uid) return;
@@ -22,7 +23,7 @@ export const ProducerSeeFields = () => {
         }
         
         const token = await firebaseUser.getIdToken();
-        
+        console.log('llamada')
         const response = await fetchData(
           `${backendUrl}/producer/dashboard/${user.uid}`,
           'GET',
@@ -30,7 +31,7 @@ export const ProducerSeeFields = () => {
           token
         );
         
-        // console.log('Datos de todas las parcelas:', response);
+        console.log('Datos de todas las parcelas:', response);
         setParcels(response.data || []);
       } catch (err) {
         setParcels([]);
@@ -42,10 +43,12 @@ export const ProducerSeeFields = () => {
   }, [user, backendUrl, fetchData]);
 
   return (
-    <section className='flexContainer CenteredContent'>
-      <h1 className='centeredText'>Mis Parcelas</h1>
-      {loading && <p>Cargando parcelas...</p>}
+    <>
+          {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
+    {/* <section className='flexContainer CenteredContent'>
+      <h1 className='centeredText'>Mis Parcelas</h1>
+
       {parcels.length === 0 ? (
         <p>No tienes parcelas registradas.</p>
       ) : (
@@ -62,7 +65,9 @@ export const ProducerSeeFields = () => {
             </Link>
           ))}
         </article>
-      )}
-    </section>
+      )}   
+    </section> */}
+    {!loading && <Map parcels= {parcels}/>}
+    </>
   );
 }
