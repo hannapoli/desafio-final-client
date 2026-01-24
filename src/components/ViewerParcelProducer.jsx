@@ -1,68 +1,61 @@
-// IMPORTACIONES DE TERCEROS
 import "aframe";
 import { useEffect, useState } from "react";
-
-// IMPORTACIONES PROPIAS
 import "./ViewerParcelProducer.css";
-import { positionFor } from "../helpers/viewerParcelHelper";
 
-export const ViewerParcelProducer = ({ imageUrl, points }) => {
-
-    // Estados
+export const ViewerParcelProducer = ({ imageUrl, points, correctionDegrees = 10 }) => { // CorrectionDegrees para corregir la rotación inicial y que los puntos coincidan
     const [activeHotspot, setActiveHotspot] = useState(null);
 
-    useEffect(() => {
-        const scene = document.querySelector("a-scene");
-
-        const handleClick = (event) => {
-            const hotspot = event.target.closest(".hotspot");
-
-            const id = hotspot.getAttribute("data-id");
-            
-            setActiveHotspot(id);
-        };
-
-        scene.addEventListener("click", handleClick); // Evento secundario
-    }, []); // Cada vez que se carga la página
-
     return (
-        <section className="viewer-container">
+        <article className="viewer-container">
             <div className="viewer-box">
-                <a-scene embedded>
+
+                <a-scene embedded vr-mode-ui="enabled: false">
+
+                    {/* Cámara centrada */}
+                    <a-entity id="rig" position="0 0 0">
+                        <a-camera
+                            position="0 0 0"
+                            look-controls="reverseMouseDrag: true"
+                        ></a-camera>
+                    </a-entity>
+
+                    {/* Cursor + Raycaster */}
                     <a-entity
                         cursor="rayOrigin: mouse"
-                        raycaster="objects: [data-raycastable]"
+                        raycaster="objects: .hotspot"
                     ></a-entity>
 
+                    {/* Imagen 360 */}
                     <a-sky src={imageUrl}></a-sky>
-                    
-                    {points &&
-                        Object.entries(points).map(([id, point]) => (
-                            <a-sphere
+
+                    {/* Contenedor que rota todos los puntos */}
+                    <a-entity rotation={`0 ${correctionDegrees} 0`}>
+                        {points?.map(({ id, position }) => (
+                            <a-image
                                 key={id}
-                                className={`hotspot hotspot--${id}`}
-                                data-raycastable
                                 data-id={id}
-                                radius="0.25"
-                                position={positionFor(point)}
-                            ></a-sphere>
+                                class="hotspot"
+                                src="/logo.png"
+                                width="1.5"
+                                height="1.5"
+                                position={position}
+                                onClick={() => setActiveHotspot(id)}
+                            ></a-image>
                         ))}
+                    </a-entity>
+
                 </a-scene>
 
+                {/* Panel lateral */}
                 {activeHotspot && (
                     <div className="viewer-panel">
                         <h3>{activeHotspot}</h3>
-                        <p>Pendiente información a recibir</p>
-
-                        <button
-                            onClick={() => setActiveHotspot(null)}
-                            className="viewer-close-btn"
-                        >
-                            Cerrar
-                        </button>
+                        <p>Información del punto detectado por IA</p>
+                        <button onClick={() => setActiveHotspot(null)}>Cerrar</button>
                     </div>
                 )}
+
             </div>
-        </section>
+        </article>
     );
 };

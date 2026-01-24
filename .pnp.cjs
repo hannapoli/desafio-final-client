@@ -46,7 +46,10 @@ const RAW_RUNTIME_STATE =
           ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"],\
           ["react-leaflet-draw", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0"],\
           ["react-router", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.12.0"],\
+<<<<<<< HEAD
           ["socket.io-client", "npm:4.8.3"],\
+=======
+>>>>>>> visor-360-2
           ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"],\
           ["wellknown", "npm:0.5.0"]\
         ],\
@@ -2268,6 +2271,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["@socket.io/component-emitter", [\
       ["npm:3.1.2", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/@socket.io-component-emitter-npm-3.1.2-bc4133d33f-10c0.zip/node_modules/@socket.io/component-emitter/",\
@@ -2277,6 +2281,8 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+=======
+>>>>>>> visor-360-2
     ["@szmarczak/http-timer", [\
       ["npm:1.1.2", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/@szmarczak-http-timer-npm-1.1.2-ea82ca2d55-10c0.zip/node_modules/@szmarczak/http-timer/",\
@@ -2923,7 +2929,10 @@ const RAW_RUNTIME_STATE =
           ["react-leaflet", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:5.0.0"],\
           ["react-leaflet-draw", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:0.21.0"],\
           ["react-router", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.12.0"],\
+<<<<<<< HEAD
           ["socket.io-client", "npm:4.8.3"],\
+=======
+>>>>>>> visor-360-2
           ["vite", "virtual:a0fe853e212d4f831fd03548e456b0bf94b354ce7333390a7aa91f6746316486d26c51665fbd7f85a5106495cdcdf4aa1eea829f38c36eb2d6a3c794f09660a1#npm:7.3.1"],\
           ["wellknown", "npm:0.5.0"]\
         ],\
@@ -2995,6 +3004,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["engine.io-client", [\
       ["npm:6.6.4", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/engine.io-client-npm-6.6.4-711a25ab9a-10c0.zip/node_modules/engine.io-client/",\
@@ -3018,6 +3028,8 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+=======
+>>>>>>> visor-360-2
     ["env-paths", [\
       ["npm:2.2.1", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/env-paths-npm-2.2.1-7c7577428c-10c0.zip/node_modules/env-paths/",\
@@ -4908,6 +4920,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["socket.io-client", [\
       ["npm:4.8.3", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/socket.io-client-npm-4.8.3-6800638250-10c0.zip/node_modules/socket.io-client/",\
@@ -4932,6 +4945,8 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+=======
+>>>>>>> visor-360-2
     ["socks", [\
       ["npm:2.8.7", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/socks-npm-2.8.7-d1d20aae19-10c0.zip/node_modules/socks/",\
@@ -5364,6 +5379,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["ws", [\
       ["npm:8.18.3", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/ws-npm-8.18.3-665d39209d-10c0.zip/node_modules/ws/",\
@@ -5390,6 +5406,8 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+=======
+>>>>>>> visor-360-2
     ["xhr", [\
       ["npm:2.6.0", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/xhr-npm-2.6.0-c4a4d64db8-10c0.zip/node_modules/xhr/",\
@@ -5432,6 +5450,7 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+<<<<<<< HEAD
     ["xmlhttprequest-ssl", [\
       ["npm:2.1.2", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/xmlhttprequest-ssl-npm-2.1.2-7d8e3817bc-10c0.zip/node_modules/xmlhttprequest-ssl/",\
@@ -5441,6 +5460,8 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+=======
+>>>>>>> visor-360-2
     ["xtend", [\
       ["npm:4.0.2", {\
         "packageLocation": "../../../../../../AppData/Local/Yarn/Berry/cache/xtend-npm-4.0.2-7f2375736e-10c0.zip/node_modules/xtend/",\
