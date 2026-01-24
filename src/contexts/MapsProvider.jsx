@@ -1,55 +1,65 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { MapsContext} from './MapsContext'
-
 
 export const MapsProvider = ({ children }) => {
     const [polygons, setPolygons] = useState([])
     const [center, setCenter] = useState([-37.21619, -72.60537 ])
     const [geoPng, setGeoPng] = useState('')
 
+  const havePolygons = useCallback((respuesta) => {
+    if (!respuesta || !respuesta.length) return;
 
-    const havePolygons = (respuesta) => {
-    //     setPolygons(
-    //         respuesta.data
-    //             .map(parcel => {
-    //                 try {
-    //                     const coords = JSON.parse(parcel.coordinates_parcel);
-    //                     // Validar que sea array de arrays y no contenga null
-    //                     if (Array.isArray(coords) && coords.every(pair => Array.isArray(pair) && pair.length === 2 && pair.every(Number.isFinite))) {
-    //                         return coords;
-    //                     }
-    //                 } catch {
-    //                     return null;
-    //                 }
-    //                 return null;
-    //             })
-    //             .filter(Boolean)
-    //     )
-    // }
-    setPolygons(respuesta.data
-        .map(parcel => {
-            try {
-                const coords = typeof parcel.coordinates_parcel === 'string' 
-                    ? JSON.parse(parcel.coordinates_parcel) 
-                    : parcel.coordinates_parcel;
+    const parsed = respuesta
+      .map(parcel => {
+        try {
+          const coords =
+            typeof parcel.coordinates_parcel === 'string'
+              ? JSON.parse(parcel.coordinates_parcel)
+              : parcel.coordinates_parcel;
 
-                // Validación robusta
-                const isValid = Array.isArray(coords) && 
-                    coords.every(p => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite));
+          const isValid =
+            Array.isArray(coords) &&
+            coords.every(
+              p => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite)
+            );
 
-                if (!isValid) return null;
+          return isValid ? coords : null;
+        } catch (e) {
+          console.log('Error parseando parcela', parcel.id, e);
+          return null;
+        }
+      })
+      .filter(Boolean);
 
-                // IMPORTANTE: Si tu API viene en [Lng, Lat], inviértelos para Leaflet:
-                // return coords.map(([lng, lat]) => [lat, lng]);
+    setPolygons(parsed); // 🚀 Ya no hay confusión, solo actualiza el estado
+  }, []);
+
+//     const havePolygons = (respuesta) => {
+//     console.log({respuesta}, 'desde haveopolygons provider')
+//     setPolygons(respuesta
+//         .map(parcel => {
+//             try {
+//                 const coords = typeof parcel.coordinates_parcel === 'string' 
+//                     ? JSON.parse(parcel.coordinates_parcel) 
+//                     : parcel.coordinates_parcel;
+
+              
+//                 const isValid = Array.isArray(coords) && 
+//                     coords.every(p => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite));
+
+//                 if (!isValid) return null;
+
                 
-                return coords; 
-            } catch (e) {
-                console.error("Error parseando parcela:", parcel.id, e);
-                return null;
-            }
-        })
-        .filter(Boolean) // Elimina los null
-)}
+//                 return coords; 
+//             } catch (error) {
+//                 console.log("Error parseando parcela:", parcel.id, error);
+//                 return null;
+//             }
+//         })
+//         .filter(Boolean) // Elimina los null
+// )
+// console.log({polygons})
+// }
 
     const addParcel = (polygono) => {
         setPolygons([...polygons, polygono])

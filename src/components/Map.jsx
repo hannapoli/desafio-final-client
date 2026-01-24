@@ -7,25 +7,21 @@ import { userMap } from '../hooks/userMap';
 import { MapsContext } from '../contexts/MapsContext';
 
 
-export const Map = () => {
+export const Map = ({parcels}) => {
+  console.log({parcels}, 'desde map')
 
-   const {simulacionLlamadaBack} = userMap()
   const {havePolygons} = useContext(MapsContext)
-   
+  
 
-  useEffect(() => {
-        const respuesta = simulacionLlamadaBack()
-        // Parsear y validar polígonos, asegurando formato [lat, lng]
-        havePolygons(respuesta)
-    }, [])
-
+ 
+  useEffect(() => { 
+    havePolygons(parcels)
+  }, [parcels, havePolygons])
 
   return (
     <div>
-        {/* <MapView geojson={geojson}/> */}
-        <MapView 
-        //  bboxPolygon={bboxPolygon}
-         />
+        
+        <MapView/>
        
     </div>
   )

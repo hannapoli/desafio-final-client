@@ -35,7 +35,7 @@ export const ViewerParcelProducer = ({ imageUrl, points }) => {
                     ></a-entity>
 
                     <a-sky src={imageUrl}></a-sky>
-
+                    
                     {points &&
                         Object.entries(points).map(([id, point]) => (
                             <a-sphere
