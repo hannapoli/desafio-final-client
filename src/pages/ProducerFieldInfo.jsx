@@ -48,7 +48,7 @@ export const ProducerFieldInfo = () => {
     const points = [
       {
         id: "Cielo",
-        position: "-0.054 5.0 -8.66"
+        position: "-0.054 5.0 8.66"
 
       },
       {
@@ -57,7 +57,7 @@ export const ProducerFieldInfo = () => {
       },
       {
         id: "Cultivo",
-        position: "7.12 -0.054 7.022"
+        position: "-7.12 -0.054 -7.022"
       }
     ]
     /////////////////////////////////

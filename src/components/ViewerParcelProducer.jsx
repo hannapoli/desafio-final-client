@@ -2,56 +2,59 @@ import "aframe";
 import { useEffect, useState } from "react";
 import "./ViewerParcelProducer.css";
 
-export const ViewerParcelProducer = ({ imageUrl, points }) => {
-    {/*Pendiente como hacer el tema de los puntos*/ }
-
+export const ViewerParcelProducer = ({ imageUrl, points, correctionDegrees = 10 }) => { // CorrectionDegrees para corregir la rotación inicial y que los puntos coincidan
     const [activeHotspot, setActiveHotspot] = useState(null);
-
-    useEffect(() => {
-        const scene = document.querySelector("a-scene");
-
-        const handleClick = (event) => {
-            const hotspot = event.target.closest(".hotspot");
-
-            const id = hotspot.getAttribute("data-id");
-
-            setActiveHotspot(id);
-        };
-
-        scene.addEventListener("click", handleClick); // Evento secundario
-    }, []);
 
     return (
         <article className="viewer-container">
             <div className="viewer-box">
-                <a-scene embedded> {/*Para que la escena no ocupe toda la pantalla*/}
-                    <a-entity cursor="rayOrigin: mouse" raycaster="objects: [data-raycastable]"></a-entity> {/*Cursor: Convierte el mouse en un puntero 3D / Raycaster: Para detectar solo objetos con el atributo data-raycastable (hotspot) */}
 
-                    <a-sky src={imageUrl}></a-sky> {/*Para crear una esfera gigante alrededor de la cámara con la imagen pasada por Props*/}
-                    {/*Si hay puntos - Marcarlos en el mapa*/}
-                    {points && (
-                        points.map(({ id, position }) => 
-                        <a-image
-                            key={id}
-                            data-id={id}
-                            data-raycastable
-                            src="/logo.png"
-                            className="hotspot"
-                            width="1.5"
-                            height="1.5"
-                            position={position}
-                        ></a-image>
-                    ))}
+                <a-scene embedded vr-mode-ui="enabled: false">
+
+                    {/* Cámara centrada */}
+                    <a-entity id="rig" position="0 0 0">
+                        <a-camera
+                            position="0 0 0"
+                            look-controls="reverseMouseDrag: true"
+                        ></a-camera>
+                    </a-entity>
+
+                    {/* Cursor + Raycaster */}
+                    <a-entity
+                        cursor="rayOrigin: mouse"
+                        raycaster="objects: .hotspot"
+                    ></a-entity>
+
+                    {/* Imagen 360 */}
+                    <a-sky src={imageUrl}></a-sky>
+
+                    {/* Contenedor que rota todos los puntos */}
+                    <a-entity rotation={`0 ${correctionDegrees} 0`}>
+                        {points?.map(({ id, position }) => (
+                            <a-image
+                                key={id}
+                                data-id={id}
+                                class="hotspot"
+                                src="/logo.png"
+                                width="1.5"
+                                height="1.5"
+                                position={position}
+                                onClick={() => setActiveHotspot(id)}
+                            ></a-image>
+                        ))}
+                    </a-entity>
+
                 </a-scene>
-                {/*Si hay hotspot seleccionado, muestra la data*/}
+
+                {/* Panel lateral */}
                 {activeHotspot && (
                     <div className="viewer-panel">
                         <h3>{activeHotspot}</h3>
-                        <p>Pendiente información a recibir</p>
-
+                        <p>Información del punto detectado por IA</p>
                         <button onClick={() => setActiveHotspot(null)}>Cerrar</button>
                     </div>
                 )}
+
             </div>
         </article>
     );
