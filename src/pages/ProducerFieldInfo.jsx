@@ -20,15 +20,46 @@ export const ProducerFieldInfo = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
   /////////////////////////////////
+  const infoParcelUrl = import.meta.env.VITE_API_DATA_URL;
+  const [dataPhoto, setDataPhoto] = useState(null);
 
-    const imageUrl = "https://res.cloudinary.com/dbi5thf23/image/upload/v1769010767/bloem_field_sunrise_4k_e3mlls.jpg"
-  // Pendiente fetch para traer la imagen
-  const points = { 
-    sky: { x: 2045, y: 513 }, 
-    soil: { x: 2047, y: 1523 }, 
-    crop: { x: 1024, y: 900 }, };
+    // Para obtener la data de la API de Data
+    useEffect(() => {
 
+      const getDataPhoto = async () => {
+        try {
+          const response = await fetchData(
+            `${infoParcelUrl}/analyze?id_parcela=123`, /////////////// PENDIENTE PREGUNTAR POR EL TEMA DEL ID Y EL TEMA DEL ADJUNTO DE LA FOTO, YO NO LO PUEDO PASAR
+          )
+
+          setDataPhoto(response.data || null);
+        } catch (err) {
+          setDataPhoto(null);
+          setError("Error al obtener la información de la parcela")
+        }
+      }
+
+      getDataPhoto();
+
+    }, [user, infoParcelUrl]);
+
+    const points = [
+      {
+        id: "Cielo",
+        position: "-0.054 5.0 -8.66"
+
+      },
+      {
+        id: "Suelo",
+        position: "-4.959 -5.197 -6.957"
+      },
+      {
+        id: "Cultivo",
+        position: "7.12 -0.054 7.022"
+      }
+    ]
     /////////////////////////////////
 
   useEffect(() => {
@@ -151,13 +182,15 @@ export const ProducerFieldInfo = () => {
       {error && <p>Error al cargar la parcela: {error}</p>}
 
       {parcel && (
+        <>
         <article >
           <h2>Detalles de la Parcela</h2>
           <pre>{JSON.stringify(parcel, null, 2)}</pre>
         </article>
-      )}
-      <ViewerParcelProducer imageUrl={imageUrl} points={points} />
 
+        <ViewerParcelProducer imageUrl={parcel.photo_url} points={points}/> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
+        </>
+      )}
       <article className='flexColumn centeredContent'>
         <h2>Crear Reporte</h2>
 

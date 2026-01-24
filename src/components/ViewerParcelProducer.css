@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-/* Caja que envuelve el <a-scene> */
+/* Para que la escena no ocupe toda la pantalla */
 .viewer-box {
   width: 600px;
   height: 400px;
@@ -24,34 +24,6 @@
   background: rgba(255, 255, 255, 0.95);
   padding: 1rem;
   border-top: 1px solid #ddd;
-}
-
-/*Botón de cerrar*/
-.viewer-close-btn {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  background: #333;
-  color: white;
-  cursor: pointer;
-}
-
-.hotspot {
-  animation: pulse 2s infinite;
-  cursor: pointer;
-}
-
-.hotspot--sky {
-  color: #ffcc00;
-}
-
-.hotspot--soil {
-  color: #00aaff;
-}
-
-.hotspot--crop {
-  color: #4caf50;
 }
 
 @keyframes pulse {
