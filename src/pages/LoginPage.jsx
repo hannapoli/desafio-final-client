@@ -109,7 +109,7 @@ export const LoginPage = () => {
             <div className="input-container input-group flexColumn">
               <label htmlFor="email"></label>
               <input
-                class="email-input"
+                className="email-input"
                 type="email"
                 name="email"
                 id="email"
@@ -123,7 +123,7 @@ export const LoginPage = () => {
             <div className="input-container input-group flexColumn">
               <label htmlFor="password"></label>
               <input
-                class="password-input"
+                className="password-input"
                 type="password"
                 name="password"
                 id="password"

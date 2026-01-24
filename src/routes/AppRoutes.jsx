@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports } from '../pages'
 import {Chats} from '../components/Chats'
 import { PrivateRoutes } from './PrivateRoutes'
 
@@ -63,7 +63,10 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-          <Route path='messages' element={<Chats />} />        </Route>
+          <Route path='messages' element={<Chats />} />
+          <Route path='reports' element={<DirectorReports />} />
+          </Route>
+          
 
         <Route
           path='/distributor'

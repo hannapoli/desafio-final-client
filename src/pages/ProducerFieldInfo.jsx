@@ -176,7 +176,7 @@ export const ProducerFieldInfo = () => {
           onFileChange={handleFileChange}
           onSubmit={handleSubmitReport}
           submitLoading={submitLoading}
-          submitLabel='Guardar Cambios'
+          submitLabel='Crear Reporte'
           disabledFields={{ email_creator: true }}
         />
       </article>
