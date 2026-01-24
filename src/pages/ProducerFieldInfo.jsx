@@ -3,7 +3,8 @@ import { useParams } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
-import { ViewerParcelProducer } from "../components/ViewerParcelProducer"
+import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
+import { Report } from '../components/Report';
 
 export const ProducerFieldInfo = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export const ProducerFieldInfo = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+<<<<<<< HEAD
 
   /////////////////////////////////
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL;
@@ -61,6 +63,20 @@ export const ProducerFieldInfo = () => {
       }
     ]
     /////////////////////////////////
+=======
+
+  //========CLOUDINARY VIEWER PARCEL========//
+
+  const imageUrl = "https://res.cloudinary.com/dbi5thf23/image/upload/v1769010767/bloem_field_sunrise_4k_e3mlls.jpg"
+  // Pendiente fetch para traer la imagen
+  const points = {
+    sky: { x: 2045, y: 513 },
+    soil: { x: 2047, y: 1523 },
+    crop: { x: 1024, y: 900 },
+  };
+
+  //========CLOUDINARY VIEWER PARCEL========//
+>>>>>>> 01893c9 (ADD: views for reports management by the producer.)
 
   useEffect(() => {
     const getParcel = async () => {
@@ -85,7 +101,11 @@ export const ProducerFieldInfo = () => {
         // console.log('Datos de la parcela elegida:', response);
       } catch (err) {
         setParcel(null);
-        setError('Error al obtener la parcela');
+        if (err.message?.includes('403') || err.message?.includes('permiso')) {
+          setError('No tienes permiso para ver esta parcela');
+        } else {
+          setError('Error al obtener la parcela');
+        }
       }
     };
 
@@ -140,7 +160,7 @@ export const ProducerFieldInfo = () => {
       }
 
       const response = await fetch(
-        `${backendUrl}/producer/reports/create/${user.email}`,
+        `${backendUrl}/producer/reports/create/${user.email}/${id}`,
         {
           method: 'POST',
           headers: {
@@ -197,63 +217,14 @@ export const ProducerFieldInfo = () => {
         {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
         {submitError && <p className='errorMessage'>{submitError}</p>}
 
-        <form onSubmit={handleSubmitReport} className='flexColumn'>
-          <div className='flexColumn'>
-            <label htmlFor='email_creator'>Email de remitente:</label>
-            <input
-              type='email'
-              name='email_creator'
-              id='email_creator'
-              value={reportData.email_creator}
-              onChange={handleInputChange}
-              readOnly
-              noValidate
-            />
-          </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='email_receiver'>Email de receptor:</label>
-            <input
-              type='email'
-              name='email_receiver'
-              id='email_receiver'
-              placeholder='Email del receptor'
-              value={reportData.email_receiver}
-              onChange={handleInputChange}
-              noValidate
-            />
-          </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='content_message'>Contenido del Mensaje:</label>
-            <textarea
-              name='content_message'
-              id='content_message'
-              placeholder='Escribe el contenido del reporte...'
-              value={reportData.content_message}
-              onChange={handleInputChange}
-              rows={6}
-              noValidate
-            />
-          </div>
-
-          <div className='flexColumn'>
-            <label htmlFor='attached'>Archivo Adjunto (opcional):</label>
-            <input
-              type='file'
-              name='attached'
-              id='attached'
-              onChange={handleFileChange}
-            />
-          </div>
-
-          <button
-            type='submit'
-            disabled={submitLoading}
-          >
-            {submitLoading ? 'Enviando...' : 'Crear Reporte'}
-          </button>
-        </form>
+        <Report reportData={reportData}
+          onChange={handleInputChange}
+          onFileChange={handleFileChange}
+          onSubmit={handleSubmitReport}
+          submitLoading={submitLoading}
+          submitLabel='Guardar Cambios'
+          disabledFields={{ email_creator: true }}
+        />
       </article>
     </section>
   );
