@@ -250,3 +250,54 @@
   }
 }
 
+/* ================= MODO OSCURO AUTOMÁTICO (REGISTER) ================= */
+
+@media (prefers-color-scheme: dark) {
+  /* 1. Oscurecemos la tarjeta glass */
+  .glass {
+    background: rgba(30, 30, 30, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* 2. Textos principales y títulos */
+  .login-title {
+    color: #81c784 !important; /* Verde claro para resaltar */
+  }
+
+  .link-login {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .link-login a {
+    color: #81c784 !important;
+  }
+
+  /* 3. Inputs y Select: Fondo oscuro y letra blanca */
+  .register-input,
+  .register-select select {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Color del placeholder para los inputs */
+  .register-input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  /* Ajuste para el foco del input */
+  .register-input:focus {
+    border-color: #81c784 !important;
+  }
+
+  /* 4. Botón: Mantenemos el degradado pero aseguramos la letra blanca */
+  .register-btn {
+    background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%) !important;
+    color: white !important;
+  }
+
+  /* Mensaje de error: un rojo un poco más brillante para que se lea mejor */
+  .errorMessage {
+    color: #ff5252 !important;
+  }
+}

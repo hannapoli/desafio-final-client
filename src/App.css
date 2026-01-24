@@ -50,3 +50,24 @@
     height: 100vh;
 
 }
+
+
+.flexContainer, .flexColumn {
+    display: flex;
+}
+.flexColumn { flex-direction: column; }
+
+.centeredContent { display: flex; align-items: center; justify-content: center; }
+
+.fullHeight {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.fullContainer {
+    width: 100%;
+    background: darkgreen;
+    height: 3.7em;
+    flex-shrink: 0; /* Para que no se aplaste */
+}

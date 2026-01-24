@@ -1,3 +1,4 @@
+
 logs
 *.log
 npm-debug.log*
@@ -29,3 +30,39 @@ yarn.lock
 map.txt
 
 .yarn/install-state.gz
+
+# Logs
+logs
+*.log
+*-debug.log*
+*-error.log*
+
+# Dependencias y Build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# --- BLOQUE YARN BERRY (Configuración personal) ---
+# Todo lo relacionado con PnP y el estado de Yarn
+.pnp.*
+.yarn/*
+.yarn/
+.yarnrc.yml
+yarn.lock
+.yarn/install-state.gz
+
+# --- Editores y Sistema ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.sw?
+*.njsproj
+*.sln
+*.ntvs
+
+# --- Privados ---
+.env
+map.txt

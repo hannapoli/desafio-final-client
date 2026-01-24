@@ -6,11 +6,6 @@ import "./HomePage.css";
 export const HomePage = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/auth/login");
-  };
-
   return (
     <div className="landing-container">
       <header className="navbar">
@@ -45,28 +40,6 @@ export const HomePage = () => {
         </p>
       </section>
 
-      <section className="landing-features">
-        <div className="cards">
-          <article className="card">
-            <h3>Gestiona tus Campos</h3>
-            <img src="/agricultor_.png" alt="Campos" />
-          </article>
-
-          <article className="card">
-            <h3>Monitorea tus Cultivos</h3>
-            <img src="/dron.png" alt="Cultivos" />
-          </article>
-
-          <article className="card">
-            <h3>Recibe Recomendaciones</h3>
-            <img src="/tomates.png" alt="Recomendaciones" />
-          </article>
-        </div>
-
-        <button onClick={() => navigate("/auth/register")}>
-          Comenzar ahora
-        </button>
-      </section>
     </div>
   );
 };

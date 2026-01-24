@@ -6,21 +6,22 @@ import './Nav.css'
 export const ProducerNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleLogout = async (e) => {
         e.preventDefault();
         await logout();
         navigate('/');
     };
+
     return (
         <nav className='flexContainer'>
-            <Link to='/' className='navLogo'>AgroSync</Link>
+            <Link to='/' className='navbar-brand' style={{ textDecoration: 'none' }}>
+                <img className="logo" src="/logo.png" alt="AgroSync" />
+                <span className="brand-name">AgroSync</span>
+            </Link>
 
             <div className='navMenuIcon' onClick={toggleMenu}>
                 <span></span>
@@ -50,7 +51,6 @@ export const ProducerNav = () => {
                         Gestionar parcelas
                     </NavLink>
                 </li>
-
                 <li>
                     <NavLink
                         to='/producer/reports'
@@ -66,11 +66,10 @@ export const ProducerNav = () => {
                         Mensajes
                     </NavLink>
                 </li>
-
                 <li>
-                    <Link to='/' onClick={handleLogout}>Logout</Link>
+                    <Link to='/' onClick={handleLogout} className="logout-link">Logout</Link>
                 </li>
             </ul>
         </nav>
-    )
-}
+    );
+};

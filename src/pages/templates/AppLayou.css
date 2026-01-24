@@ -1,0 +1,26 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    width: 100%;
+}
+
+.producer-main {
+    flex: 1; /* Estira el contenido y empuja el footer al fondo */
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background: rgb(233, 205, 44);
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 60px;
+}
+
+/* ESCRITORIO (>= 768px) */
+@media (min-width: 768px) {
+    .app-container {
+        height: auto; 
+    }
+}
