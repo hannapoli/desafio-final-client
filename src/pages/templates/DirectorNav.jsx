@@ -36,6 +36,14 @@ export const DirectorNav = () => {
                         Reportes
                     </NavLink>
                 </li>
+
+                <li>
+                    <NavLink
+                        to='/director/messages'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mensajes
+                    </NavLink>
+                </li>
                
                 <li>
                     <Link to='/' onClick={handleLogout}>Logout</Link>

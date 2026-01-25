@@ -38,6 +38,14 @@ export const AnaystNav = () => {
                 </li>
 
                 <li>
+                    <NavLink
+                        to='/analyst/messages'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mensajes
+                    </NavLink>
+                </li>
+
+                <li>
                     <Link to='/' onClick={handleLogout}>Logout</Link>
                 </li>
             </ul>

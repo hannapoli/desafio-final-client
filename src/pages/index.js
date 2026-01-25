@@ -25,6 +25,7 @@ export * from './ProducerReports.jsx';
 export * from './DirectorReports.jsx';
 
 //Páginas Asesor
+export * from './ConsultantReports.jsx';
 
 //Páginas Analista
 

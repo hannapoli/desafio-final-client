@@ -33,7 +33,23 @@ export const ConsultantNav = () => {
                     <NavLink
                         to='/consultant/alerts'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mis alertas
+                        Alertas
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to='/consultant/reports'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Reportes
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to='/consultant/messages'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mensajes
                     </NavLink>
                 </li>
 

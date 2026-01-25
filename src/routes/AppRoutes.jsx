@@ -1,7 +1,7 @@
 import { AppLayout } from "../pages/templates/AppLayout"
 
 import { Route, Routes, Navigate } from 'react-router'
-import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports } from '../pages'
+import { HomePage, LoginPage, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports, ConsultantReports } from '../pages'
 import { Chats } from '../components/Chats'
 
 import { PrivateRoutes } from './PrivateRoutes'
@@ -44,6 +44,7 @@ export const AppRoutes = () => {
 
           <Route path='dashboard' element={<ConsultantDashboard />} />
           <Route path='messages' element={<Chats />} />
+          <Route path='reports' element={<ConsultantReports />} />
         </Route>
 
         <Route
@@ -67,7 +68,6 @@ export const AppRoutes = () => {
           }>
 
           <Route path='dashboard' element={<DirectorDashboard />} />
-
           <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<DirectorReports />} />
         </Route>

@@ -31,7 +31,6 @@ export const ProducerReports = () => {
                 );
                 const reportsData = Array.isArray(response.data) ? response.data : response.data ? [response.data] : [];
 
-                // Normalize attached field
                 const normalizedReports = reportsData.map(report => ({
                     ...report,
                     attached: normalizeFileData(report.attached)
@@ -156,8 +155,7 @@ export const ProducerReports = () => {
                         <div>Para: {report.email_receiver}</div>
                         <div>Mensaje: {report.content_message}</div>
                         {report.attached && report.attached.length > 0 && (
-                            <div>
-                                <strong>Archivos adjuntos ({report.attached.length}):</strong>
+                            <div>Archivos adjuntos ({report.attached.length}):
                                 <ul>
                                     {report.attached.map((fileUrl, index) => (
                                         <li key={index}>

@@ -27,8 +27,6 @@ return (
         <div className="dashboard-grid-cards">
           <article className="producer-card-item">
             <MenuCard
-              // logo='🌾'
-              // text='Mis parcelas'
               image={fieldImg}
               url='/producer/fields/all'
             />
@@ -36,8 +34,6 @@ return (
 
           <article className="producer-card-item">
             <MenuCard
-              // logo='🌱'
-              // text='Gestionar parcelas'
               image={cropImg}
               url='/producer/fields/manage'
             />
@@ -45,8 +41,6 @@ return (
 
           <article className="producer-card-item">
             <MenuCard
-              // logo='✉️'
-              // text='Mensajes'
               image={messageImg}
               url='/producer/messages'
             />
