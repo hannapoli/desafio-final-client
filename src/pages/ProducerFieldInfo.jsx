@@ -5,7 +5,6 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 import { Report } from '../components/Report';
-import { pixelToPositionPointsPhoto } from '../helpers/pixelToPositionPointsPhoto';
 
 export const ProducerFieldInfo = () => {
   const { id } = useParams();
@@ -73,18 +72,14 @@ export const ProducerFieldInfo = () => {
         );
         
         const receivedPoints = responsePoints.data;
+        
         // Convertir a array para mapear
         const pointsToPrint = Object.entries(receivedPoints).map(([key, value]) => {
-          const positionTransform = pixelToPositionPointsPhoto(
-            value.aframe_position,
-            key,
-            1
-          );
-          
+          const { x, y, z } = value.aframe_position;
+
           return {
             id: key,
-            //position: `${value.aframe_position.x} ${value.aframe_position.y} ${value.aframe_position.z}` // Convertir a string para poder leerlo por a-frame
-            position: positionTransform
+            position: `${x} ${y} ${-z}`
           }
           
         });
