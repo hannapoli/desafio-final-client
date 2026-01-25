@@ -1,7 +1,5 @@
 import { MenuCard } from '../components/MenuCard';
-import fieldImg from '../assets/images/field.jpg';
-import cropImg from '../assets/images/fieldwork.jpg';
-import messageImg from '../assets/images/email.jpg';
+import messageImg from '../../public/mensajes.png';
 
 export const ConsultantDashboard = () => {
 

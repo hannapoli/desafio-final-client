@@ -53,14 +53,33 @@ export const Report = ({
       </div>
 
       <div className='form-group'>
-        <label htmlFor='attached'>Archivo Adjunto (opcional):</label>
+        <label htmlFor='attached'>Archivo(s):</label>
         <input
           type='file'
           name='attached'
           id='attached'
           onChange={onFileChange}
           disabled={disabledFields.attached ?? false}
+          multiple
         />
+        {reportData.attached && (
+          <div className='file-list'>
+            <strong>Archivos seleccionados ({Array.isArray(reportData.attached) ? reportData.attached.length : reportData.attached instanceof FileList ? reportData.attached.length : 1}):</strong>
+            <ul>
+              {Array.isArray(reportData.attached) ? (
+                reportData.attached.map((file, index) => (
+                  <li key={index}>{file.name}</li>
+                ))
+              ) : reportData.attached instanceof FileList ? (
+                Array.from(reportData.attached).map((file, index) => (
+                  <li key={index}>{file.name}</li>
+                ))
+              ) : (
+                <li>{reportData.attached.name}</li>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
 
       <button

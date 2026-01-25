@@ -18,7 +18,7 @@ return (
         </span>
         <h1 className="dashboard-title">Panel de Gestión</h1>
         <p className="dashboard-description">
-          Bienvenido. Aquí puedes gestionar tus parcelas, monitorear cultivos 
+          ¡Te damos la bienvenida! Aquí puedes gestionar tus parcelas, monitorear cultivos 
           y revisar tus mensajes de soporte técnico.
         </p>
       </section>

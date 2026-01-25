@@ -26,42 +26,42 @@ export const ProducerFieldInfo = () => {
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL;
   const [dataPhoto, setDataPhoto] = useState(null);
 
-    // Para obtener la data de la API de Data
-    useEffect(() => {
+  // Para obtener la data de la API de Data
+  useEffect(() => {
 
-      const getDataPhoto = async () => {
-        try {
-          const response = await fetchData(
-            `${infoParcelUrl}/analyze?id_parcela=123`, /////////////// PENDIENTE PREGUNTAR POR EL TEMA DEL ID Y EL TEMA DEL ADJUNTO DE LA FOTO, YO NO LO PUEDO PASAR
-          )
+    const getDataPhoto = async () => {
+      try {
+        const response = await fetchData(
+          `${infoParcelUrl}/analyze?id_parcela=123`, /////////////// PENDIENTE PREGUNTAR POR EL TEMA DEL ID Y EL TEMA DEL ADJUNTO DE LA FOTO, YO NO LO PUEDO PASAR
+        )
 
-          setDataPhoto(response.data || null);
-        } catch (err) {
-          setDataPhoto(null);
-          setError("Error al obtener la información de la parcela")
-        }
+        setDataPhoto(response.data || null);
+      } catch (err) {
+        setDataPhoto(null);
+        setError("Error al obtener la información de la parcela")
       }
+    }
 
-      getDataPhoto();
+    getDataPhoto();
 
-    }, [user, infoParcelUrl]);
+  }, [user, infoParcelUrl]);
 
-    const points = [
-      {
-        id: "Cielo",
-        position: "-0.054 5.0 8.66"
+  const points = [
+    {
+      id: "Cielo",
+      position: "-0.054 5.0 8.66"
 
-      },
-      {
-        id: "Suelo",
-        position: "-4.959 -5.197 -6.957"
-      },
-      {
-        id: "Cultivo",
-        position: "-7.12 -0.054 -7.022"
-      }
-    ]
-    /////////////////////////////////
+    },
+    {
+      id: "Suelo",
+      position: "-4.959 -5.197 -6.957"
+    },
+    {
+      id: "Cultivo",
+      position: "-7.12 -0.054 -7.022"
+    }
+  ]
+  /////////////////////////////////
 
   useEffect(() => {
     const getParcel = async () => {
@@ -115,9 +115,10 @@ export const ProducerFieldInfo = () => {
   };
 
   const handleFileChange = (e) => {
+    const files = e.target.files;
     setReportData(currentData => ({
       ...currentData,
-      attached: e.target.files[0]
+      attached: files && files.length > 0 ? Array.from(files) : null
     }));
   };
 
@@ -141,7 +142,13 @@ export const ProducerFieldInfo = () => {
       formData.append('email_receiver', reportData.email_receiver);
       formData.append('content_message', reportData.content_message);
       if (reportData.attached) {
-        formData.append('attached', reportData.attached);
+        if (Array.isArray(reportData.attached)) {
+          reportData.attached.forEach((file) => {
+            formData.append('attached', file);
+          });
+        } else {
+          formData.append('attached', reportData.attached);
+        }
       }
 
       const response = await fetch(
@@ -188,12 +195,12 @@ export const ProducerFieldInfo = () => {
 
       {parcel && (
         <>
-        <article >
-          <h2>Detalles de la Parcela</h2>
-          <pre>{JSON.stringify(parcel, null, 2)}</pre>
-        </article>
+          <article >
+            <h2>Detalles de la Parcela</h2>
+            <pre>{JSON.stringify(parcel, null, 2)}</pre>
+          </article>
 
-        <ViewerParcelProducer imageUrl={parcel.photo_url} points={points}/> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
+          <ViewerParcelProducer imageUrl={parcel.photo_url} points={points} /> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
         </>
       )}
       <article className='flexColumn centeredContent'>

@@ -50,7 +50,7 @@ export const ProducerSeeFields = () => {
     <>
           {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
-    {/* <section className='flexContainer CenteredContent'>
+    {<section className='flexContainer CenteredContent'>
       <h1 className='centeredText'>Mis Parcelas</h1>
 
       {parcels.length === 0 ? (
@@ -70,7 +70,7 @@ export const ProducerSeeFields = () => {
           ))}
         </article>
       )}   
-    </section> */}
+    </section>}
     {!loading && <Map parcels= {parcels}/>}
     </>
   );
