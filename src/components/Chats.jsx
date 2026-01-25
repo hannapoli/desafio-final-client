@@ -4,6 +4,10 @@ import { useChatSocket } from "../hooks/useChatSocket";
 import { auth } from '../firebase/firebaseConfig';
 import "./Chats.css";
 
+import { Icon } from "./Icono-Busqueda-chat"; 
+
+// import "./Chats-style.css";
+
 export const Chats = () => {
   const { user } = useAuth();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -12,6 +16,26 @@ export const Chats = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newChatEmail, setNewChatEmail] = useState("");
+
+  const [isInputFocused, setIsInputFocused] = useState(false); // para el boton de abrir chat
+
+  // Para que el chat baje al ir escribiendo
+  const messagesEndRef = useRef(null);
+
+const scrollToBottom = () => {
+  messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+};
+
+useEffect(() => {
+  scrollToBottom();
+}, [messages]);
+
+// Y en el JSX, al final de .messages-container:
+<div className="messages-container">
+    {/* ... tus mensajes ... */}
+    <div ref={messagesEndRef} /> 
+</div>
+
 
   const getIdToken = async () => {
     const firebaseUser = auth.currentUser;
@@ -177,35 +201,64 @@ const fetchChats = async () => {
     <div className="chats-container">
         {/* SIDEBAR */}
         <aside className="chats-sidebar">
-        <h3>Chats</h3>
+          <section className="search-container">
+            <h3 className="messages-title">Messages</h3>
 
-        {chats.map((email) => (
-            <div key={email} className={`chat-item ${selectedChat === email ? "active" : ""}`}>
-                <span onClick={() => setSelectedChat(email)}> {email} </span>
-                <button
-                className="delete-chat-btn"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    deleteChat(email);
-                }}
-                >
-                🗑️
-                </button>
+            <div className="search-wrapper">
+                <input 
+                    className="input-chat"
+                    type="email"
+                    value={newChatEmail}
+                    onChange={(e) => setNewChatEmail(e.target.value)}
+                    placeholder="" 
+                />
+                {/* Esta capa se oculta automáticamente cuando hay texto */}
+                {!newChatEmail && (
+                    <div className="placeholder-overlay">
+                        <Icon name="search" color="#a0a0a0" size={16} />
+
+                        <span>Search...</span>
+                    </div>
+                )}
             </div>
-            ))}
+            {/* El boton aparecerá si el imput esta enfocado */}
+            {(isInputFocused || newChatEmail.length > 0) && (
+              <button className="btn-chat " onClick={() => setSelectedChat(newChatEmail)}>
+                  Abrir chat
+              </button>
+            )}
+
+          </section>
+
+            <section className="messages-container">
+              {chats.map((email) => (
+                  <div 
+                      key={email} 
+                      className={`chat-item ${selectedChat === email ? "active" : ""}`}
+                      onClick={() => setSelectedChat(email)} // Movido aquí para que toda la fila sea clicable
+                  >
+                      <span className="user-photo"></span><span>{email}</span>
+                      
+                      <button
+                          className="delete-chat-btn"
+                          onClick={(e) => {
+                              e.stopPropagation(); // Evita que se seleccione el chat al borrar
+                              deleteChat(email);
+                          }}
+                          title="Eliminar chat"
+                      >
+                          {/* Usamos el nuevo componente Icon */}
+                          <Icon name="trash" color="#5f6368" size={20} />
+                      </button>
+                  </div>
+              ))}
+
+            </section>
 
 
         <hr />
 
-        <input
-            type="email"
-            placeholder="Nuevo chat"
-            value={newChatEmail}
-            onChange={(e) => setNewChatEmail(e.target.value)}
-        />
-        <button onClick={() => setSelectedChat(newChatEmail)}>
-            Abrir chat
-        </button>
+
         </aside>
 
         {/* CHAT */}

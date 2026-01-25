@@ -1,5 +1,5 @@
 /* 1. BASE Y VARIABLES */
-nav {
+nav.flexContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,10 +31,11 @@ nav {
     transition: color 0.3s;
 }
 
+/* Efectos Hover Logo */
 .navbar-brand:hover .brand-name { color: orange; }
 .navbar-brand:hover .logo { filter: brightness(1.2); }
 
-/* 3. MENÚ (MÓVIL POR DEFECTO) */
+/* 3. MENÚ (MÓVIL POR DEFECTO - HASTA 899px) */
 .navMenu {
     display: none;
     position: absolute;
@@ -51,13 +52,13 @@ nav {
 }
 
 .navMenu.visible {
-    display: flex;
+    display: flex !important;
     animation: slideDown 0.3s ease forwards;
 }
 
 nav li {
     list-style: none;
-    width: 90%; /* Mejor estética en móvil */
+    width: 90%; 
     text-align: center;
 }
 
@@ -84,7 +85,9 @@ nav li {
     font-weight: 700 !important;
 }
 
-.logout-link:hover { background: rgba(211, 47, 47, 0.1) !important; }
+.logout-link:hover { 
+    background: rgba(211, 47, 47, 0.1) !important; 
+}
 
 /* 5. ICONO HAMBURGUESA */
 .navMenuIcon {
@@ -105,23 +108,29 @@ nav li {
 
 .navMenuIcon:active { transform: scale(0.9); }
 
-/* 6. DESKTOP (Media Query) */
-@media screen and (min-width: 768px) {
-    nav { padding: 0 2rem; }
+/* 6. DESKTOP (A partir de 900px para que no se amontone) */
+@media screen and (min-width: 900px) {
+    nav.flexContainer { padding: 0 2rem; }
 
     .navMenu {
-        display: flex;
+        display: flex !important;
         position: static;
         flex-direction: row;
         background: transparent;
         box-shadow: none;
         width: auto;
         padding: 0;
+        gap: 0.5rem; /* Ajustado para que quepan los 6 items */
     }
 
     nav li { width: auto; }
 
-    .navMenuIcon { display: none; }
+    .navMenuIcon { display: none !important; }
+
+    .navMenu a {
+        padding: 0.5em 0.8rem;
+        font-size: 0.95rem; 
+    }
 }
 
 /* 7. ANIMACIONES */

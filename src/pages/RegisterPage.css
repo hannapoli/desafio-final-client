@@ -17,7 +17,6 @@
   position: relative;
 }
 
-/* Forzamos el box-sizing en todo el contenedor para evitar descuadres por padding */
 .register-container * {
   box-sizing: border-box;
 }
@@ -109,9 +108,21 @@
   border-color: #2b701a;
 }
 
-.register-name { background-image: url("/user.png"); background-size: 26px 26px; }
-.register-email { background-image: url("/email.png"); background-size: 28px 28px; }
-.register-password { background-image: url("/password.png"); background-size: 30px 30px; }
+.register-name { 
+  background-image: 
+  url("/user.png"); 
+  background-size: 26px 26px; 
+}
+.register-email { 
+  background-image: 
+  url("/email.png"); 
+  background-size: 28px 28px; 
+}
+.register-password { 
+  background-image: 
+  url("/password.png"); 
+  background-size: 30px 30px; 
+}
 
 /* ================= SELECT ================= */
 
@@ -132,7 +143,7 @@
 .register-btn {
   width: 100%;
   height: 50px;
-  border-radius: 14px; /* Mismo radio que el botón de Google/Login */
+  border-radius: 14px; 
   border: none;
   background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
   color: white;
@@ -189,7 +200,7 @@
   .register-container {
     background-position: center bottom;
     padding: 8vh 24px 32px;
-    justify-content: center; /* Centra la tarjeta verticalmente */
+    justify-content: center; 
   }
 
   .glass {
@@ -238,7 +249,7 @@
   }
 
   .register-form {
-    max-width: 420px; /* Mantener la proporción estética */
+    max-width: 420px; 
   }
 
   .login-title {
@@ -261,7 +272,7 @@
 
   /* 2. Textos principales y títulos */
   .login-title {
-    color: #81c784 !important; /* Verde claro para resaltar */
+    color: #81c784 !important; 
   }
 
   .link-login {
@@ -285,18 +296,18 @@
     color: rgba(255, 255, 255, 0.5) !important;
   }
 
-  /* Ajuste para el foco del input */
+  /* Foco del input */
   .register-input:focus {
     border-color: #81c784 !important;
   }
 
-  /* 4. Botón: Mantenemos el degradado pero aseguramos la letra blanca */
+  /* 4. Botón */
   .register-btn {
     background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%) !important;
     color: white !important;
   }
 
-  /* Mensaje de error: un rojo un poco más brillante para que se lea mejor */
+  /* Mensaje de error */
   .errorMessage {
     color: #ff5252 !important;
   }
