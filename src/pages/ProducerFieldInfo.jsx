@@ -5,6 +5,7 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 import { Report } from '../components/Report';
+import { pixelToPositionPointsPhoto } from '../helpers/pixelToPositionPointsPhoto';
 
 export const ProducerFieldInfo = () => {
   const { id } = useParams();
@@ -23,45 +24,9 @@ export const ProducerFieldInfo = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   /////////////////////////////////
-  const infoParcelUrl = import.meta.env.VITE_API_DATA_URL;
   const [dataPhoto, setDataPhoto] = useState(null);
-
-    // Para obtener la data de la API de Data
-    useEffect(() => {
-
-      const getDataPhoto = async () => {
-        try {
-          const response = await fetchData(
-            `${infoParcelUrl}/analyze?id_parcela=123`, /////////////// PENDIENTE PREGUNTAR POR EL TEMA DEL ID Y EL TEMA DEL ADJUNTO DE LA FOTO, YO NO LO PUEDO PASAR
-          )
-
-          setDataPhoto(response.data || null);
-        } catch (err) {
-          setDataPhoto(null);
-          setError("Error al obtener la información de la parcela")
-        }
-      }
-
-      getDataPhoto();
-
-    }, [user, infoParcelUrl]);
-
-    const points = [
-      {
-        id: "Cielo",
-        position: "-0.054 5.0 8.66"
-
-      },
-      {
-        id: "Suelo",
-        position: "-4.959 -5.197 -6.957"
-      },
-      {
-        id: "Cultivo",
-        position: "-7.12 -0.054 -7.022"
-      }
-    ]
-    /////////////////////////////////
+  const [dataPoints, setDataPoints] = useState(null);
+  const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
 
   useEffect(() => {
     const getParcel = async () => {
@@ -96,6 +61,49 @@ export const ProducerFieldInfo = () => {
 
     getParcel();
   }, [user, backendUrl, fetchData, id]);
+
+  // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE
+  useEffect(() => {
+    const getDataPoints = async () => {
+      try {
+        const responsePoints = await fetchData(
+          `${infoParcelUrl}/analyze`,
+          'POST',
+          { image_url: parcel.photo_url }
+        );
+        
+        const receivedPoints = responsePoints.data;
+        // Convertir a array para mapear
+        const pointsToPrint = Object.entries(receivedPoints).map(([key, value]) => {
+          const positionTransform = pixelToPositionPointsPhoto(
+            value.aframe_position,
+            key,
+            1
+          );
+          
+          return {
+            id: key,
+            //position: `${value.aframe_position.x} ${value.aframe_position.y} ${value.aframe_position.z}` // Convertir a string para poder leerlo por a-frame
+            position: positionTransform
+          }
+          
+        });
+
+        setDataPoints(pointsToPrint)
+        setError(null);
+
+      } catch (err) {
+        setDataPoints(null)
+        setError("Error al obtener los puntos de la imagen");
+      }
+    }
+
+    getDataPoints();
+  }, [parcel]);
+
+  // FETCH PARA OBTENER LA DATA A PINTAR EN EL COMPONENTE
+
+   /////////////////////////////////
 
   useEffect(() => {
     if (user?.email) {
@@ -188,12 +196,12 @@ export const ProducerFieldInfo = () => {
 
       {parcel && (
         <>
-        <article >
-          <h2>Detalles de la Parcela</h2>
-          <pre>{JSON.stringify(parcel, null, 2)}</pre>
-        </article>
+          <article >
+            <h2>Detalles de la Parcela</h2>
+            <pre>{JSON.stringify(parcel, null, 2)}</pre>
+          </article>
 
-        <ViewerParcelProducer imageUrl={parcel.photo_url} points={points}/> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
+          <ViewerParcelProducer imageUrl={parcel.photo_url} points={dataPoints} /> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
         </>
       )}
       <article className='flexColumn centeredContent'>
