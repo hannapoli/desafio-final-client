@@ -8,7 +8,7 @@ import { Legend } from './Legend';
 
 export const  ClickablePolygon = ({ positions })  => {
   const {deleteParcel} = useContext(MapsContext)
-  const {simulaciónLlamadaApiSaludDelCampo} = userMap()
+  const {HealthMap} = userMap()
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
 
@@ -28,7 +28,8 @@ export const  ClickablePolygon = ({ positions })  => {
 
   const overLay = async (p) => {
     
-    const respuesta = simulaciónLlamadaApiSaludDelCampo()
+    const respuesta = await HealthMap()
+    console.log({respuesta})
     setHealthData(respuesta[0])
   }
 console.log("Capa activa:", activeLayer);
@@ -46,10 +47,10 @@ console.log("Bounds:", healthData?.image_bounds);
         }}
       >
       <Popup>
-        {/* <button onClick={()=>deleteParcel(p)}>Eliminar</button>
-        <button onClick={()=>overLay(p)}>Detalles</button> */}
+        <button onClick={()=>deleteParcel(p)}>Eliminar</button>
+        <button onClick={()=>overLay(p)}>Detalles</button>
         <p>Detalle del campo:</p>
-        <p>Nombre del campo</p>
+        <p>Nombre del campo: </p>
         <p>Temperatura: </p>
       </Popup>
       {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(

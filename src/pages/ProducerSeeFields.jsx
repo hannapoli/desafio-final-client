@@ -1,16 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import {Map} from '../components/Map'
+import { userMap } from '../hooks/userMap';
+import { MapsContext } from '../contexts/MapsContext';
 
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();
-  const [parcels, setParcels] = useState([]);
+  // const [parcels, setParcels] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-//  console.log('antes del useeffet')
+  const {getAllAlertsByUser, getAllInfoMeteoByUser} = userMap()
+  const {parcels, setParcels} = useContext(MapsContext)
+
+  
+
   useEffect(() => {
     const getParcels = async () => {
       if (!user?.uid) return;
@@ -42,9 +48,13 @@ export const ProducerSeeFields = () => {
         }
       }
     };
+    const alertas = getAllAlertsByUser(user.email)
 
     getParcels();
+    
   }, [user, backendUrl, fetchData]);
+
+  console.log({user})
 
   return (
     <>
