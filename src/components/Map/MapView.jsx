@@ -141,7 +141,7 @@ export default function MapView({ centroid} ) {
 
  
     useEffect(()=>{
-     if(polygon) {
+     if(polygon.length != 0) {
       addParcel(polygon)
       bboxCenter(polygons)
      }

@@ -121,7 +121,7 @@ button {
 
 /* Contenedor principal del landing */
 .landing-container {
-  min-height: 60vh;
+  min-height: calc(100vh - 60px);/* footer incluido */
   width: 100%;
   background-image: url("/landin.png"); /* Foto para el LandingPage */
   background-size: cover;
@@ -322,10 +322,6 @@ button {
 
 /* ==== DESKTOP ==== */
 @media (min-width: 900px) {
-.landing-container {
-  height: calc(100vh - 60px); /* footer incluido */
-
-}
 
   .landing-hero {
     text-align: center;

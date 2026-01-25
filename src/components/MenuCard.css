@@ -1,71 +1,50 @@
 .menu-card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    padding: 0.3em 1em 0;
-    text-decoration: none;
-    color: #222;
-    transition: box-shadow 0.2s, transform 0.2s;
-    width: 20em;
-    height: 20em;
-    min-height: 18em;
-    min-width: 12em;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 11; /* Mantiene el rectángulo horizontal siempre */
+  transition: transform 0.25s ease;
 }
 
 .menu-card:hover {
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
-    transform: translateY(-4px) scale(1.03);
+  transform: translateY(-5px);
 }
 
-.menu-card-logo {
-    font-size: 2em;
-    margin-block: 0.3em;
+.menu-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  flex-shrink: 0;
 }
+
+.menu-card-logo { font-size: 1.5rem; }
 
 .menu-card-text {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-bottom: 0.7em;
-    text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #2b701a;
 }
 
 .img-container {
-    width: 90%;
-    min-height: 8em;
-    max-height: 12em;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
 }
 
 .menu-card-image {
-    width: 100%;
-    border-radius: 10px;
-    height: 100%;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.menu-card-list {
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5em;
-    margin: 2em 0;
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .menu-card-list {
-        flex-direction: row;
-        gap: 2em;
-        margin: 3em 0;
-    }
-}
-
-@media (min-width: 992px) {
-    .menu-card-list {
-        margin: 4em 0;
-    }
-    .menu-card {
-        margin: 0;
-        width: 20em;
-    }
+/* Pantallas grandes */
+@media (min-width: 1024px) {
+  .menu-card-text { font-size: 20px; }
 }

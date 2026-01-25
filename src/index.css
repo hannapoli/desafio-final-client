@@ -8,7 +8,6 @@
 
 body {
     min-width: 320px;
-    min-height: 100vh;
     overflow-x: hidden;
 }
 
@@ -16,6 +15,13 @@ a, button, .clickable {
     cursor: pointer;
 }
 
-main {
-    margin-block: 2.5em 5em;
+html, body {
+    height: 100%; /* Necesario para que los hijos hereden altura */
+    min-width: 320px;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; /* Permite que la app crezca si hay contenido */
 }

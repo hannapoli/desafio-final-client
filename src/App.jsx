@@ -17,7 +17,6 @@ function App() {
           <AppRoutes />
        </MapsProvider>
       </AuthProvider>
-      <Footer />
     </>
   )
 }
