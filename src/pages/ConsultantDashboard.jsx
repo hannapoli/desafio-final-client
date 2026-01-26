@@ -11,7 +11,7 @@ export const ConsultantDashboard = () => {
           <div className="dashboard-grid-cards">
             <article className="producer-card-item">
               <MenuCard
-                text='Alertas'
+                text='Ver parcelas de un productor'
                 // image={}
                 url='/consultant/alerts'
               />
