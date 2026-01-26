@@ -138,10 +138,44 @@ export const ProducerReports = () => {
         }
     };
 
-    const sortedReports = [...reports].sort((a, b) => {
-        if (!a.created_at || !b.created_at) return 0;
-        return new Date(b.created_at) - new Date(a.created_at);
-    });
+  const handleDownload = async (id) => {
+    try {
+      const token = user.token || await auth.currentUser?.getIdToken();
+        const res = await fetch(
+            `${backendUrl}/producer/reports/download/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (!res.ok) {
+            throw new Error(data.msg);
+        }
+        
+        const blob = await res.blob();// Convertimos la respuesta en un Blob
+        const url = window.URL.createObjectURL(blob); // Creamos una URL temporal
+        const a = document.createElement("a");// Creamos un enlace para descargar el pdf de la url que hemos creado
+        a.href = url;
+        a.download = `reporte_${id}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();// Borramos en elnace una vez lo hemos usado para descargar el pdf
+        window.URL.revokeObjectURL(url);
+        // navigate('/worker/dashboard');
+
+    } catch (error) {
+        console.log("ERROR:", error)
+        alert(error);
+    }
+  };
+
+  const sortedReports = [...reports].sort((a, b) => {
+    if (!a.created_at || !b.created_at) return 0;
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
 
     return (
         <section>
@@ -170,6 +204,7 @@ export const ProducerReports = () => {
                         <div className='report-actions'>
                             <button className='edit-btn' onClick={() => handleEdit(report)}>Modificar</button>
                             <button className='delete-btn' onClick={() => handleDelete(report.uid_report)}>Eliminar</button>
+                            <button className='download-btn' onClick={() => handleDownload(report.uid_report)}>Descargar</button>
                         </div>
                     </li>
                 ))}
