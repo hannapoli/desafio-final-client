@@ -155,8 +155,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #e2e8f0 url("/default-user.png") center/cover;
-  background: #e6f5e9; /* momentaneos hasta cargar la foto a la base de datops */
+  background: #e2e8f0 url("/default-user-photo.png") center/cover;
   flex-shrink: 0;
 }
 
@@ -374,5 +373,120 @@
 
   .sidebar-handle {
     display: none;
+  }
+}
+
+/* ================================================= */
+/* ===== CHAT – MODO OSCURO (EQUILIBRADO / PRO) ===== */
+/* ================================================= */
+
+@media (prefers-color-scheme: dark) {
+  .chats-container {
+    --chat-bg: #202c33; 
+    --chat-bg-soft: #111b21;  
+    --chat-border: #2a3942; 
+
+    /* Texto: Claridad sin ser blanco neón */
+    --chat-text-main: #e9edef;
+    --chat-text-muted: #8696a0;
+
+    /* Acento: Verde corporativo suave */
+    --chat-primary: #00a884;
+    --chat-primary-hover: #06cf9c;
+    
+    background-color: var(--chat-bg) !important;
+  }
+
+  /* ================= SIDEBAR ================= */
+
+  .chats-sidebar {
+    background: var(--chat-bg-soft) !important;
+    border-right: 1px solid var(--chat-border) !important;
+  }
+
+  .search-container {
+    background: var(--chat-bg-soft);
+    border-bottom: 1px solid var(--chat-border);
+  }
+
+  .input-chat {
+    background: #202c33 !important;
+    color: var(--chat-text-main);
+    border: none;
+    border-radius: 8px;
+  }
+
+  /* ================= LISTA DE CHATS ================= */
+
+  .chat-item {
+    border-bottom: 1px solid var(--chat-border);
+  }
+
+  .chat-item:hover {
+    background: #202c33 !important;
+  }
+
+  .chat-item.active {
+    background: #2a3942 !important;
+  }
+
+  /* ================= CABECERA ================= */
+
+  .cabecera-nombre-chat {
+    background: #202c33 !important;
+    border-bottom: 1px solid var(--chat-border);
+    color: var(--chat-text-main);
+  }
+
+  /* ================= MENSAJES ================= */
+
+.chat-messages {
+  background-color: #0b141a;
+  background-image: linear-gradient(rgba(11, 20, 26, 0.95), rgba(11, 20, 26, 0.95)), 
+                    url("TU_URL_DE_IMAGEN_AQUI");
+  background-repeat: repeat;
+}
+
+  .message-bubble.received {
+    background: #202c33;
+    color: var(--chat-text-main);
+    border: none;
+  }
+
+  .message-bubble.sent {
+    background: #005c4b; 
+    color: #e9edef;
+  }
+
+  /* ================= FORM ENVÍO ================= */
+
+  .send-msg-container {
+    background: #202c33 !important;
+    border: none;
+  }
+
+  .message-textarea {
+    color: var(--chat-text-main) !important;
+    background: #2a3942 !important;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .btn-send-msg {
+    background: transparent !important;
+    color: var(--chat-primary);
+  }
+
+  /* ================= EMPTY STATE ================= */
+
+  .msg-option {
+    background: #222e35;
+  }
+
+  .msg-option p {
+    background: transparent;
+    border: none;
+    color: var(--chat-text-muted);
+    box-shadow: none;
   }
 }

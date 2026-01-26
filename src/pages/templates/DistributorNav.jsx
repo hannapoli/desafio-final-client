@@ -20,7 +20,10 @@ export const DistributorNav = () => {
     };
     return (
         <nav className='flexContainer'>
-            <Link to='/' className='navLogo'>AgroSync</Link>
+            <Link to='/' className='navbar-brand' style={{ textDecoration: 'none' }}>
+                <img className="logo" src="/logo.png" alt="AgroSync" />
+                <span className="brand-name">AgroSync</span>
+            </Link>
 
             <div className='navMenuIcon' onClick={toggleMenu}>
                 <span></span>

@@ -27,13 +27,16 @@ nav.flexContainer {
 .brand-name {
     font-size: 1.2rem;
     font-weight: bold;
-    color: darkgreen;
-    transition: color 0.3s;
+    background: linear-gradient(to right, green 50%, darkgreen 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Efectos Hover Logo */
-.navbar-brand:hover .brand-name { color: orange; }
-.navbar-brand:hover .logo { filter: brightness(1.2); }
+.brand-group .logo:hover {
+  filter: brightness(1.1); 
+  transform: scale(1.05); 
+  transition: all 0.3s ease;
+}
 
 /* 3. MENÚ (MÓVIL POR DEFECTO - HASTA 899px) */
 .navMenu {
@@ -139,4 +142,145 @@ nav li {
         opacity: 0; 
         transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/*=============================================*/
+
+/* ================= NAV CORPORATIVO PROFESIONAL ================= */
+
+nav.flexContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    height: 3.7em; 
+    
+    background-color: var(--bg-app);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+@media (prefers-color-scheme: dark) {
+    nav.flexContainer {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background-color: rgba(15, 23, 42, 0.9); /* Slate profundo con transparencia */
+        backdrop-filter: blur(10px);
+    }
+}
+
+/* 2. LOGO / BRAND */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+}
+
+.logo {
+    width: 2.2rem;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.brand-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--chat-primary, darkgreen);
+    transition: var(--transition);
+}
+
+/* 3. MENÚ MÓVIL (Refinado) */
+.navMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    background-color: var(--bg-app);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.navMenu.visible {
+    display: flex !important;
+    animation: slideIn 0.3s ease forwards;
+}
+
+.navMenu a {
+    display: block;
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 0.7em 1.2em;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+/* 4. INTERACTIVIDAD */
+.navMenu a:hover,
+.nav-link-active {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--chat-primary, #1b5e20) !important;
+}
+
+.logout-link {
+    color: #ef4444 !important; /* Rojo moderno */
+    margin-top: 5px;
+    border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.logout-link:hover { 
+    background: #fef2f2 !important; 
+}
+
+/* 5. ICONO HAMBURGUESA (Minimalista) */
+.navMenuIcon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.navMenuIcon span {
+    height: 2px;
+    background-color: var(--text-main);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.navMenuIcon span:nth-child(1) { width: 100%; }
+.navMenuIcon span:nth-child(2) { width: 70%; }
+.navMenuIcon span:nth-child(3) { width: 40%; }
+
+.navMenuIcon:hover span { width: 100%; background-color: var(--chat-primary); }
+
+/* 6. DESKTOP (900px+) */
+@media screen and (min-width: 900px) {
+    .navMenu {
+        display: flex !important;
+        position: static;
+        flex-direction: row;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        gap: 0.2rem;
+    }
+
+    .navMenu a {
+        padding: 0.5em 1rem;
+    }
+
+    .navMenuIcon { display: none !important; }
 }
