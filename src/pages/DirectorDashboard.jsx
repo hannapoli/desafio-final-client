@@ -1,4 +1,5 @@
 import { MenuCard } from '../components/MenuCard';
+import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 import plantas from '/plantas.png';
 
@@ -33,6 +34,7 @@ export const DirectorDashboard = () => {
               </div>
             </section>
           </div>
+          <ChatBot />
         </>
   );
 }

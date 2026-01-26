@@ -1,4 +1,5 @@
 import { MenuCard } from '../components/MenuCard';
+import { ChatBot } from '../components/ChatBot';
 import fieldImg from '/mis_parcelas.png';
 import cropImg from '/parcelas.png';
 import messageImg from '/mensajes.png';
@@ -27,8 +28,8 @@ export const ProducerDashboard = () => {
           <h1 className="dashboard-title">Panel de Gestión</h1>
 
           <p className="dashboard-description">
-          ¡Te damos la bienvenida! Aquí puedes gestionar tus parcelas, monitorear cultivos 
-          y revisar tus mensajes de soporte técnico.
+            ¡Te damos la bienvenida! Aquí puedes gestionar tus parcelas, monitorear cultivos
+            y revisar tus mensajes de soporte técnico.
           </p>
         </section>
 
@@ -60,6 +61,7 @@ export const ProducerDashboard = () => {
         </section>
 
       </div>
+      <ChatBot />
     </div>
   );
 };
