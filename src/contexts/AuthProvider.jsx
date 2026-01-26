@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
             if (firebaseUser) {
                 try {
                     const token = await firebaseUser.getIdToken();
-
+                    console.log(token)
                     // Pedimos al backend los datos del rol y nombre del usuario de PostgreSQL
                     const userData = await fetchData(
                         `${backendUrl}/auth/me`,
