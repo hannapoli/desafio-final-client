@@ -1,4 +1,5 @@
 import { MenuCard } from '../components/MenuCard';
+import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 
 export const DistributorDashboard = () => {
@@ -25,6 +26,7 @@ export const DistributorDashboard = () => {
               </div>
             </section>
           </div>
+          <ChatBot />
         </>
   );
 }

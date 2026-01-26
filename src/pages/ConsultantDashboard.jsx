@@ -1,4 +1,5 @@
 import { MenuCard } from '../components/MenuCard';
+import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 
 export const ConsultantDashboard = () => {
@@ -16,7 +17,7 @@ export const ConsultantDashboard = () => {
                 url='/consultant/alerts'
               />
             </article>
-            
+
             <article className="producer-card-item">
               <MenuCard
                 image={messageImg}
@@ -26,6 +27,7 @@ export const ConsultantDashboard = () => {
           </div>
         </section>
       </div>
+      <ChatBot />
     </>
   );
 };
