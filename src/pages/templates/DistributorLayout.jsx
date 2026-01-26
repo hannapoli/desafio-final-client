@@ -1,16 +1,17 @@
 import { Outlet } from 'react-router';
-import { Header } from '../../components/Header';
-import {DistributorNav} from './DistributorNav'
+import { useNav } from '../../contexts/NavContext';
+import { DistributorNav } from './DistributorNav';
+import { useEffect } from 'react';
 
 export const DistributorLayout = () => {
-    return (
-        <>
-            <Header>
-                <DistributorNav />
-            </Header>
-            <main className='flexColumn'>
-                <Outlet />
-            </main>
-        </>
-    );
+  const { setNav } = useNav();
+
+  useEffect(() => {
+    setNav(<DistributorNav />);
+    return () => setNav(null);
+  }, [setNav]);
+
+  return (
+    <Outlet />
+  );
 };

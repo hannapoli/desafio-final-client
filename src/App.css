@@ -134,4 +134,22 @@ footer.footer {
 
   El layout lo controla AppLayout.css
 */
+/* ===========================================
+      VERSION MODO OSCURO (DARK MODE)
+============================================== */
 
+footer.footer.dark {
+  background-color: #1a1a1a; /* Fondo casi negro */
+  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.5);
+  border-top: 1px solid #333; /* Separador sutil */
+}
+
+footer.footer.dark p,
+footer.footer.dark a {
+  color: #f0d93b; /* El amarillo ahora resalta como color de acento */
+}
+
+footer.footer.dark a:hover {
+  color: #ffffff; /* Blanco puro al pasar el mouse */
+  text-shadow: 0 0 8px rgba(240, 217, 59, 0.4); /* Brillo suave */
+}

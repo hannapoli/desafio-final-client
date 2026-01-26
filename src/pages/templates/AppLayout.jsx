@@ -9,7 +9,7 @@ export const AppLayout = () => {
       <main className="app-main">
         <Outlet />
       </main>
-      <Footer />
+      <Footer className="dark" />
     </div>
   );
 };

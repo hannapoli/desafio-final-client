@@ -1,20 +1,21 @@
 import { Link, NavLink, useNavigate } from 'react-router';
 import { useAuth } from '../../hooks/useAuth';
-import { useState } from 'react';
+import { useNav } from 'react';
 import './Nav.css'
 
 export const ConsultantNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const {isNavOpen, setIsNavOpen} = useNav();
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        setIsNavOpen(!isNavOpen);
     };
 
     const handleLogout = async (e) => {
         e.preventDefault();
+        setIsNavOpen(false);
         await logout();
         navigate('/');
     };
@@ -31,33 +32,21 @@ export const ConsultantNav = () => {
                 <span></span>
             </div>
 
-            <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
+            <ul className={`navMenu ${isNavOpen ? 'visible' : ''}`}>
                 <li>
-                    <NavLink
-                        to='/consultant/alerts'
-                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Alertas
-                    </NavLink>
+                <NavLink to="/consultant/alerts">Alertas</NavLink>
                 </li>
 
                 <li>
-                    <NavLink
-                        to='/consultant/reports'
-                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Reportes
-                    </NavLink>
+                <NavLink to="/consultant/reports">Reportes</NavLink>
                 </li>
 
                 <li>
-                    <NavLink
-                        to='/consultant/messages'
-                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mensajes
-                    </NavLink>
+                <NavLink to="/consultant/messages">Mensajes</NavLink>
                 </li>
 
                 <li>
-                    <Link to='/' onClick={handleLogout}>Logout</Link>
+                <Link to="/" onClick={handleLogout}>Logout</Link>
                 </li>
             </ul>
         </nav>

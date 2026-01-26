@@ -1,16 +1,15 @@
 import { Outlet } from 'react-router';
-import { Header } from '../../components/Header';
 import { DirectorNav } from './DirectorNav';
+import { useEffect } from 'react';
+import { useNav } from '../../contexts/NavContext';
 
 export const DirectorLayout = () => {
-    return (
-        <>
-            <Header>
-                <DirectorNav />
-            </Header>
-            <main className='flexColumn'>
-                <Outlet />
-            </main>
-        </>
-    );
+    const { setNav } = useNav();
+
+    useEffect(() => {
+        setNav(<DirectorNav />);
+        return () => setNav(null)
+    },[setNav])
+
+    return <Outlet />
 };

@@ -1,17 +1,16 @@
 import { Outlet } from 'react-router';
-import { Header } from '../../components/Header';
 import { ConsultantNav } from './ConsultantNav';
+import { useEffect } from 'react';
+import { useNav } from '../../contexts/NavContext';
 
 
 export const ConsultantLayout = () => {
-    return (
-        <>
-            <Header>
-                <ConsultantNav />
-            </Header>
-            <main className='flexColumn'>
-                <Outlet />
-            </main>
-        </>
-    );
+    const { setNav } = useNav()
+
+    useEffect(() => {
+        setNav(<ConsultantNav />);
+        return () => setNav(null)
+    },[setNav])
+
+    return <Outlet />
 };

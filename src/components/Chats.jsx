@@ -331,7 +331,7 @@ export const Chats = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={sendMessage} className="message-form">
+            <form className="message-form" onSubmit={sendMessage} >
               <div className="send-msg-container">
                 <textarea
                   value={newMessage}
