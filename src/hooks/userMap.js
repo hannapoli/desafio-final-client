@@ -60,30 +60,7 @@ export const userMap = () => {
                     setError('Error al cargar los datos de la parcela')        }
       }
 
-    //    const  getAllAlertsByUser = async (email) => {
-    //     if(!email) return
-    //     try {
-    //          const firebaseUser = auth.currentUser;
-    //                 if (!firebaseUser) {
-    //                   console.error('No hay usuario autenticado en Firebase');
-    //                   return;
-    //                 }
-                    
-    //                 const token = await firebaseUser.getIdToken();
-    //                 // console.log('llamada')
-    //                 const response = await fetchData(
-    //                   `${backendUrl}/alerts/getAllAlertsByUser/${email}`,
-    //                   'GET',
-    //                   null,
-    //                   token
-    //                 );
-                    
-    //                 console.log('Estas son las alertas de tus parcelas', response);
-    //                 return response
-    //             } catch (error) {
-    //                 setError('Error al cargar las alertas de la parcela') 
-    //             }
-    //   }
+    
 const getAllAlertsByUser = useCallback(async (email) => {
     if(!email) return;
     try {
@@ -135,7 +112,7 @@ const getAllAlertsByUser = useCallback(async (email) => {
         try {
             const body = {uid_parcel}
             const response = await fetchData(
-                `${backendUrl}/maps_sentinel`,
+                `${apiDataUrl}/maps_sentinel`,
                 'POST',
                 body,
                 null
@@ -219,6 +196,8 @@ const getAllAlertsByUser = useCallback(async (email) => {
         ];
          return centro
     }
+
+
       
     
     return {

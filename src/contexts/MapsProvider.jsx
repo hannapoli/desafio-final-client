@@ -114,18 +114,22 @@ export const MapsProvider = ({ children }) => {
 
 
      return (
-            <MapsContext.Provider value={{polygons, 
-                                        addParcel, 
-                                        deleteParcel, 
-                                        bboxCenter, 
-                                        center, 
-                                        geoPng, 
-                                        havePolygons,
-                                        alerts,
-                                        meteo,
-                                        parcels,
-                                        setParcels,
-                                        addPolygon}}>
+            <MapsContext.Provider value={{
+                                            polygons, 
+                                            addParcel, 
+                                            deleteParcel, 
+                                            bboxCenter, 
+                                            center, 
+                                            geoPng, 
+                                            havePolygons,
+                                            alerts,
+                                            meteo,
+                                            parcels,
+                                            setParcels,
+                                            addPolygon, 
+                                            getAlerts,
+                                            getMeteo
+                                        }}>
                 {children}
             </MapsContext.Provider>
         )
