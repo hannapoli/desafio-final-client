@@ -135,3 +135,13 @@ footer.footer {
   El layout lo controla AppLayout.css
 */
 
+
+
+.alert-marker {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  background: none;
+  border: none;
+}

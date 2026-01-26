@@ -5,6 +5,9 @@ export const MapsProvider = ({ children }) => {
     const [polygons, setPolygons] = useState([])
     const [center, setCenter] = useState([-37.21619, -72.60537 ])
     const [geoPng, setGeoPng] = useState('')
+    const [alerts, setAlerts] = useState([])
+    const [meteo, setMeteo] = useState([])
+    const [parcels, setParcels] = useState([])
 
   const havePolygons = useCallback((respuesta) => {
     if (!respuesta || !respuesta.length) return;
@@ -61,8 +64,12 @@ export const MapsProvider = ({ children }) => {
 // console.log({polygons})
 // }
 
-    const addParcel = (polygono) => {
+    const addPolygon = (polygono) => {
         setPolygons([...polygons, polygono])
+    }
+
+    const addParcel = (parcela) => {
+        setParcels([...parcels, parcela])
     }
 
     const deleteParcel = (polygono) => {
@@ -71,6 +78,7 @@ export const MapsProvider = ({ children }) => {
         if(polygons.length) bboxCenter()
     }
 
+    
     const bboxCenter = (polygons) =>{
           
        if (polygons.length=== 0) return
@@ -91,11 +99,37 @@ export const MapsProvider = ({ children }) => {
         ];
          setCenter(centro)
     }
+    
+    const getAlerts = (response) => {
+      setAlerts(response.data)
+    }
+
+    const getMeteo = (response) => {
+      setAlerts(response.data)
+    }
+
+    
+
 
 
 
      return (
-            <MapsContext.Provider value={{polygons, addParcel, deleteParcel, bboxCenter, center, geoPng, havePolygons}}>
+            <MapsContext.Provider value={{
+                                            polygons, 
+                                            addParcel, 
+                                            deleteParcel, 
+                                            bboxCenter, 
+                                            center, 
+                                            geoPng, 
+                                            havePolygons,
+                                            alerts,
+                                            meteo,
+                                            parcels,
+                                            setParcels,
+                                            addPolygon, 
+                                            getAlerts,
+                                            getMeteo
+                                        }}>
                 {children}
             </MapsContext.Provider>
         )
