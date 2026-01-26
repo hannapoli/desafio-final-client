@@ -5,7 +5,7 @@ import { PublicLayout } from '../pages/templates/PublicLayout';
 import { AuthLayout } from '../pages/templates/AuthLayout';
 
 import {
-  HomePage, LoginPage, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports
+  HomePage, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports
 } from '../pages';
 
 import { Chats } from '../components/Chats';
@@ -58,6 +58,7 @@ export const AppRoutes = () => {
           <Route path='dashboard' element={<ConsultantDashboard />} />
           <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<ConsultantReports />} />
+          <Route path='fields' element={<ConsultantFields />} />
         </Route>
 
         {/* ---------- ANALYST ---------- */}
@@ -83,6 +84,7 @@ export const AppRoutes = () => {
           }
         >
           <Route path='dashboard' element={<DirectorDashboard />} />
+          <Route path='fields' element={<DirectorFields />} />
           <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<DirectorReports />} />
         </Route>
