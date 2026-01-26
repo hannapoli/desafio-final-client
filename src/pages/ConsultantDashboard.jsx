@@ -13,7 +13,7 @@ export const ConsultantDashboard = () => {
               <MenuCard
                 text='Ver parcelas de un productor'
                 // image={}
-                url='/consultant/alerts'
+                url='/consultant/fields'
               />
             </article>
             

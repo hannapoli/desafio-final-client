@@ -78,7 +78,7 @@ export const DirectorReports = () => {
   const handleDisease = async (url) => {
     try {
       const res = await fetchData(`${diseaseUrl}/analyze`,'POST', { image_url: url })
-      setDisease(res.data)
+      setDisease(res)
     } catch{
       console.log("ERROR:", error)
       alert(error);

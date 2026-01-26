@@ -177,42 +177,43 @@ export const ProducerReports = () => {
 
   const handleDisease = async (url) => {
     try {
-      // const res = await fetchData(`${diseaseUrl}/analyze`,'POST', { image_url: url })
+      const res = await fetchData(`${diseaseUrl}/analyze`,'POST', { image_url: url })
       // SE HAN ACABADO LOS TOKEN PARA LAS LLAMADAS A LA API EXTERNA ---> ESTO ES SIMULANDO DATOS
-      const mockDiseaseResponse = {
-        health_assessment: {
-          is_healthy: false,
-          healthy_probability: 0.0017,
-          diseases: [
-            {
-              name: "Mildiu",
-              probability: 0.87,
-            },
-            {
-              name: "Oídio",
-              probability: 0.62,
-            },
-          ],
-        },
-        meta: {
-          geo_mode: "global_demo",
-          is_plant_probability: 0.9535,
-          scan_date: null,
-        },
-        taxonomy: {
-          scientific_name: "Vitis vinifera",
-          probability: 0.0439,
-          description: "Sin descripción disponible.",
-          common_names: [],
-          wiki_url: null,
-          image_refs: [
-            "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/d0c/d670e63c9eb1aa8401224a4e79bcd9d90943b.jpeg",
-            "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/963/ebb29e55d122d69ac931e529820aedaa58667.jpeg",
-          ],
-          taxonomy_tree: {},
-        },
-      };
-      setDisease(mockDiseaseResponse)
+      // const mockDiseaseResponse = {
+      //   health_assessment: {
+      //     is_healthy: false,
+      //     healthy_probability: 0.0017,
+      //     diseases: [
+      //       {
+      //         name: "Mildiu",
+      //         probability: 0.87,
+      //       },
+      //       {
+      //         name: "Oídio",
+      //         probability: 0.62,
+      //       },
+      //     ],
+      //   },
+      //   meta: {
+      //     geo_mode: "global_demo",
+      //     is_plant_probability: 0.9535,
+      //     scan_date: null,
+      //   },
+      //   taxonomy: {
+      //     scientific_name: "Vitis vinifera",
+      //     probability: 0.0439,
+      //     description: "Sin descripción disponible.",
+      //     common_names: [],
+      //     wiki_url: null,
+      //     image_refs: [
+      //       "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/d0c/d670e63c9eb1aa8401224a4e79bcd9d90943b.jpeg",
+      //       "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/963/ebb29e55d122d69ac931e529820aedaa58667.jpeg",
+      //     ],
+      //     taxonomy_tree: {},
+      //   },
+      // };
+      console.log(res)
+      setDisease(res)
       setShowDiseasePopup(true);
     } catch{
       console.log("ERROR:", error)

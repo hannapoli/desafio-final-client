@@ -34,9 +34,9 @@ export const ConsultantNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
-                        to='/consultant/alerts'
+                        to='/consultant/fields'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Alertas
+                        Parcelas
                     </NavLink>
                 </li>
 
