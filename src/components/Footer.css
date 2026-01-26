@@ -28,8 +28,9 @@ footer.footer a {
   text-decoration: none;
 }
 
-footer.footer a:hover {
+.textLink:hover {
   color: #8a8787;
+  cursor: pointer;
 }
 
 /* ===============================
