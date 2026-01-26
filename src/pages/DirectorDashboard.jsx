@@ -1,5 +1,6 @@
 import { MenuCard } from '../components/MenuCard';
 import messageImg from '/mensajes.png';
+import plantas from '/plantas.png';
 
 export const DirectorDashboard = () => {
   return (
@@ -20,6 +21,13 @@ export const DirectorDashboard = () => {
                   <MenuCard
                     image={messageImg}
                     url='/director/messages'
+                  />
+                </article>
+
+                <article className="producer-card-item">
+                  <MenuCard
+                    image={plantas}
+                    url='/director/fields'
                   />
                 </article>
               </div>

@@ -23,6 +23,7 @@ export * from './ProducerReports.jsx';
 
 //Páginas Director
 export * from './DirectorReports.jsx';
+export * from './DirectorFields.jsx';
 
 //Páginas Asesor
 export * from './ConsultantReports.jsx';

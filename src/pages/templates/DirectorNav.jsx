@@ -34,6 +34,14 @@ export const DirectorNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
+                        to='/director/fields'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Parcelas
+                    </NavLink>
+                </li>
+                
+                <li>
+                    <NavLink
                         to='/director/reports'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Reportes
