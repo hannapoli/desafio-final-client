@@ -125,33 +125,74 @@ const getAllAlertsByUser = useCallback(async (email) => {
                 }
       }
 
-      const addParcel = async (nombrecampo, shape) => {
+      const addParcelApi = async (nombrecampo, shape) => {
         if(!nombrecampo || !shape) return
         try {
-            const firebaseUser = auth.currentUser;
-                    if (!firebaseUser) {
-                      console.error('No hay usuario autenticado en Firebase');
-                      return;
-                    }
-                    
-                    const token = await firebaseUser.getIdToken();
-                    
+                              
             const body = {nombrecampo, shape}
-            const response = await fetchData(
-                `${backendUrl}/agregarlote`,
-                'POST',
-                body,
-                null
-                );
+                const response = await fetchData(
+                    `${apiDataUrl}/agregarlote`,
+                    'POST',
+                    body,
+                    null
+                    );
                     
-                    console.log('parcela creada correctamente', response);
+                    console.log('respuesta al crear parcela', response);
                     // aquí debería ir la llamada al back para crear
                     return response
 
                 } catch (error) {
+                  console.log(error)
                     setError('Error al crear la parcela')    
                 }
       }
+
+      const createParcel = async (uid_parcel, uid_producer,name_parcel,product_parcel,coordinates_parcel, photo) => {
+        
+          try {
+            const firebaseUser = auth.currentUser;
+
+            if (!firebaseUser) {
+              throw new Error('No hay usuario autenticado en Firebase');
+            }
+
+            const token = await firebaseUser.getIdToken();
+
+            const formData = new FormData();
+            formData.append('uid_parcel', uid_parcel);
+            formData.append('uid_producer', uid_producer);
+            formData.append('name_parcel', name_parcel);
+            formData.append('product_parcel', product_parcel);
+            formData.append('coordinates_parcel', JSON.stringify(coordinates_parcel));
+            if (photo) formData.append('photo', photo);
+console.log('entra en create Parcel', {formData})
+            const response = await fetch(`${backendUrl}/producer/createParcel`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formData,
+            });
+
+            console.log(response, 'create parcels');
+
+            if (!response.ok) {
+              let errorMsg = 'Error al crear parcela';
+              try {
+                const err = await response.json();
+                errorMsg = err.msg || errorMsg;
+              } catch (_) {}
+              throw new Error(errorMsg);
+            }
+
+            return await response.json();
+
+          } catch (error) {
+            console.error('createParcel error:', error);
+            throw error; // importante: propagar el error al componente
+          }
+        };
+
 
       const deleteParcel = async (uid_parcel) => {
        
@@ -208,7 +249,8 @@ const getAllAlertsByUser = useCallback(async (email) => {
         getAllAlertsByUser,
         getAllInfoMeteoByUser,
         HealthMap,
-        addParcel,
+        addParcelApi,
+        createParcel,
         deleteParcel,
         bboxCenter
         }

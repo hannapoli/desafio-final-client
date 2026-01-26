@@ -12,10 +12,12 @@ export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
   const [currentLayer, setCurrentLayer] = useState('osm');
   const [popupPosition, setPopupPosition] = useState(null);
-  const [createParcel, setCreateParcel] = useState(null);
+  // const [createParcel, setCreateParcel] = useState(null);
+  const [imagen, setImagen] = useState(null);
+  const [errorCrear, setErrorCrear] = useState(null)
   
-  const {bboxCenter} = userMap()
-  const { polygons, addParcel, addPolygon, center } = useContext(MapsContext);
+  const {bboxCenter, addParcelApi, createParcel} = userMap()
+  const { polygons, addParcel, addPolygon, center, } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   const tileLayers = {
@@ -83,33 +85,52 @@ export default function MapView({ alertas }) {
     }
   }, [polygon]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const form = e.target;
     const nombreparcela = form.nombreparcela.value;
     const cultivo = form.cultivo.value;
 
-    addParcel({
-      nombreparcela,
-      cultivo,
-      polygon,
-    });
+    try {
+      const crear = await addParcelApi(nombreparcela, polygon);
 
-    addParcel(nombreparcela, cultivo, user.uid, polygon)
- 
-    setPopupPosition(null);
+      if (crear.res === 'error') {
+        setErrorCrear(crear.info);
+        console.log({errorCrear})
+        return;
+      }
+
+      const polygonClosed = [...polygon, polygon[0]];
     
-    
+      const respuesta = await createParcel(
+        crear.id_lote,
+        user.uid,
+        nombreparcela,
+        cultivo,
+        polygonClosed,
+        imagen
+      );
+
+      console.log('Parcela creada:', respuesta);
+      setPopupPosition(null);
+
+    } catch (error) {
+      console.error(error);
+      setErrorCrear(error.message);
+    }
   };
 
   const handleAlerta = (e) => {
     console.log(e.target)
 
   }
-
+  console.log({polygon})
   if (!center) return <p>Cargando mapa...</p>;
 
   return (
+    
+<div>
     <MapContainer center={center} zoom={15} style={{ height: '400px', width: '100%' }}>
       <TileLayer {...tileLayers[currentLayer]} />
 
@@ -125,6 +146,15 @@ export default function MapView({ alertas }) {
               required
             />
             <input type="text" name="cultivo" placeholder="Cultivo" required />
+            <label htmlFor="photo">Imagen del Artículo</label>
+            <input
+                    type="file"
+                    id="photo"
+                    name="photo"
+                    accept="photo/*"
+                    onChange={(e) => setImagen(e.target.files[0])}
+                    required
+                />
             <button type="submit">Guardar parcela</button>
           </form>
         </Popup>
@@ -167,7 +197,8 @@ export default function MapView({ alertas }) {
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
       <ClickablePolygon positions={polygons} />
     </MapContainer>
-    /* <pre>{JSON.stringify(polygon, null, 2)}</pre> */
+     {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
+     </div>
   );
 }
 
