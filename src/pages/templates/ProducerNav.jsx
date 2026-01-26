@@ -1,20 +1,21 @@
 import { Link, NavLink, useNavigate } from 'react-router';
 import { useAuth } from '../../hooks/useAuth';
-import { useState } from 'react';
+import { useNav } from '../../contexts/NavContext';
 import './Nav.css'
 
 export const ProducerNav = () => {
-    const { logout } = useAuth();
-    const navigate = useNavigate();
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const { isNavOpen, setIsNavOpen } = useNav();
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsNavOpen(!isNavOpen);
 
-    const handleLogout = async (e) => {
-        e.preventDefault();
-        await logout();
-        navigate('/');
-    };
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await logout();
+    setIsNavOpen(false);
+    navigate('/');
+  };
 
     return (
         <nav className='flexContainer'>
@@ -29,7 +30,7 @@ export const ProducerNav = () => {
                 <span></span>
             </div>
 
-            <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
+            <ul className={`navMenu ${isNavOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
                         to='/producer/dashboard'

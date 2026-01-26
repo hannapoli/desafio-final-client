@@ -6,6 +6,8 @@ export const Footer = () => {
     <footer className='footer fullContainer flexContainer'>
         <p>&copy; 2026 AgroSync</p>
         <p><Link to='#'>Todos derechos reservados</Link></p>
+              <a href="#">Privacidad</a>
+              <a href="#">Contacto</a>
       </footer>
   )
 }

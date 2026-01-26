@@ -14,7 +14,9 @@ function App() {
     <>
       <AuthProvider>
         <MapsProvider>
-          <AppRoutes />
+          <div className="viewport-layout">
+            <AppRoutes />
+          </div>
        </MapsProvider>
       </AuthProvider>
     </>

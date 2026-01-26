@@ -3,51 +3,63 @@ import fieldImg from '/mis_parcelas.png';
 import cropImg from '/parcelas.png';
 import messageImg from '/mensajes.png';
 
-import "./ProducerDashboard.css"
+import "./ProducerDashboard.css";
 
 export const ProducerDashboard = () => {
-
-return (
-    /* Clase base cambiada para evitar heredar el fondo del Home */
+  return (
     <div className="dashboard-producer-container">
 
-      {/* Secciones renombradas */}
-      <section className="dashboard-producer-hero">
-        <span>
-          <img className="dashboard-logo-icon" src="/logo.png" alt="AgroSync" />
-        </span>
-        <h1 className="dashboard-title">Panel de Gestión</h1>
-        <p className="dashboard-description">
+      {/* Capa de fondo */}
+      <div className="dashboard-producer-bg" />
+
+      {/* Contenido */}
+      <div className="dashboard-producer-content-wrapper">
+
+        <section className="dashboard-producer-hero">
+          <span>
+            <img
+              className="dashboard-logo-icon"
+              src="/logo.png"
+              alt="AgroSync"
+            />
+          </span>
+
+          <h1 className="dashboard-title">Panel de Gestión</h1>
+
+          <p className="dashboard-description">
           ¡Te damos la bienvenida! Aquí puedes gestionar tus parcelas, monitorear cultivos 
           y revisar tus mensajes de soporte técnico.
-        </p>
-      </section>
+          </p>
+        </section>
 
-      <section className="dashboard-producer-content">
-        <div className="dashboard-grid-cards">
-          <article className="producer-card-item">
-            <MenuCard
-              image={fieldImg}
-              url='/producer/fields/all'
-            />
-          </article>
+        <section className="dashboard-producer-content">
+          <div className="dashboard-grid-cards">
 
-          <article className="producer-card-item">
-            <MenuCard
-              image={cropImg}
-              url='/producer/fields/manage'
-            />
-          </article>
+            <article className="producer-card-item">
+              <MenuCard
+                image={fieldImg}
+                url="/producer/fields/all"
+              />
+            </article>
 
-          <article className="producer-card-item">
-            <MenuCard
-              image={messageImg}
-              url='/producer/messages'
-            />
-          </article>
-        </div>
+            <article className="producer-card-item">
+              <MenuCard
+                image={cropImg}
+                url="/producer/fields/manage"
+              />
+            </article>
 
-      </section>
+            <article className="producer-card-item">
+              <MenuCard
+                image={messageImg}
+                url="/producer/messages"
+              />
+            </article>
+
+          </div>
+        </section>
+
+      </div>
     </div>
   );
 };
