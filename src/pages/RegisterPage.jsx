@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
-
+import { Terminos } from '../components/Terminos';
 import "./RegisterPage.css"
+import '../components/PopUp.css';
+
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    role: ''
+    role: '',
+    accept: false
   });
+
+  const [showTerms, setShowTerms] = useState(false);
 
   const { register, loading, authError, setAuthError } = useAuth();
   const navigate = useNavigate();
@@ -21,14 +26,19 @@ export const RegisterPage = () => {
   }, [setAuthError]);
 
   const handleChange = (e) => {
+    const { name, type, value, checked } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: type === 'checkbox' ? checked : value
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.accept) {
+      setAuthError('Debes aceptar los términos y condiciones para registrarte.');
+      return;
+    }
     try {
       await register(formData);
       navigate('/auth/login', {
@@ -44,13 +54,13 @@ export const RegisterPage = () => {
       <section className='register-container flexColumn centeredContent'>
         <div className="glass register-glass">
           <div className="login-brand">
-              <img
-                className="logo-login"
-                src="/logo.png"
-                alt="AgroSync"
-              />
-              <span className="brand-name-login">AgroSync</span>
-            </div>
+            <img
+              className="logo-login"
+              src="/logo.png"
+              alt="AgroSync"
+            />
+            <span className="brand-name-login">AgroSync</span>
+          </div>
           <h2 className="login-title">Regístrate</h2>
 
           {authError && <p className='errorMessage'>{authError}</p>}
@@ -110,6 +120,21 @@ export const RegisterPage = () => {
               </select>
 
             </div>
+
+            <div>
+              <input
+                type="checkbox"
+                id="accept"
+                name="accept"
+                checked={formData.accept}
+                onChange={handleChange}
+              />
+              <label htmlFor="accept">
+                Acepto los <span className='text-link' onClick={() => setShowTerms(true)}>términos y condiciones</span>
+              </label>
+            </div>
+
+            <Terminos showPopup={showTerms} onClose={() => setShowTerms(false)} />
             <button className='register-btn' type='submit' disabled={loading}>
               {loading ? 'Registrando...' : 'Registrarse'}
             </button>

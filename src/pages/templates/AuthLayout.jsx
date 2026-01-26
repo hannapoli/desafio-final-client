@@ -1,12 +1,10 @@
 import { Outlet } from "react-router";
-import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 
-export const AppLayout = () => {
+export const AuthLayout = () => {
   return (
-    <div className="app-layout">
-      <Header />
-      <main className="app-main">
+    <div>
+      <main className="auth-layout">
         <Outlet />
       </main>
       <Footer />

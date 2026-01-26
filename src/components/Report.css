@@ -35,6 +35,12 @@
     border-color: darkgreen;
 }
 
+.file-list {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #555;
+}
+
 .report-form .submit-btn {
     margin-top: 0.5rem;
     padding: 0.9rem 1.2rem;

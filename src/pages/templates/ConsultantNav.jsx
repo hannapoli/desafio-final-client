@@ -20,7 +20,10 @@ export const ConsultantNav = () => {
     };
     return (
         <nav className='flexContainer'>
-            <Link to='/' className='navLogo'>AgroSync</Link>
+            <Link to='/' className='navbar-brand' style={{ textDecoration: 'none' }}>
+                <img className="logo" src="/logo.png" alt="AgroSync" />
+                <span className="brand-name">AgroSync</span>
+            </Link>
 
             <div className='navMenuIcon' onClick={toggleMenu}>
                 <span></span>
@@ -31,9 +34,25 @@ export const ConsultantNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
-                        to='/consultant/alerts'
+                        to='/consultant/fields'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mis alertas
+                        Parcelas
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to='/consultant/reports'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Reportes
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to='/consultant/messages'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mensajes
                     </NavLink>
                 </li>
 

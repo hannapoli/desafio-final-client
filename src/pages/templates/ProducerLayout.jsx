@@ -1,16 +1,15 @@
 import { Outlet } from 'react-router';
-import { Header } from '../../components/Header';
+import { useEffect } from 'react';
 import { ProducerNav } from './ProducerNav';
+import { useNav } from '../../contexts/NavContext';
 
 export const ProducerLayout = () => {
-    return (
-        <>
-            <Header>
-                <ProducerNav />
-            </Header>
-            <main className='producer-main'>
-                <Outlet />
-            </main>
-        </>
-    );
+  const { setNav } = useNav();
+
+  useEffect(() => {
+    setNav(<ProducerNav />);
+    return () => setNav(null);
+  }, [setNav]);
+
+  return <Outlet />;
 };

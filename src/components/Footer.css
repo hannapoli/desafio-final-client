@@ -1,44 +1,58 @@
-footer {
+/* ===== FOOTER (BLINDADO) ===== */
+
+footer.footer {
   width: 100%;
+  height: auto;        
+  min-height: 60px;    /* opcional */
+  padding: 1rem 1.5em;
+
+  flex-shrink: 0;
+
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0.8em;
+
+  padding: 0 1.5em;
   gap: 0.5em;
+
+  background-color: #f0d93b; /* AMARILLO DE SIEMPRE */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* ================= TEXTO ================= */
 
-footer p,
-footer a {
-    font-size: 0.9rem;
-    color: white;
+footer.footer p,
+footer.footer a {
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  text-decoration: none;
 }
 
-footer a:hover {
-    color: grey;
+.textLink:hover {
+  color: #8a8787;
+  cursor: pointer;
 }
+
 /* ===============================
             768px
 =================================== */
 @media screen and (min-width: 768px) {
-    footer {
-        padding: 1em;
-    }
+  footer.footer {
+    padding: 0 2em;
+  }
 
-    footer p,
-    footer a {
-        font-size: 0.9rem;
-    }
+  footer.footer p,
+  footer.footer a {
+    font-size: 0.95rem;
+  }
 }
-/* 768px */
+
 /* ===============================
             992px
 =================================== */
 @media screen and (min-width: 992px) {
-
-    footer p,
-    footer a {
-        font-size: 1rem;
-    }
+  footer.footer p,
+  footer.footer a {
+    font-size: 1rem;
+  }
 }
-/* 992px */

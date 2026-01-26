@@ -1,22 +1,23 @@
 import { MenuCard } from '../components/MenuCard';
-import fieldImg from '../assets/images/field.jpg';
-import cropImg from '../assets/images/fieldwork.jpg';
-import messageImg from '../assets/images/email.jpg';
+import { ChatBot } from '../components/ChatBot';
+import messageImg from '/mensajes.png';
 
 export const AnalystDashboard = () => {
   return (
     <>
-    <section className='flexColumn centeredContent fullHeight'>
-      <h1 className='centeredText'>Panel de productor</h1>
-      <div className='menu-card-list flexContainer'>
-        <MenuCard
-          logo='✉️'
-          text='Mensajes'
-          image={messageImg}
-          url='/analyst/messages'
-        />
+      <div className="dashboard-producer-container">
+        <section className='flexColumn centeredContent fullHeight'>
+          <h1 className='centeredText'>Panel de Gestión</h1>
+          <div className='menu-card-list flexContainer'>
+            <MenuCard
+              text='Mensajes'
+              image={messageImg}
+              url='/analyst/messages'
+            />
+          </div>
+        </section>
       </div>
-      </section>
+      <ChatBot />
     </>
   );
 }
