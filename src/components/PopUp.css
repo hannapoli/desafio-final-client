@@ -63,7 +63,7 @@ border-radius: 10px;
 
 /* Títulos dentro del popup */
 .popup-content h3, .agreement-content h2 {
-    color: #2b701a;
+    color: var(--dark-green);
     font-size: 24px;
     font-weight: 800;
     margin: 0;
@@ -84,7 +84,7 @@ border-radius: 10px;
 
 .popup-content input:focus {
     outline: none;
-    border-color: #2b701a;
+    border-color: var(--dark-green);
     background-color: white;
 }
 
@@ -94,7 +94,7 @@ border-radius: 10px;
     height: 50px;
     border-radius: 14px;
     border: none;
-    background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
     color: white;
     font-size: 16px;
     font-weight: 800;

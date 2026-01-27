@@ -94,7 +94,7 @@ export const DirectorReports = () => {
     return (
         <>
             <section>
-                <h1 className='centeredText'>Mis Reportes</h1>
+                <h1 className='centeredText'>Mis reportes</h1>
                 {loading && <p>Cargando reportes...</p>}
                 {error && <p className='errorMessage'>{error}</p>}
                 <ul className='report-list'>

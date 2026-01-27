@@ -2,7 +2,6 @@
 
 .register-container {
   min-height: calc(100vh - 60px);
-  background-image: url("/planta-mobile.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom;
@@ -25,10 +24,6 @@
   width: 100%;
   max-width: 320px;
   padding: 1.5rem 1rem; 
-
-  background: rgba(255, 255, 255, 0.486);
-  backdrop-filter: blur(2px);
-  border-radius: 18px;
 
   display: flex;
   flex-direction: column;
@@ -65,7 +60,7 @@
   text-align: center;
   font-size: 28px;
   font-weight: 800;
-  color: #2b701a;
+  color: var(--green-principal);
   margin: 16px 0;
 }
 
@@ -105,7 +100,7 @@
 
 .register-input:focus {
   outline: none;
-  border-color: #2b701a;
+  border-color: var(--green-principal);
 }
 
 .register-name { 
@@ -145,7 +140,7 @@
   height: 50px;
   border-radius: 14px; 
   border: none;
-  background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+  background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
   color: white;
   font-size: 16px;
   font-weight: 800;
@@ -179,7 +174,7 @@
 }
 
 .link-login a {
-  color: #2f7d3a;
+  color: var(--green-principal);
   font-weight: 800;
   text-decoration: none;
 }
@@ -189,14 +184,14 @@
 }
 
 .errorMessage {
-  color: #b00020;
+  color: var(--error-color);
   font-size: 14px;
   text-align: center;
   margin-bottom: 8px;
 }
 
 .text-link {
-  color: #2f7d3a;
+  color: var(--green-principal);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -268,15 +263,13 @@
 }
 
 /* ================= MODO OSCURO AUTOMÁTICO (REGISTER) ================= */
-
+/* 
 @media (prefers-color-scheme: dark) {
-  /* 1. Oscurecemos la tarjeta glass */
   .glass {
     background: rgba(30, 30, 30, 0.85) !important;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* 2. Textos principales y títulos */
   .login-title {
     color: #81c784 !important; 
   }
@@ -289,7 +282,6 @@
     color: #81c784 !important;
   }
 
-  /* 3. Inputs y Select: Fondo oscuro y letra blanca */
   .register-input,
   .register-select select {
     background-color: #2d2d2d !important;
@@ -297,24 +289,20 @@
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Color del placeholder para los inputs */
   .register-input::placeholder {
     color: rgba(255, 255, 255, 0.5) !important;
   }
 
-  /* Foco del input */
   .register-input:focus {
     border-color: #81c784 !important;
   }
 
-  /* 4. Botón */
   .register-btn {
     background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%) !important;
     color: white !important;
   }
 
-  /* Mensaje de error */
   .errorMessage {
     color: #ff5252 !important;
   }
-}
+} */

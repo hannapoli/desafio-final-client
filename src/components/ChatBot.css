@@ -5,7 +5,7 @@
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
     border: none;
     font-size: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -43,7 +43,7 @@
 }
 
 .chatbot-header {
-    background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
     color: #fff;
     padding: 1rem 1.5rem;
     display: flex;

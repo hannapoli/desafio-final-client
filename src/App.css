@@ -1,7 +1,7 @@
 /* ================= CONFIGURACIÓN DE CONTRASTE ================= */
 
 :root {
-  /* MODO CLARO */
+  /* MODO CLARO 
   --text-main: #0f172a;
   --text-muted: #64748b;
   --bg-app: #ffffff;
@@ -14,10 +14,32 @@
   --error-bg: #fef2f2;
   --error-border: #fecaca;
 
-  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow: rgba(0, 0, 0, 0.08); 
+  /*
+
+  /* MODO CLARO 2 */
+  --text-main: #2D3047;
+  --text-muted: #64748b;
+  --green-principal: #3A7D44;
+  --dark-blue: #2D3047;
+  --yellow: #F2C94C;
+  --grey: #F4F4F4;
+  --dark-green: #1E3D2F;
+
+  --success-color: #3A7D44;
+  --success-border: #bbf7d0;
+
+  --error-color: red;
+  --error-border: rgb(255, 138, 138);
+
+  --shadow: #2D3047;
+
+  --font-title: serif;
+  --font-body: serif;
+
 }
 
-/* ================= MODO OSCURO ================= */
+/* ================= MODO OSCURO ================= 
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -35,7 +57,7 @@
 
     --shadow: rgba(0, 0, 0, 0.3);
   }
-}
+} */
 
 /* ================= BASE ================= */
 
@@ -65,8 +87,18 @@ body {
 
 .centeredText {
   text-align: center;
+  color: var(--green-principal);
+  padding: 2rem
 }
 
+.flexColumn h1 {
+    padding: 2rem;
+    color: var(--green-principal)
+}
+
+.flexColumn h2 {
+    color: var(--green-principal)
+}
 /* ================= FEEDBACK ================= */
 
 .successMessage,
@@ -101,7 +133,7 @@ body {
   padding: 0.8rem 1rem;
   flex-shrink: 0;     
   z-index: 1000;
-  background-color: var(--bg-app);
+  background-color: var(--grey);
 }
 
 /* Footer.css */

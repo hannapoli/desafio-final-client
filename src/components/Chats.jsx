@@ -235,7 +235,7 @@ export const Chats = () => {
       {/* SIDEBAR */}
       <aside className="chats-sidebar">
         <section className="search-container">
-          <h3 className="messages-title">Messages</h3>
+          <h3 className="messages-title">Mensajes</h3>
 
           <div className="search-wrapper">
             <input
@@ -250,8 +250,8 @@ export const Chats = () => {
 
             {!newChatEmail && (
               <div className="placeholder-overlay">
-                <Icon name="search" color="#a0a0a0" size={16} />
-                <span>Search...</span>
+                <Icon name="search" color="#000000" size={16} />
+                <span>Buscar...</span>
               </div>
             )}
           </div>
@@ -292,7 +292,7 @@ export const Chats = () => {
                 }}
                 title="Eliminar chat"
               >
-                <Icon name="trash" color="#5f6368" size={20} />
+                <Icon name="trash" color="#000000" size={20} />
               </button>
             </div>
           ))}
@@ -301,7 +301,8 @@ export const Chats = () => {
 
       {/* CHAT */}
       <section className="chat-section">
-        {selectedChat ? (
+        <div className="chat-inner">
+          {selectedChat ? (
           <>
             <div className="users-div cabecera-nombre-chat">
               <span className="user-photo"></span>
@@ -340,7 +341,7 @@ export const Chats = () => {
                   className="message-textarea"
                 />
                 <button className="btn-send-msg" type="submit">
-                  <Icon name="airplane" color="#ffffff" size={22} />
+                  <Icon name="airplane" color="white" size={22} />
                 </button>
               </div>
             </form>
@@ -352,6 +353,7 @@ export const Chats = () => {
             </p>
           </div>
         )}
+        </div>
       </section>
     </div>
   );

@@ -15,8 +15,7 @@ footer.footer {
   padding: 0 1.5em;
   gap: 0.5em;
 
-  background-color: #f0d93b; /* AMARILLO DE SIEMPRE */
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--green-principal);
 }
 
 /* ================= TEXTO ================= */
@@ -24,12 +23,12 @@ footer.footer {
 footer.footer p,
 footer.footer a {
   font-size: 0.9rem;
-  color: #1a1a1a;
+  color: white;
   text-decoration: none;
 }
 
 .textLink:hover {
-  color: #8a8787;
+  color: var(--dark-blue);
   cursor: pointer;
 }
 

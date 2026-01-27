@@ -7,7 +7,21 @@ export const AdminDashboard = () => {
   return (
       <>
         <div className="dashboard-producer-container">
-          <h1 className='centeredText'>Panel de Gestión</h1>
+          <section className="dashboard-producer-hero">
+          <span>
+            <img
+              className="dashboard-logo-icon"
+              src="/logo.png"
+              alt="AgroSync"
+            />
+          </span>
+
+          <h1 className="dashboard-title">Panel de Gestión</h1>
+
+          <p className="dashboard-description">
+            ¡Te damos la bienvenida! Aquí puedes gestionar los usuarios de la plataforma y ponerte en contacto a través del chat.
+          </p>
+        </section>
           <section className="dashboard-producer-content">
             <div className="dashboard-grid-cards">
               <article className="producer-card-item">

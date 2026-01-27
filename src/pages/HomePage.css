@@ -2,7 +2,6 @@
   width: 100%;
   flex: 1;            
   
-  background-image: url("/landin.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -51,14 +50,13 @@
 .landing-hero h1 {
   font-size: clamp(28px, 5vw, 56px);
   font-weight: 800;
-  color: #234d2a;
+  color: var(--green-principal);
   margin: 0 0 14px;
 }
 
 .landing-hero p {
   font-size: 16px;
-  background-color: rgba(255, 255, 255, 0.658);
-  color: #3b3b3b;
+  color: var(--dark-blue);
   max-width: 720px;
   margin: 0 auto;
   line-height: 1.5;
