@@ -3,15 +3,18 @@ import { Polygon, useMap, Popup, GeoJSON, ImageOverlay } from 'react-leaflet';
 import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
 import { Legend } from './Legend';
+import { InfoMeteo } from '../InfoMeteo';
 
 
 
 export const  ClickablePolygon = ({ positions })  => {
+
   const {deleteParcel, parcels} = useContext(MapsContext)
-  const {HealthMap, getInfoMeteoByParcel} = userMap()
+  const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
   const [infoMeteo, setInfoMeteo] = useState(null)
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+  const [errorEliminar, setErrorEliminar] = useState(null)
 
   const map = useMap();
 
@@ -48,9 +51,36 @@ export const  ClickablePolygon = ({ positions })  => {
     console.log({respuesta})
     setHealthData(respuesta)
   }
-// console.log("Capa activa:", activeLayer);
-// console.log("Bounds:", healthData?.image_bounds);
- 
+
+  const eliminarParcela = async(p) => {
+    if(!p.uid_parcel) return
+    try {
+      const resp1 = await deleteParcelApi(p.uid_parcel)
+      // const resp1= {res: 'ok'}
+      // if(resp1.res === 'Error'){
+      //   setErrorEliminar(resp1.info)
+      if(!resp1){
+        setErrorEliminar('Error al eliminar la parcela')
+      
+      } else {
+        const resp = await deleteParcelBack(p.uid_parcel)
+        // console.log({resp}, 'delete')
+         if (!resp.ok) {
+            setErrorEliminar(resp.msg);
+          } else {
+            console.log({resp})
+            setErrorEliminar(null);
+            deleteParcel(p)
+            console.log('parcela eliminada' , resp)
+          }
+      }
+      
+    } catch (error) {
+      console.log(error)
+      setErrorEliminar(error)
+    }
+  }
+
 
   return (
     <>
@@ -64,21 +94,22 @@ export const  ClickablePolygon = ({ positions })  => {
       >
         
       <Popup>
-        <button onClick={()=>deleteParcel(p.uid_parcel)}>Eliminar</button>
+        <button onClick={()=>eliminarParcela(p)}>Eliminar</button>
         <button onClick={()=>overLay(p.uid_parcel)}>Ver salud del campo</button>
-        <p>Detalle del campo: </p>
-        <p>Nombre del campo: {p.name_parcel} </p>
-        <p>Cultivo: {p.product_parcel}</p>
-        {infoMeteo && (
-          <div>
-          <p>Temperatura: {infoMeteo.temperature} </p>
-        <p>Humedad Relativa: {infoMeteo.relative_humidity} </p>
-        <p>Precipitación: {infoMeteo.precipitation}</p>
-        <p>Nublado: {infoMeteo.cloud_cover}%</p>
-        <p>Velocidad del viento: {infoMeteo.wind_speed}</p>
-        <p>Dirección del viento: {infoMeteo.wind_direction}</p>
-        </div>
+       {errorEliminar ? (
+          <p>{errorEliminar}</p>
+        ) : (
+          <>
+            <p>Detalle del campo:</p>
+            <p>Nombre del campo: {p.name_parcel}</p>
+            <p>Cultivo: {p.id_cultivo}</p>
+
+            {infoMeteo && (
+              <InfoMeteo p={p} infoMeteo={infoMeteo} />
+            )}
+          </>
         )}
+
       </Popup>
       {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay

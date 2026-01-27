@@ -7,19 +7,20 @@ import LayerSwitcherControl from './LayerSwitcherControl';
 import { MapsContext } from '../../contexts/MapsContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { userMap } from '../../hooks/userMap';
+import { AddParcel } from '../AddParcel';
 
 export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
   const [currentLayer, setCurrentLayer] = useState('osm');
   const [popupPosition, setPopupPosition] = useState(null);
   // const [createParcel, setCreateParcel] = useState(null);
-  const [imagen, setImagen] = useState(null);
-  const [errorCrear, setErrorCrear] = useState(null)
+  
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
   const { polygons, addParcel, addPolygon, center, } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
+  
   const tileLayers = {
     osm: {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -85,42 +86,6 @@ export default function MapView({ alertas }) {
     }
   }, [polygon]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const nombreparcela = form.nombreparcela.value;
-    const cultivo = form.cultivo.value;
-
-    try {
-      const crear = await addParcelApi(nombreparcela, polygon);
-
-      if (crear.res === 'error') {
-        setErrorCrear(crear.info);
-        console.log({errorCrear})
-        return;
-      }
-
-      const polygonClosed = [...polygon, polygon[0]];
-    
-      const respuesta = await createParcel(
-        crear.id_lote,
-        user.uid,
-        nombreparcela,
-        cultivo,
-        polygonClosed,
-        imagen
-      );
-
-      console.log('Parcela creada:', respuesta);
-      setPopupPosition(null);
-
-    } catch (error) {
-      console.error(error);
-      setErrorCrear(error.message);
-    }
-  };
-
   const handleAlerta = (e) => {
     console.log(e.target)
 
@@ -136,29 +101,16 @@ export default function MapView({ alertas }) {
 
       <DrawControl onPolygonCreated={handlePolygonCreated} />
 
-      {popupPosition && (
-        <Popup position={popupPosition}>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="nombreparcela"
-              placeholder="Nombre de la parcela"
-              required
-            />
-            <input type="text" name="cultivo" placeholder="Cultivo" required />
-            <label htmlFor="photo">Imagen del Artículo</label>
-            <input
-                    type="file"
-                    id="photo"
-                    name="photo"
-                    accept="photo/*"
-                    onChange={(e) => setImagen(e.target.files[0])}
-                    required
-                />
-            <button type="submit">Guardar parcela</button>
-          </form>
+      
+        <Popup 
+          key={polygon.length}
+          autoClose={false}
+          position={popupPosition}
+          closeOnClick={false}
+          closeButton={true}>
+            <AddParcel polygon={polygon}/>
         </Popup>
-      )}
+      
 
       {Array.isArray(alertas) && alertas.map(a => {
         const coords = typeof a.coordinates_parcel === 'string' 
@@ -197,7 +149,7 @@ export default function MapView({ alertas }) {
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
       <ClickablePolygon positions={polygons} />
     </MapContainer>
-     {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
+     <pre>{JSON.stringify(polygon, null, 2)}</pre> 
      </div>
   );
 }
