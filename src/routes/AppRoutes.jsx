@@ -4,7 +4,7 @@ import { AppLayout } from '../pages/templates/AppLayout';
 import { PublicLayout } from '../pages/templates/PublicLayout';
 import { AuthLayout } from '../pages/templates/AuthLayout';
 
-import { HomePage, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
+import { HomePage, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerFieldInfo, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
 
 import { Chats } from '../components/Chats';
 import { PrivateRoutes } from './PrivateRoutes';
@@ -38,7 +38,6 @@ export const AppRoutes = () => {
         >
           <Route path='dashboard' element={<ProducerDashboard />} />
           <Route path='fields/all' element={<ProducerSeeFields />} />
-          <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
           <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<ProducerReports />} />

@@ -13,7 +13,6 @@ export * from './templates/AdminLayout.jsx';
 export * from './ProducerDashboard.jsx';
 export * from './ProducerSeeFields.jsx';
 export * from './ProducerFieldInfo.jsx';
-export * from './ProducerManageFields.jsx';
 export * from './ProducerReports.jsx';
 
 //Páginas Director

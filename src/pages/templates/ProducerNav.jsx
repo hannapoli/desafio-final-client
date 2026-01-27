@@ -47,13 +47,6 @@ export const ProducerNav = () => {
                 </li>
                 <li>
                     <NavLink
-                        to='/producer/fields/manage'
-                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Gestionar parcelas
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
                         to='/producer/reports'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Reportes

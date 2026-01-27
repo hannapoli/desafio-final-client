@@ -17,7 +17,7 @@ export default function MapView({ alertas }) {
   
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
-  const { polygons, addParcel, addPolygon, center, } = useContext(MapsContext);
+  const { polygons, addParcel, addPolygon, center } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   
