@@ -6,6 +6,7 @@ import { auth } from '../firebase/firebaseConfig';
 import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 import { Report } from '../components/Report';
 
+
 export const ProducerFieldInfo = () => {
   const { id } = useParams();
   const { user } = useAuth();
@@ -22,9 +23,9 @@ export const ProducerFieldInfo = () => {
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  /////////////////////////////////
-  const [dataPhoto, setDataPhoto] = useState(null);
   const [dataPoints, setDataPoints] = useState(null);
+  const [dataPhoto, setDataPhoto] = useState(null);
+
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
 
   useEffect(() => {
@@ -70,18 +71,19 @@ export const ProducerFieldInfo = () => {
           'POST',
           { image_url: parcel.photo_url }
         );
-        
+
         const receivedPoints = responsePoints.data;
-        
+        console.log(receivedPoints)
+
         // Convertir a array para mapear
         const pointsToPrint = Object.entries(receivedPoints).map(([key, value]) => {
           const { x, y, z } = value.aframe_position;
 
           return {
             id: key,
-            position: `${x} ${y} ${-z}`
+            position: `${x} ${y} ${z}`
           }
-          
+
         });
 
         setDataPoints(pointsToPrint)
@@ -96,9 +98,41 @@ export const ProducerFieldInfo = () => {
     getDataPoints();
   }, [parcel]);
 
-  // FETCH PARA OBTENER LA DATA A PINTAR EN EL COMPONENTE
+  // FETCH PARA OBTENER DATOS DE LA IMAGEN 360
+  useEffect(() => {
+    const getDataPhoto = async () => {
+      try {
 
-   /////////////////////////////////
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) {
+          setSubmitError('No hay usuario autenticado');
+          return;
+        }
+
+        const token = await firebaseUser.getIdToken();
+        console.log(token);
+        
+        const response = await fetch(
+        `${backendUrl}/producer/parcel/data/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+        const result = await response.json();
+        setDataPhoto(result.data || null);
+        setError(null);
+
+      } catch (err) {
+        setDataPhoto(null)
+        setError("Error al obtener la información de los datos de la parcela");
+      }
+    }
+
+    getDataPhoto();
+  }, [parcel]);
 
   useEffect(() => {
     if (user?.email) {
@@ -203,7 +237,11 @@ export const ProducerFieldInfo = () => {
             <pre>{JSON.stringify(parcel, null, 2)}</pre>
           </article>
 
-          <ViewerParcelProducer imageUrl={parcel.photo_url} points={dataPoints} /> {/* --- CUIDADO, SI CAMBIA EL CAMPO EN LA BBDD HAY QUE CAMBIAR ESTE CAMPO ---*/}
+          {!dataPoints && <p>Cargando hotspots</p>}
+          
+          {dataPoints && (
+            <ViewerParcelProducer imageUrl={parcel.photo_url} points={dataPoints} dataPhoto={dataPhoto}/>
+          )}
         </>
       )}
       <article className='flexColumn centeredContent'>
