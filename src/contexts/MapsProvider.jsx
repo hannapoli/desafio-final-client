@@ -72,9 +72,12 @@ export const MapsProvider = ({ children }) => {
         setParcels([...parcels, parcela])
     }
 
-    const deleteParcel = (polygono) => {
+    const deleteParcel = (parcel) => {
+      setParcels(prev =>
+        prev.filter(par => par !== parcel)
+      )
         setPolygons(prev => //prev es la versión már reciente del estado
-            prev.filter(pol => pol !== polygono))
+            prev.filter(pol => pol !== parcel.coordinates_parcel))
         if(polygons.length) bboxCenter()
     }
 
@@ -116,6 +119,7 @@ export const MapsProvider = ({ children }) => {
      return (
             <MapsContext.Provider value={{
                                             polygons, 
+                                            setPolygons,
                                             addParcel, 
                                             deleteParcel, 
                                             bboxCenter, 
