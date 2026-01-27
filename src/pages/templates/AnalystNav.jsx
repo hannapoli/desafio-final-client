@@ -34,6 +34,14 @@ export const AnaystNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
+                        to='/analyst/dashboard'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Inicio
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
                         to='/analyst/reports'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Mis informes
