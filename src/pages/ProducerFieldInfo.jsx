@@ -5,6 +5,7 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 import { Report } from '../components/Report';
+import { PopUp } from '../components/PopUp';
 
 
 export const ProducerFieldInfo = () => {
@@ -22,6 +23,7 @@ export const ProducerFieldInfo = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [dataPoints, setDataPoints] = useState(null);
   const [dataPhoto, setDataPhoto] = useState(null);
@@ -134,30 +136,30 @@ export const ProducerFieldInfo = () => {
     getDataPhoto();
   }, [parcel]);
 
-  useEffect(() => {
-    if (user?.email) {
-      setReportData(currentData => ({
-        ...currentData,
-        email_creator: user.email
-      }));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     setReportData(currentData => ({
+  //       ...currentData,
+  //       email_creator: user.email
+  //     }));
+  //   }
+  // }, [user]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setReportData(currentData => ({
-      ...currentData,
-      [name]: value
-    }));
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setReportData(currentData => ({
+  //     ...currentData,
+  //     [name]: value
+  //   }));
+  // };
 
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    setReportData(currentData => ({
-      ...currentData,
-      attached: files && files.length > 0 ? Array.from(files) : null
-    }));
-  };
+  // const handleFileChange = (e) => {
+  //   const files = e.target.files;
+  //   setReportData(currentData => ({
+  //     ...currentData,
+  //     attached: files && files.length > 0 ? Array.from(files) : null
+  //   }));
+  // };
 
   const handleSubmitReport = async (e) => {
     e.preventDefault();
@@ -204,7 +206,6 @@ export const ProducerFieldInfo = () => {
       }
 
       const result = await response.json();
-      // console.log('Reporte creado:', result);
       setSubmitSuccess(true);
 
       setReportData({
@@ -242,15 +243,23 @@ export const ProducerFieldInfo = () => {
           {dataPoints && (
             <ViewerParcelProducer imageUrl={parcel.photo_url} points={dataPoints} dataPhoto={dataPhoto}/>
           )}
+
+          <button 
+            onClick={() => setIsPopupOpen(true)} 
+            className='confirmBtn'
+            style={{marginTop: '2em'}}
+          >
+            Crear Reporte
+          </button>
         </>
       )}
-      <article className='flexColumn centeredContent'>
-        <h2>Crear Reporte</h2>
 
+      <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+        <h2>Crear Reporte</h2>
         {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
         {submitError && <p className='errorMessage'>{submitError}</p>}
-
-        <Report reportData={reportData}
+        <Report
+          reportData={reportData}
           onChange={handleInputChange}
           onFileChange={handleFileChange}
           onSubmit={handleSubmitReport}
@@ -258,7 +267,7 @@ export const ProducerFieldInfo = () => {
           submitLabel='Crear Reporte'
           disabledFields={{ email_creator: true }}
         />
-      </article>
+      </PopUp>
     </section>
   );
 }

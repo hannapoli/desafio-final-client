@@ -17,8 +17,8 @@ export const ProducerSeeFields = () => {
   const { fetchData, loading, error, setError } = useFetch();
   // const [parcels, setParcels] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const {getAllAlertsByUser, getAllInfoMeteoByUser} = userMap()
-  const {parcels, setParcels, parcel, selectedParcelId} = useContext(MapsContext)
+  const { getAllAlertsByUser, getAllInfoMeteoByUser } = userMap()
+  const { parcels, setParcels, parcel, selectedParcelId } = useContext(MapsContext)
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [reportData, setReportData] = useState({
@@ -41,7 +41,7 @@ export const ProducerSeeFields = () => {
           console.error('No hay usuario autenticado en Firebase');
           return;
         }
-        
+
         const token = await firebaseUser.getIdToken();
         // console.log('llamada')
         const response = await fetchData(
@@ -50,7 +50,7 @@ export const ProducerSeeFields = () => {
           null,
           token
         );
-        
+
         // console.log('Datos de todas las parcelas:', response);
         setParcels(response.data || []);
       } catch (err) {
@@ -65,7 +65,7 @@ export const ProducerSeeFields = () => {
     const alertas = getAllAlertsByUser(user.email)
 
     getParcels();
-    
+
   }, [user, backendUrl, fetchData]);
 
   // console.log('desde see fields', {parcel})
@@ -180,12 +180,12 @@ export const ProducerSeeFields = () => {
 
   return (
     <>
-          {loading && <p>Cargando parcelas...</p>}
+      {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
-    <section className='flexContainer CenteredContent'>
-      <h1 className='centeredText'>Mis Parcelas</h1>
+      <section className='flexContainer CenteredContent'>
+        <h1 className='centeredText'>Mis Parcelas</h1>
 
-      {/* {parcels.length === 0 ? (
+        {/* {parcels.length === 0 ? (
         <p>No tienes parcelas registradas.</p>
       ) : (
         <article>
@@ -202,22 +202,41 @@ export const ProducerSeeFields = () => {
           ))}
         </article>
       )}    */}
-    </section>
-    {!loading && <Map parcels= {parcels}/>}
+      </section>
+      {!loading && <Map parcels={parcels} />}
 
-    {parcel && <ParcelDetails/>}
+      {parcel && <ParcelDetails />}
 
-    <div className='btn-container'>
-    <button 
-      onClick={handleOpenPopup}
-      className='btn-report'
-      style={{cursor: selectedParcelId ? 'pointer' : 'not-allowed'
-        }}
-        disabled
-    >Crear un reporte</button> 
-
-    </div>
-
+      <div className='btn-container'>
+        <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
+        <button
+          onClick={handleOpenPopup}
+          className='btn-report'
+          style={{
+            cursor: selectedParcelId ? 'pointer' : 'not-allowed'
+          }}
+          disabled={!selectedParcelId}
+        >Crear un reporte</button>
+        {selectedParcelId && (
+          <p className='selectedParcel'>
+            Parcela seleccionada: {selectedParcelId}
+          </p>
+        )}
+      </div>
+      <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+        <h2>Crear Reporte</h2>
+        {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
+        {submitError && <p className='errorMessage'>{submitError}</p>}
+        <Report
+          reportData={reportData}
+          onChange={handleInputChange}
+          onFileChange={handleFileChange}
+          onSubmit={handleSubmitReport}
+          submitLoading={submitLoading}
+          submitLabel='Crear Reporte'
+          disabledFields={{ email_creator: true }}
+        />
+      </PopUp>
     </>
   );
 }
