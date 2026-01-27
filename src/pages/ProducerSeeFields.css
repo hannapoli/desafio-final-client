@@ -11,3 +11,15 @@
     border: none;
     border-radius: 5px;
 }
+
+.selectedParcel {
+    margin-top: 2em;
+    font-size: 1.2rem;
+    color: #333;  
+}
+
+.description-text {
+    margin-bottom: 1.3em;
+    font-size: 1.1rem;
+    color: #000;
+}
