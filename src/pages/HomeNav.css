@@ -1,6 +1,6 @@
 .home-nav {
   width: 100%;
-  background-color: #f3f2f0;
+  background-color: var(--grey);
   display: flex;
   flex-direction: column;
   padding: 0.75rem 1rem;
@@ -12,7 +12,7 @@
 
 .home-nav .navbar-brand {
   width: 100%;
-  display: flex;
+  display: flex;                                                                          
   align-items: center;
   justify-content: space-between;
 }
@@ -34,7 +34,7 @@
 .brand-name {
   font-size: 18px;
   font-weight: 800;
-  background: linear-gradient(to right, #308a55 53%, #1b5e20 47%);
+  background: linear-gradient(to right, var(--green-principal) 53%, var(--dark-green) 47%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -46,7 +46,7 @@
   background: none;
   border: none;
   font-size: 1.8rem;
-  color: #308a55;
+  color: var(--dark-green);
   cursor: pointer;
 }
 
@@ -84,8 +84,8 @@
 
 
 .btn-login {
-  border: 1px solid #308a55; 
-  color: #308a55;
+  border: 1px solid var(--dark-green); 
+  color: var(--green-principal);
   background: transparent;
 }
 
@@ -95,7 +95,7 @@
 
 
 .btn-register { 
-  background: linear-gradient(180deg, #5aa344 0%, #2f7d3a 100%); 
+  background: linear-gradient(180deg, #5aa344 0%, var(--green-principal) 100%); 
   color: white; 
   border: none; 
 }

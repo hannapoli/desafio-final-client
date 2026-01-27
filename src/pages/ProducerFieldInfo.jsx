@@ -224,8 +224,8 @@ export const ProducerFieldInfo = () => {
   };
 
   return (
-    <section className='flexColumn centeredContent'>
-      <h1>Información de la Parcela</h1>
+    <section className='flexColumn report'>
+      <h1 className="centeredContent">Información de la Parcela</h1>
 
       {loading && <p>Cargando la información de la parcela...</p>}
       {error && <p>Error al cargar la parcela: {error}</p>}
@@ -245,7 +245,7 @@ export const ProducerFieldInfo = () => {
         </>
       )}
       <article className='flexColumn centeredContent'>
-        <h2>Crear Reporte</h2>
+        <h2>Crear reporte</h2>
 
         {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
         {submitError && <p className='errorMessage'>{submitError}</p>}

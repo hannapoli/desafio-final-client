@@ -2,12 +2,22 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    padding: 1.2em;
-    background: #fff;
+    padding: 1.2rem;
+    background: var(--grey);
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+    width: 100%; 
+    min-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
+.report {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
 .form-group {
     display: flex;
     flex-direction: column;
@@ -17,34 +27,34 @@
 .report-form label {
     font-size: 1rem;
     font-weight: 500;
-    color: #333;
+    color: var(--dark-blue);
 }
 
 .report-form input,
 .report-form textarea {
     padding: 0.7rem 1rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--grey);
     border-radius: 0.5rem;
     font-size: 1rem;
-    background: #f9fafb;
     transition: border 0.2s;
+    width: 100%; box-sizing: border-box;
 }
 
 .report-form input:focus,
 .report-form textarea:focus {
-    border-color: darkgreen;
+    border-color: var(--dark-green);
 }
 
 .file-list {
     margin-top: 0.5em;
     font-size: 0.9em;
-    color: #555;
+    color: var(--grey);
 }
 
 .report-form .submit-btn {
     margin-top: 0.5rem;
     padding: 0.9rem 1.2rem;
-  background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
     color: #fff;
     border: none;
     border-radius: 0.5rem;
@@ -54,14 +64,49 @@
     transition: background 0.2s;
 }
 
+.report-form .submit-btn:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
 .report-form .submit-btn:disabled {
-    background: #a5b4fc;
+    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
     cursor: not-allowed;
+}
+
+@media (min-width: 480px) {
+  .report-form {
+    max-width: 420px;
+    padding: 1.8rem;
+    gap: 1.4rem;
+  }
+
+  .report-form input,
+  .report-form textarea {
+    font-size: 1.05rem;
+    padding: 0.85rem 1.1rem;
+  }
 }
 
 @media (min-width: 600px) {
     .report-form {
-        max-width: 420px;
-        margin: 0 auto;
+        max-width: 550px; 
+        padding: 2rem
     }
 }
+
+@media (min-width: 900px) {
+  .report-form {
+    max-width: 700px;
+    padding: 2.2rem;
+    gap: 1.6rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .report-form {
+    max-width: 1100px;
+  }
+}
+

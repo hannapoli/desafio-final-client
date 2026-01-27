@@ -2,7 +2,6 @@
 
 .login-body-container {
   min-height: calc(100vh - 60px); /* min-height para que no se corte el fondo */
-  background-image: url("/tractor1.png");
   background-repeat: no-repeat;
   background-size: 180%;
   background-position: 60% 10%;
@@ -21,10 +20,6 @@
   max-width: 320px;
   margin-top: 10vh;
   padding: 24px 16px;
-
-  background: rgba(255, 255, 255, 0.486);
-  backdrop-filter: blur(2px);
-  border-radius: 18px;
 
   display: flex;
   flex-direction: column;
@@ -49,7 +44,7 @@
 .brand-name-login {
   font-size: 40px;
   font-weight: 800;
-  background: linear-gradient(to right, #308a55 53%, #1b5e20 47%);
+  background: linear-gradient(to right, #308a55 53%, var(--dark-green) 47%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -61,7 +56,7 @@
   text-align: center;
   font-size: 28px;
   font-weight: 800;
-  color: #2b701a;
+  color: var(--green-principal);
   margin: 16px 0;
 }
 
@@ -129,7 +124,7 @@
 /* ================= BOTÓN INICIAR SESIÓN ================= */
 
 .login-button {
-  background: linear-gradient(180deg, #6bb850 0%, #2f7d3a 100%);
+  background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
   color: white;
   font-weight: 800;
   margin-bottom: 0.75rem;
@@ -156,7 +151,6 @@
 }
 
 .login-google:hover {
-  background-color: #fcfcfc;
   border-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
@@ -173,17 +167,17 @@
   text-align: center;
   margin-top: 16px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.55);
+  color: var(--dark-blue);
 }
 
 .login-register {
   margin-top: 20px;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--dark-blue);
 }
 
 .login-register a {
   margin-left: 4px;
-  color: #2f7d3a;
+  color: var(--green-principal);
   font-weight: 800;
   text-decoration: none;
 }
@@ -194,7 +188,7 @@
 
 .login-forgot {
   margin-top: 14px;
-  color: #2b701a;
+  color: var(--green-principal);
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -209,7 +203,6 @@
 
 @media (min-width: 600px) {
   .login-body-container {
-    background-image: url("/tractor.png");
     background-size: cover;
     background-position: center;
     position: relative;
@@ -284,18 +277,18 @@
 }
 
 /* ================= MODO OSCURO AUTOMÁTICO ================= */
-
+/*
 @media (prefers-color-scheme: dark) {
-  /* 1. Oscurecemos la tarjeta de cristal */
+
   .login-glass {
-    background: rgba(30, 30, 30, 0.8) !important; /* Fondo gris muy oscuro */
+    background: rgba(30, 30, 30, 0.8) !important; 
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* 2. El título y los textos generales pasan a blanco o verde claro */
+  
   .login-title, 
   .login-forgot {
-    color: #81c784 !important; /* Un verde más claro para que resalte en negro */
+    color: #81c784 !important; 
   }
 
   .login-forgot:hover {
@@ -306,7 +299,6 @@
     color: rgba(255, 255, 255, 0.7) !important;
   }
 
-  /* 3. Inputs: Fondo oscuro y letra blanca */
   .email-input,
   .password-input {
     background-color: #2d2d2d !important;
@@ -314,13 +306,11 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Cambiamos el color del texto de sugerencia (placeholder) */
   .email-input::placeholder,
   .password-input::placeholder {
     color: rgba(255, 255, 255, 0.5) !important;
   }
 
-  /* 4. Botón de Google: Lo ponemos en tono oscuro para que no desentone */
   .login-google {
     background-color: #333333 !important;
     color: #ffffff !important;
@@ -330,4 +320,4 @@
   .login-google:hover {
     background-color: #444444 !important;
   }
-}
+}*/

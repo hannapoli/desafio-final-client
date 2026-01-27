@@ -5,7 +5,7 @@
     margin-top: 0.5em;
 }
 .itemInfo {
-    background: white;
+    background: var(--grey);
     border-radius: 15px;
     padding: 1.5em;
     box-shadow: 0 4px 15px rgba(107, 91, 149, 0.1);
@@ -36,7 +36,7 @@
 }
 
 .text-green {
-    color: darkgreen;
+    color: var(--dark-green);
 }
 
 .search-input {

@@ -5,12 +5,12 @@
 /* ===== THEME LOCAL DEL CHAT (NO GLOBAL) ===== */
 .chats-container {
   --chat-primary: #5aa344;
-  --chat-primary-hover: #2f7d3a;
+  --chat-primary-hover: var(--green-principal);
   --chat-bg: #EAF4EC;
   --chat-bg-soft: #ffffff;
-  --chat-text-main: #1b5e20;
-  --chat-text-muted: #6b7280;
-  --chat-accent: #FFD700;
+  --chat-text-main: var(--dark-green);
+  --chat-text-muted: #64748B;
+  --chat-accent: var(--yellow);
 
   --radius: 16px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -20,8 +20,10 @@
   min-height: 0;        /* ⬅ CLAVE para evitar scroll de página */
   background: var(--chat-bg);
   position: relative;
+  min-height: 0;
   overflow: hidden;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 100vh;
 }
 
 /* ================================================= */
@@ -49,7 +51,7 @@
 .messages-title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--chat-text-main);
+  color: var(--green-principal);
   margin-bottom: 12px;
 }
 
@@ -73,7 +75,7 @@
 }
 
 .input-chat:focus {
-  border-color: rgba(43,130,61,0.55);
+  border-color: var(--dark-green);
   box-shadow: 0 0 0 3px rgba(43,130,61,0.12);
 }
 
@@ -155,7 +157,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #e2e8f0 url("/default-user-photo.png") center/cover;
+  background: var(--grey) url("/default-user-photo.png") center/cover;
   flex-shrink: 0;
 }
 
@@ -183,6 +185,7 @@
   background: var(--chat-bg-soft);
   position: relative;
   padding: 16px;
+  overflow: hidden;
 }
 
 .cabecera-nombre-chat {
@@ -379,25 +382,21 @@
 /* ================================================= */
 /* ===== CHAT – MODO OSCURO (EQUILIBRADO / PRO) ===== */
 /* ================================================= */
-
+/*
 @media (prefers-color-scheme: dark) {
   .chats-container {
     --chat-bg: #202c33; 
     --chat-bg-soft: #111b21;  
     --chat-border: #2a3942; 
 
-    /* Texto: Claridad sin ser blanco neón */
     --chat-text-main: #e9edef;
     --chat-text-muted: #8696a0;
 
-    /* Acento: Verde corporativo suave */
     --chat-primary: #00a884;
     --chat-primary-hover: #06cf9c;
     
     background-color: var(--chat-bg) !important;
   }
-
-  /* ================= SIDEBAR ================= */
 
   .chats-sidebar {
     background: var(--chat-bg-soft) !important;
@@ -416,8 +415,6 @@
     border-radius: 8px;
   }
 
-  /* ================= LISTA DE CHATS ================= */
-
   .chat-item {
     border-bottom: 1px solid var(--chat-border);
   }
@@ -430,7 +427,6 @@
     background: #2a3942 !important;
   }
 
-  /* ================= CABECERA ================= */
 
   .cabecera-nombre-chat {
     background: #202c33 !important;
@@ -438,7 +434,6 @@
     color: var(--chat-text-main);
   }
 
-  /* ================= MENSAJES ================= */
 
 .chat-messages {
   background-color: #0b141a;
@@ -458,7 +453,6 @@
     color: #e9edef;
   }
 
-  /* ================= FORM ENVÍO ================= */
 
   .send-msg-container {
     background: #202c33 !important;
@@ -477,7 +471,6 @@
     color: var(--chat-primary);
   }
 
-  /* ================= EMPTY STATE ================= */
 
   .msg-option {
     background: #222e35;
@@ -489,4 +482,4 @@
     color: var(--chat-text-muted);
     box-shadow: none;
   }
-}
+} */
