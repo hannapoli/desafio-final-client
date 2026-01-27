@@ -1,10 +1,9 @@
+import './Legend.css'
+
 export const Legend = ({ data }) => {
   if (!data) return null;
   return (
-    <div style={{
-      position: 'absolute', bottom: '20px', right: '20px', zIndex: 1000,
-      background: 'white', padding: '10px', borderRadius: '5px', border: '1px solid gray'
-    }}>
+    <div className='legend' >
       <strong>{data.title}</strong>
       {data.palette.map((item, i) => (
         <div key={i} style={{ display: 'flex', alignItems: 'center', marginTop: '4px' }}>

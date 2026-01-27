@@ -6,8 +6,13 @@ export const MapsProvider = ({ children }) => {
     const [center, setCenter] = useState([-37.21619, -72.60537 ])
     const [geoPng, setGeoPng] = useState('')
     const [alerts, setAlerts] = useState([])
-    const [meteo, setMeteo] = useState([])
+    const [infoMeteo, setInfoMeteo] = useState([])
     const [parcels, setParcels] = useState([])
+    const [parcel, setParcel] = useState(null)
+    const [alert, setAlert] = useState(null)
+    const [vegetation, setVegetation] = useState(null)
+    const [crop, setCrop] = useState(null)
+    const [selectedParcelId, setSelectedParcelId] = useState(null)
 
   const havePolygons = useCallback((respuesta) => {
     if (!respuesta || !respuesta.length) return;
@@ -34,35 +39,9 @@ export const MapsProvider = ({ children }) => {
       })
       .filter(Boolean);
 
-    setPolygons(parsed); // 🚀 Ya no hay confusión, solo actualiza el estado
+    setPolygons(parsed); // Ya no hay confusión, solo actualiza el estado
   }, []);
 
-//     const havePolygons = (respuesta) => {
-//     console.log({respuesta}, 'desde haveopolygons provider')
-//     setPolygons(respuesta
-//         .map(parcel => {
-//             try {
-//                 const coords = typeof parcel.coordinates_parcel === 'string' 
-//                     ? JSON.parse(parcel.coordinates_parcel) 
-//                     : parcel.coordinates_parcel;
-
-              
-//                 const isValid = Array.isArray(coords) && 
-//                     coords.every(p => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite));
-
-//                 if (!isValid) return null;
-
-                
-//                 return coords; 
-//             } catch (error) {
-//                 console.log("Error parseando parcela:", parcel.id, error);
-//                 return null;
-//             }
-//         })
-//         .filter(Boolean) // Elimina los null
-// )
-// console.log({polygons})
-// }
 
     const addPolygon = (polygono) => {
         setPolygons([...polygons, polygono])
@@ -124,12 +103,23 @@ export const MapsProvider = ({ children }) => {
                                             geoPng, 
                                             havePolygons,
                                             alerts,
-                                            meteo,
+                                            infoMeteo,
+                                            setInfoMeteo,
                                             parcels,
                                             setParcels,
                                             addPolygon, 
                                             getAlerts,
-                                            getMeteo
+                                            getMeteo,
+                                            parcel,
+                                            setParcel,
+                                            alert,
+                                            setAlert,
+                                            crop,
+                                            setCrop,
+                                            vegetation,
+                                            setVegetation,
+                                            selectedParcelId,
+                                            setSelectedParcelId
                                         }}>
                 {children}
             </MapsContext.Provider>

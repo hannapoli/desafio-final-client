@@ -4,17 +4,18 @@ import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
 import { Legend } from './Legend';
 import { InfoMeteo } from '../InfoMeteo';
+import './Legend.css'
 
 
+export const  ClickablePolygon = ()  => {
 
-export const  ClickablePolygon = ({ positions })  => {
-
-  const {deleteParcel, parcels} = useContext(MapsContext)
+  const {deleteParcel, parcels, setParcel, setSelectedParcelId, infoMeteo, setInfoMeteo} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
-  const [infoMeteo, setInfoMeteo] = useState(null)
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
   const [errorEliminar, setErrorEliminar] = useState(null)
+
+  
 
   const map = useMap();
 
@@ -38,27 +39,32 @@ export const  ClickablePolygon = ({ positions })  => {
     };
     zoomToFeature(e)
 
+    setSelectedParcelId(p.uid_parcel);
+
     const data = await getInfoMeteoByParcel(p.uid_parcel)
     console.log({data})
     setInfoMeteo(data.data)
-    
+    setParcel(p)
+    overLay(p.uid_parcel)
+    // setUnmark(p.uid_parcel)
+    // console.log({p},'desde el polígono')
  }
   
 
   const overLay = async (uid_parcel) => {
     
     const respuesta = await HealthMap(uid_parcel)
-    console.log({respuesta})
+    console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
   }
 
   const eliminarParcela = async(p) => {
     if(!p.uid_parcel) return
     try {
-      // const resp1 = await deleteParcelApi(p.uid_parcel)
-      const resp1= {res: 'ok'}
-      // if(resp1.res === 'Error'){
-      //   setErrorEliminar(resp1.info)
+      const resp1 = await deleteParcelApi(p.uid_parcel)
+      // const resp1= {res: 'ok'}
+      if(resp1.res === 'Error'){
+        setErrorEliminar(resp1.info)}
       if(!resp1){
         setErrorEliminar('Error al eliminar la parcela')
       
@@ -92,10 +98,10 @@ export const  ClickablePolygon = ({ positions })  => {
           click: (e) => handleClick(e, p),
         }}
       >
-        
-      <Popup>
-        <button onClick={()=>eliminarParcela(p)}>Eliminar</button>
-        <button onClick={()=>overLay(p.uid_parcel)}>Ver salud del campo</button>
+       
+      {/* <Popup>
+         <button onClick={()=>eliminarParcela(p)}>Eliminar</button>
+        <button onClick={()=>}>Ver salud del campo</button>
        {errorEliminar ? (
           <p>{errorEliminar}</p>
         ) : (
@@ -110,7 +116,7 @@ export const  ClickablePolygon = ({ positions })  => {
           </>
         )}
 
-      </Popup>
+      </Popup> */}
       {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay
           url={activeLayer.image_data}
@@ -121,10 +127,7 @@ export const  ClickablePolygon = ({ positions })  => {
         />
       )}
       {healthData && (
-        <div style={{
-                      position: 'absolute', bottom: '160px', right: '20px', zIndex: 1001,
-                      padding: '10px', borderRadius: '5px'
-                    }}>
+        <div className='select-overlay' >
                 <select 
                   value={selectedLayerType} 
                   onChange={(e) => setSelectedLayerType(e.target.value)}

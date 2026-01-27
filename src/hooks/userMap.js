@@ -81,6 +81,27 @@ const getAllAlertsByUser = useCallback(async (email) => {
       setError('Error al cargar las alertas de la parcela');
     }
   }, [fetchData, setError, backendUrl]);
+
+  const getAllAlertByUid = useCallback(async (uid_parcel) => {
+    if(!uid_parcel) return;
+    try {
+      const firebaseUser = auth.currentUser;
+      if (!firebaseUser) return;
+      const token = await firebaseUser.getIdToken();
+
+      const response = await fetchData(
+        `${backendUrl}/getAlertByParcel/${uid_parcel}`,
+        'GET',
+        null,
+        token
+      );
+
+      console.log(`esta es la alerta de la parcela con uid ${uid_parcel}`, response);
+      return response;
+    } catch (error) {
+      setError('Error al cargar las alertas de la parcela');
+    }
+  }, [fetchData, setError, backendUrl]);
       
        const getAlertByParcel = async (uid_parcel) => {
         if(!uid_parcel) return
@@ -261,6 +282,56 @@ const getAllAlertsByUser = useCallback(async (email) => {
          return centro
     }
 
+    const getParcelVegetation = async (uid_parcel) => {
+      if(!uid_parcel) return
+        try {
+             const firebaseUser = auth.currentUser;
+                    if (!firebaseUser) {
+                      console.error('No hay usuario autenticado en Firebase');
+                      return;
+                    }
+                    
+                    const token = await firebaseUser.getIdToken();
+                    // console.log('llamada')
+                    const response = await fetchData(
+                      `${backendUrl}/alerts/getParcelVegetation/${uid_parcel}`,
+                      'GET',
+                      null,
+                      token
+                    );
+                    
+                    console.log('Vegetación de la parcela seleccionada:', response);
+                    return response
+                } catch (error) {
+                    setError('Error al cargar lavegetación parcela')        
+                }
+    }
+
+    const getParcelCrops = useCallback(async (uid_parcel) => {
+      if(!uid_parcel) return
+        try {
+             const firebaseUser = auth.currentUser;
+                    if (!firebaseUser) {
+                      console.error('No hay usuario autenticado en Firebase');
+                      return;
+                    }
+                    
+                    const token = await firebaseUser.getIdToken();
+                    // console.log('llamada')
+                    const response = await fetchData(
+                      `${backendUrl}/alerts/getParcelCrops/${uid_parcel}`,
+                      'GET',
+                      null,
+                      token
+                    );
+                    
+                    console.log('Tipo de cultivo de la parcela seleccionada:', response);
+                    return response
+                } catch (error) {
+                    setError('Error al cargar el tipo de cultivo parcela')        }
+    })
+    
+
 
       
     
@@ -274,7 +345,10 @@ const getAllAlertsByUser = useCallback(async (email) => {
         createParcel,
         deleteParcelApi,
         deleteParcelBack,
-        bboxCenter
+        bboxCenter,
+        getAlertByParcel,
+        getParcelVegetation,
+        getParcelCrops
         }
 
     

@@ -11,7 +11,7 @@ import { AuthContext } from '../contexts/AuthContext';
 export const Map = ({parcels}) => {
   
   const { user } = useContext(AuthContext);
-  const {havePolygons} = useContext(MapsContext)
+  const {havePolygons, setParcels} = useContext(MapsContext)
   const {getAllAlertsByUser, getAllInfoMeteoByUser, bboxCenter} = userMap()
   const [alertas, setAlertas] = useState({})
   
@@ -31,7 +31,8 @@ console.log({alertas})
 
   useEffect(() => { 
     havePolygons(parcels)
-  }, [parcels, havePolygons])
+    setParcels(parcels)
+  }, [setParcels, havePolygons])
 
   return (
     <div>

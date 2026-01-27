@@ -14,10 +14,10 @@ export default function MapView({ alertas }) {
   const [currentLayer, setCurrentLayer] = useState('osm');
   const [popupPosition, setPopupPosition] = useState(null);
   // const [createParcel, setCreateParcel] = useState(null);
-  
+  const [unmark, setUnmark] = useState(null)
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
-  const { polygons, addParcel, addPolygon, center } = useContext(MapsContext);
+  const { polygons, addParcel, addPolygon, center, alert, setAlert, parcel } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   
@@ -86,11 +86,13 @@ export default function MapView({ alertas }) {
     }
   }, [polygon]);
 
-  const handleAlerta = (e) => {
-    console.log(e.target)
+  const handleAlerta = (a) => {
+    // console.log('alerta', e.target)
+    setAlert(a)}
+    
 
-  }
-  console.log({polygon})
+  
+  // console.log({unmark})
   if (!center) return <p>Cargando mapa...</p>;
 
   return (
@@ -120,39 +122,44 @@ export default function MapView({ alertas }) {
               ? JSON.parse(a.coordinates_parcel) 
               : a.coordinates_parcel;
                 return (
-        <Marker onClick={handleAlerta}
+                  
+        <Marker onClick={handleAlerta(a)}
           key={a.uid_parcel} 
           position={bboxCenter([coords])} 
           icon={alertIcon} 
         >
-          <Popup>
-            <div style={{ minWidth: '150px' }}>
-              <h3 style={{ margin: '0 0 5px 0' }}>{a.name_parcel}</h3>
-              <hr />
-              <p><strong>📦 Producto:</strong> {a.product_parcel}</p>
-              <p><strong>📅 Fecha:</strong> {new Date(a.fecha).toLocaleDateString()}</p>
-              <p><strong>👤 productor:</strong> {a.name_user}</p>
-              {a.alerta_plaga && <p><strong>⚠️ Alerta de plagas:</strong> {a.alerta_plaga}</p>}
-              {a.alerta_inundacion && <p><strong>⚠️ Alerta de inundación:</strong> {a.alerta_inundacion}</p>}
-              {a.alerta_helada && <p><strong>⚠️ Alerta de helada:</strong> {a.alerta_helada}</p>}
-              {a.alerta_sequia && <p><strong>⚠️ Alerta_ de sequía:</strong> {a.alerta_sequia}</p>}
-              
-              {/* Si quieres un botón para ejecutar alguna acción adicional */}
-              {/* <button onClick={() => console.log("Detalles de:", a.uid_parcel)}>
-                Ver más detalles
-              </button> */}
-            </div>
-          </Popup>
+          
         </Marker>
-      );
+      ); })}
+      {/* {Array.isArray(alertas) && alertas.map(a => {
+        const coords = typeof a.coordinates_parcel === 'string'
+          ? JSON.parse(a.coordinates_parcel)
+          : a.coordinates_parcel;
+
+        if (unmark === a.uid_parcel) return null;
+
+        return (
+          
+          <Marker
+            key={a.uid_parcel}
+            position={bboxCenter([coords])}
+            icon={alertIcon}
+            eventHandlers={{
+              click: () => handleAlerta(a),
+            }}
+          />
+        );
+      })} */}
 
       
-    })}
+    
 
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
-      <ClickablePolygon positions={polygons} />
+      {/* 
+      <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
+      <ClickablePolygon positions={polygons}  />
     </MapContainer>
-     <pre>{JSON.stringify(polygon, null, 2)}</pre> 
+     {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
      </div>
   );
 }
@@ -168,3 +175,21 @@ export default function MapView({ alertas }) {
 // // {x} {y} → coordenadas del tile
 
 
+/* <Popup>
+            <div style={{ minWidth: '150px' }}>
+              <h3 style={{ margin: '0 0 5px 0' }}>{a.name_parcel}</h3>
+              <hr />
+              <p><strong>📦 Producto:</strong> {a.product_parcel}</p>
+              <p><strong>📅 Fecha:</strong> {new Date(a.fecha).toLocaleDateString()}</p>
+              <p><strong>👤 productor:</strong> {a.name_user}</p>
+              {a.alerta_plaga && <p><strong>⚠️ Alerta de plagas:</strong> {a.alerta_plaga}</p>}
+              {a.alerta_inundacion && <p><strong>⚠️ Alerta de inundación:</strong> {a.alerta_inundacion}</p>}
+              {a.alerta_helada && <p><strong>⚠️ Alerta de helada:</strong> {a.alerta_helada}</p>}
+              {a.alerta_sequia && <p><strong>⚠️ Alerta_ de sequía:</strong> {a.alerta_sequia}</p>}
+              
+              {/* Si quieres un botón para ejecutar alguna acción adicional */
+          //     {/* <button onClick={() => console.log("Detalles de:", a.uid_parcel)}>
+          //       Ver más detalles
+          //     </button> */}
+          //   </div>
+          // </Popup> */
