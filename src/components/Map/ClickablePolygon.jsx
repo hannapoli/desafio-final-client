@@ -55,8 +55,8 @@ export const  ClickablePolygon = ({ positions })  => {
   const eliminarParcela = async(p) => {
     if(!p.uid_parcel) return
     try {
-      const resp1 = await deleteParcelApi(p.uid_parcel)
-      // const resp1= {res: 'ok'}
+      // const resp1 = await deleteParcelApi(p.uid_parcel)
+      const resp1= {res: 'ok'}
       // if(resp1.res === 'Error'){
       //   setErrorEliminar(resp1.info)
       if(!resp1){
