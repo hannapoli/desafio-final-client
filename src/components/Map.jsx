@@ -37,6 +37,7 @@ console.log({alertas})
     <div>
         
         <MapView alertas={alertas}/>
+        
        
     </div>
   )

@@ -113,9 +113,6 @@ export const MapsProvider = ({ children }) => {
 
     
 
-
-
-
      return (
             <MapsContext.Provider value={{
                                             polygons, 
