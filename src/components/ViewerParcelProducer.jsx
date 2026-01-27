@@ -2,10 +2,25 @@ import "aframe";
 import { useState } from "react";
 import "./ViewerParcelProducer.css";
 
-export const ViewerParcelProducer = ({ imageUrl, points }) => {
+export const ViewerParcelProducer = ({ imageUrl, points, dataPhoto }) => {
     const [activeHotspot, setActiveHotspot] = useState(null);
     // Normalizar para que nunca sea null
     const pointsToPrint = Array.isArray(points) ? points : [];
+
+    const dataMap = {
+        sky: "dataSky",
+        soil: "dataSoil",
+        crop: "dataCrop"
+    }
+
+    const handleHotspotClick = (id) => {
+        const key = dataMap[id]; 
+        const info = key && dataPhoto?.[key][0]; // primer objeto del array 
+        console.log(dataPhoto, "DATAPHOTO <============================>");
+        console.log(info, "INFO <================================>");
+        
+        setActiveHotspot({ id, data: info || null })
+    };
 
     return (
         <article className="viewer-container">
@@ -34,20 +49,20 @@ export const ViewerParcelProducer = ({ imageUrl, points }) => {
                             ></a-entity>
 
                             {/* Imagen 360 */}
-                            <a-sky src={imageUrl}></a-sky>
+                            <a-sky src={imageUrl} rotation= "0 -90 0"></a-sky>
 
                             {/* Contenedor con los hotspots*/}
                             <a-entity>
                                 {pointsToPrint?.map(({ id, position }) => (
                                     <a-image
                                         key={id}
-                                        data-id={id}
                                         className="hotspot"
-                                        src="/logo.png"
+                                        src="/logo-hotspot-visor360.png"
                                         width="1.5"
                                         height="1.5"
                                         position={position}
-                                        onClick={() => setActiveHotspot(id)}
+                                        onClick={() => handleHotspotClick(id)}
+                                        // onClick={() => console.log({id, data})}
                                     ></a-image>
                                 ))}
                             </a-entity>
@@ -57,9 +72,23 @@ export const ViewerParcelProducer = ({ imageUrl, points }) => {
                         {/* Popup */}
                         {activeHotspot && (
                             <div className="viewer-panel">
-                                <h3>{activeHotspot}</h3>
-                                <p>Pendiente recibir información</p>
-                                <button onClick={() => setActiveHotspot(null)}>Cerrar</button>
+                                <h3>{activeHotspot.id}</h3>
+
+                                {activeHotspot.data ? (
+                                    <ul>
+                                        {Object.entries(activeHotspot.data).map(([key, value]) => (
+                                            <li key={key}>
+                                                <strong>{key}:</strong> {String(value)}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No hay información disponible</p>
+                                )}
+
+                                <button onClick={() => setActiveHotspot(null)}>
+                                    Cerrar
+                                </button>
                             </div>
                         )}
                     </div>
