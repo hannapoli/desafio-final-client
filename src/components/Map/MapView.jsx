@@ -102,14 +102,17 @@ export default function MapView({ alertas }) {
       <DrawControl onPolygonCreated={handlePolygonCreated} />
 
       
+      {popupPosition && (
         <Popup 
           key={polygon.length}
           autoClose={false}
           position={popupPosition}
           closeOnClick={false}
-          closeButton={true}>
-            <AddParcel polygon={polygon}/>
+          closeButton={true}
+        >
+          <AddParcel polygon={polygon}/>
         </Popup>
+      )}
       
 
       {Array.isArray(alertas) && alertas.map(a => {
