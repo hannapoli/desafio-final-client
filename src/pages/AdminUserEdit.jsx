@@ -125,7 +125,7 @@ export const AdminUserEdit = () => {
                     </div>
 
                     <div>
-                        <button type='submit' disabled={modifyLoading} className='confirmBtn'>
+                        <button type='submit' disabled={modifyLoading} className='register-btn'>
                             {modifyLoading ? 'Modificando...' : 'Modificar usuario'}
                         </button>
                     </div>

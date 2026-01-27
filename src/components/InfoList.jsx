@@ -19,9 +19,9 @@ export const InfoList = ({
                     <Link
                         to={onModifyPath}
                         state={stateObject}>
-                        <button className='edit-btn'>Modificar</button>
+                        <button className='register-btn'>Modificar</button>
                     </Link>
-                    <button onClick={() => onDelete(itemObject)} className='delete-btn'>
+                    <button onClick={() => onDelete(itemObject)} className='register-btn'>
                         Eliminar
                     </button>
                 </div>
