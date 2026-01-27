@@ -122,6 +122,10 @@ footer.footer {
   flex-direction: column;
 }
 
+.bold {
+  font-weight: 600;
+}
+
 
 
 /* ================= NOTA IMPORTANTE ================= */

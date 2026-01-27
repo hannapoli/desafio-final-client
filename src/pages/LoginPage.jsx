@@ -58,6 +58,9 @@ export const LoginPage = () => {
         case "director":
           navigate("/director/dashboard");
           break;
+        case "admin":
+          navigate("/admin/dashboard");
+          break;
         default:
           navigate("/");
       }

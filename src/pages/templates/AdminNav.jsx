@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
-export const DistributorNav = () => {
+export const AdminNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ export const DistributorNav = () => {
             <ul className={`navMenu ${isMenuOpen ? 'visible' : ''}`}>
                 <li>
                     <NavLink
-                        to='/distributor/dashboard'
+                        to='/admin/dashboard'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Inicio
                     </NavLink>
@@ -42,15 +42,15 @@ export const DistributorNav = () => {
 
                 <li>
                     <NavLink
-                        to='/distributor/routes'
+                        to='/admin/users'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
-                        Mis rutas
+                        Usuarios
                     </NavLink>
                 </li>
 
                 <li>
                     <NavLink
-                        to='/distributor/messages'
+                        to='/admin/messages'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Mensajes
                     </NavLink>
