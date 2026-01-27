@@ -208,6 +208,13 @@ export const Chats = () => {
     if (selectedChat) fetchMessages(selectedChat);
   }, [selectedChat]);
 
+  const handleSubmit = () => {
+  sendMessage();
+  setNewMessage("");
+  textareaRef.current.style.height = "auto";
+};
+
+
   /* =========================
      UI
   ========================== */
@@ -262,6 +269,7 @@ export const Chats = () => {
               onClick={() => {
                 setSelectedChat(newChatEmail);
                 setIsSidebarOpen(false);
+                handleSubmit()
               }}
             >
               Abrir chat
@@ -333,12 +341,19 @@ export const Chats = () => {
 
             <form className="message-form" onSubmit={sendMessage} >
               <div className="send-msg-container">
-                <textarea
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Escribe un mensaje"
-                  className="message-textarea"
-                />
+              <textarea
+                className="message-textarea"
+                value={newMessage}
+                onChange={(e) => {
+                  setNewMessage(e.target.value);
+
+                  // auto-resize
+                  e.target.style.height = "auto";
+                  e.target.style.height = `${e.target.scrollHeight}px`;
+                }}
+                placeholder="Escribe un mensaje"
+              />
+
                 <button className="btn-send-msg" type="submit">
                   <Icon name="airplane" color="#ffffff" size={22} />
                 </button>

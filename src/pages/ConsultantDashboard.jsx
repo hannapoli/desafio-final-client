@@ -1,6 +1,8 @@
 import { MenuCard } from '../components/MenuCard';
 import messageImg from '/mensajes.png';
 
+import "./ConsultantDashboard.css"
+
 export const ConsultantDashboard = () => {
 
   return (

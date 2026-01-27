@@ -3,6 +3,8 @@ import { Route, Routes, Navigate } from 'react-router';
 import { AppLayout } from '../pages/templates/AppLayout';
 import { PublicLayout } from '../pages/templates/PublicLayout';
 import { AuthLayout } from '../pages/templates/AuthLayout';
+import { ChatLayout } from '../pages/templates/ChatLayout';
+
 
 import {
   HomePage, LoginPage, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerManageFields, ProducerFieldInfo, ProducerReports, DirectorReports
@@ -26,7 +28,7 @@ export const AppRoutes = () => {
         <Route path='/auth/register' element={<RegisterPage />} />
       </Route>
 
-      {/* ================= ZONA CON HEADER / NAV ================= */}
+      {/* ================= ZONA APP (CON FOOTER) ================= */}
       <Route element={<AppLayout />}>
 
         {/* ---------- PRODUCER ---------- */}
@@ -42,7 +44,6 @@ export const AppRoutes = () => {
           <Route path='fields/all' element={<ProducerSeeFields />} />
           <Route path='fields/manage' element={<ProducerManageFields />} />
           <Route path='fields/:id' element={<ProducerFieldInfo />} />
-          <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<ProducerReports />} />
         </Route>
 
@@ -56,7 +57,6 @@ export const AppRoutes = () => {
           }
         >
           <Route path='dashboard' element={<ConsultantDashboard />} />
-          <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<ConsultantReports />} />
         </Route>
 
@@ -70,7 +70,6 @@ export const AppRoutes = () => {
           }
         >
           <Route path='dashboard' element={<AnalystDashboard />} />
-          <Route path='messages' element={<Chats />} />
         </Route>
 
         {/* ---------- DIRECTOR ---------- */}
@@ -83,7 +82,6 @@ export const AppRoutes = () => {
           }
         >
           <Route path='dashboard' element={<DirectorDashboard />} />
-          <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<DirectorReports />} />
         </Route>
 
@@ -97,8 +95,57 @@ export const AppRoutes = () => {
           }
         >
           <Route path='dashboard' element={<DistributorDashboard />} />
-          <Route path='messages' element={<Chats />} />
         </Route>
+
+      </Route>
+
+      {/* ================= CHAT (SIN FOOTER) ================= */}
+      <Route element={<ChatLayout />}>
+
+        <Route
+          path='/producer/messages'
+          element={
+            <PrivateRoutes allowedRoles={['productor']}>
+              <Chats />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path='/consultant/messages'
+          element={
+            <PrivateRoutes allowedRoles={['asesor']}>
+              <Chats />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path='/analyst/messages'
+          element={
+            <PrivateRoutes allowedRoles={['analista']}>
+              <Chats />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path='/director/messages'
+          element={
+            <PrivateRoutes allowedRoles={['director']}>
+              <Chats />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path='/distributor/messages'
+          element={
+            <PrivateRoutes allowedRoles={['distribuidor']}>
+              <Chats />
+            </PrivateRoutes>
+          }
+        />
 
       </Route>
 

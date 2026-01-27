@@ -34,3 +34,17 @@ a, button, .clickable {
     flex-direction: column;
     height: 100%; 
 }
+
+
+/* ===== TEXTO PRINCIPAL MODO CLARO/OSCURO ======= */
+
+:root {
+  --text-readable: #1f2937; 
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-readable: #5f625e; 
+  }
+}

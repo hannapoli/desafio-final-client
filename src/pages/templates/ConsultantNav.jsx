@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router';
 import { useAuth } from '../../hooks/useAuth';
-import { useNav } from 'react';
+import { useNav } from '../../contexts/NavContext';
 import './Nav.css'
 
 export const ConsultantNav = () => {

@@ -37,7 +37,7 @@ nav.flexContainer {
 .logo {
   width: 2.2rem;
   height: auto;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .brand-name {
@@ -60,7 +60,7 @@ nav.flexContainer {
   padding: 1rem;
   gap: 0.5rem;
   background-color: var(--bg-app);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
@@ -85,10 +85,9 @@ nav.flexContainer {
   transition: var(--transition);
 
   max-width: 280px;
-  margin: 0 auto; 
+  margin: 0 auto;
   text-align: center;
 }
-
 
 .navMenu a:hover,
 .nav-link-active {
@@ -121,7 +120,10 @@ nav.flexContainer {
 }
 .navMenuIcon span {
   height: 2px;
-  background-color: var(--chat-primary, #1b5e20); /* Verde corporativo original */
+  background-color: var(
+    --chat-primary,
+    #1b5e20
+  ); /* Verde corporativo original */
   border-radius: 10px;
   transition: var(--transition);
 }
@@ -133,9 +135,15 @@ nav.flexContainer {
   width: 100%; /* Opcional: expande todas las barras al pasar el cursor */
 }
 
-.navMenuIcon span:nth-child(1) { width: 100%; }
-.navMenuIcon span:nth-child(2) { width: 70%; }
-.navMenuIcon span:nth-child(3) { width: 40%; }
+.navMenuIcon span:nth-child(1) {
+  width: 100%;
+}
+.navMenuIcon span:nth-child(2) {
+  width: 70%;
+}
+.navMenuIcon span:nth-child(3) {
+  width: 40%;
+}
 
 .navMenuIcon:hover span {
   width: 100%;
@@ -169,11 +177,16 @@ nav.flexContainer {
 
 @media (prefers-color-scheme: dark) {
   header.Header-global .navMenuIcon span {
-    background-color: #FFD700 !important;
+    background-color: #ffd700 !important;
   }
 
   header.Header-global .navMenuIcon:hover span {
-    background-color: #FFD700 !important;
+    background-color: #ffd700 !important;
+  }
+
+  .logout-link {
+    color: #ef4444 !important;
+    margin-top: 6px;
   }
 }
 
@@ -194,11 +207,15 @@ nav.flexContainer {
 @media (prefers-color-scheme: dark) {
   .navMenu a:hover,
   .nav-link-active {
-    background: rgba(74, 222, 128, 0.15); 
-    
-    color: #fff534 !important; 
-    
+    background: rgba(74, 222, 128, 0.15);
+
+    color: #fff534 !important;
+
     text-shadow: 0 0 8px rgba(74, 222, 128, 0.2);
   }
-}
 
+  .logout-link {
+    color: #ef4444 !important;
+    margin-top: 6px;
+  }
+}
