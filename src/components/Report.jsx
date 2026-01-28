@@ -39,7 +39,7 @@ export const Report = ({
       </div>
 
       <div className='form-group'>
-        <label htmlFor='content_message'>Contenido del Mensaje:</label>
+        <label htmlFor='content_message'>Contenido del mensaje:</label>
         <textarea
           name='content_message'
           id='content_message'

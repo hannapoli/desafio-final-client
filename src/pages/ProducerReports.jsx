@@ -265,7 +265,7 @@ export const ProducerReports = () => {
                 <div className='popup-overlay' onClick={e => e.target === e.currentTarget && setShowEditPopup(false)}>
                     <div className='popup-content'>
                         <button className='popup-close' onClick={() => setShowEditPopup(false)}>x</button>
-                        <h2>Modificar Reporte</h2>
+                        <h2>Modificar reporte</h2>
                         {popupError && <p className='errorMessage'>{popupError}</p>}
                         <Report
                             reportData={editReport}

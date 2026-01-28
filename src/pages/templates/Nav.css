@@ -324,7 +324,6 @@ nav.flexContainer {
 .navMenuIcon span:nth-child(2) { width: 70%; }
 .navMenuIcon span:nth-child(3) { width: 40%; }
 
-.navMenuIcon:hover span { width: 100%; background-color: var(--chat-primary); }
 
 /* 6. DESKTOP (900px+) */
 @media screen and (min-width: 900px) {

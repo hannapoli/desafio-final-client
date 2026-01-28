@@ -35,7 +35,8 @@ export const useFetch = () => {
         headers: {
           'Content-Type': 'application/json',
           // Solo añadimos ngrok header para ngrok URLs
-          ...(url.includes('ngrok') && { 'ngrok-skip-browser-warning': 'true' })
+          ...(url.includes('ngrok') && { 'ngrok-skip-browser-warning': 'true' }), 
+          //"ngrok-skip-browser-warning": "69420"
         },
       };
 

@@ -20,6 +20,16 @@
     align-items: normal;
 }
 
+.popup-content .flexContainer .delete-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    margin: 1rem;
+}
+
+.popup-content .flexContainer .delete-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    margin: 1rem;
+}
+
 /* ================= CONTENIDO (Estilo Glass) ================= */
 .popup-content {
     background: rgba(255, 255, 255, 0.95);
@@ -28,11 +38,19 @@
     box-shadow: var(--shadow-lg);
     max-width: 35em;
     width: 100%;
+    height: min(90vw, 500px);;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    max-height: 80vh; 
+    overflow-y: auto;
+    align-items: center;
+}
+
+.popup-content h2 {
+    color: var(--green-principal);
 }
 
 .agreement-content {
