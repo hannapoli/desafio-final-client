@@ -1,9 +1,13 @@
 
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import './VegetationIndex.css';
+import { MapsContext } from '../../contexts/MapsContext';
 
 export const VegetationIndex = ({ vegetation }) => {
+  
+  const {setSelectedLayerType} = useContext(MapsContext)
+
   const legends = {
     ndvi: [
       { v: 0.0,  color: "#a50026", label: "Suelo desnudo" },
@@ -78,9 +82,11 @@ export const VegetationIndex = ({ vegetation }) => {
           key={key}
           className="index-card"
           style={{ borderTopColor: info.color }}
+          onClick={setSelectedLayerType(key)}
         >
           <div className="index-header">
             <span className="index-name">{key.toUpperCase()}</span>
+            <hr />
             <p className="index-desc">{desc}</p>
           </div>
 

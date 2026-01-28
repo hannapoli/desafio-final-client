@@ -127,6 +127,34 @@ const getAllAlertsByUser = useCallback(async (email) => {
                     setError('Error al cargar las  alertas de las parcela')        }
       }
 
+      
+
+      const saveAlertsByParcel = async (uid_parcel) => {
+        if(!uid_parcel) return
+        try {
+            
+                    const body = {uid_parcela: uid_parcel}
+                    // console.log('llamada')
+                    const response = await fetchData(
+                    
+                      `${apiDataUrl}/agrosync-api/alertas_tiempo_parcela`,
+                      'POST',
+                      body,
+                      null
+                    );
+              if(response === 'OK') {
+                console.log('Se han guardado las alertas de la parcela creada:', response);
+                    return response
+              } else {
+                setError("No Se ha podido guardar las alertas de la parcela creada")
+              }
+                    
+                    
+                } catch (error) {
+                  console.log(error, 'Error al guardar las  alertas de las parcela')
+                    setError('Error al guardar las  alertas de las parcela')        }
+      }
+
     
       const HealthMap = async (uid_parcel) => {
         if(!uid_parcel) return
@@ -348,7 +376,8 @@ const getAllAlertsByUser = useCallback(async (email) => {
         bboxCenter,
         getAlertByParcel,
         getParcelVegetation,
-        getParcelCrops
+        getParcelCrops,
+        saveAlertsByParcel
         }
 
     

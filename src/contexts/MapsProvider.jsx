@@ -13,6 +13,9 @@ export const MapsProvider = ({ children }) => {
   const [vegetation, setVegetation] = useState(null)
   const [crop, setCrop] = useState(null)
   const [selectedParcelId, setSelectedParcelId] = useState(null)
+    const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+      const [healthData, setHealthData] = useState(null);
+
 
   const havePolygons = useCallback((respuesta) => {
     if (!respuesta || !respuesta.length) return;
@@ -119,7 +122,11 @@ export const MapsProvider = ({ children }) => {
       vegetation,
       setVegetation,
       selectedParcelId,
-      setSelectedParcelId
+      setSelectedParcelId,
+      selectedLayerType,
+      setSelectedLayerType,
+      healthData,
+      setHealthData
     }}>
       {children}
     </MapsContext.Provider>

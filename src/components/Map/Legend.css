@@ -1,4 +1,4 @@
-.legend {
+ .legend {
      position: absolute; 
      bottom: 20px; 
      right: 20px; 
@@ -29,7 +29,7 @@
   background-repeat: no-repeat;
   background-position: 10px center;
   background-color: white;
-  box-sizing: border-box; /* Crucial para que el padding no desplace el ancho */
+  box-sizing: border-box; 
   margin-bottom: 0.5rem;
 }
 
@@ -62,4 +62,4 @@
 
 .button-360 {
   max-width: 500px;
-}
+ } 

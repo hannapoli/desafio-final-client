@@ -1,18 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Polygon, useMap, Popup, GeoJSON, ImageOverlay } from 'react-leaflet';
 import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
 import { Legend } from './Legend';
-import { InfoMeteo } from '../InfoMeteo';
 import './Legend.css'
 
 
 export const  ClickablePolygon = ()  => {
 
-  const {deleteParcel, parcels, setParcel, setSelectedParcelId, infoMeteo, setInfoMeteo} = useContext(MapsContext)
+  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+
+  
+
   const [errorEliminar, setErrorEliminar] = useState(null)
 
   
@@ -56,36 +58,15 @@ export const  ClickablePolygon = ()  => {
     const respuesta = await HealthMap(uid_parcel)
     console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
+    console.log({healthData})
+    
   }
-
-  const eliminarParcela = async(p) => {
-    if(!p.uid_parcel) return
-    try {
-      const resp1 = await deleteParcelApi(p.uid_parcel)
-      // const resp1= {res: 'ok'}
-      if(resp1.res === 'Error'){
-        setErrorEliminar(resp1.info)}
-      if(!resp1){
-        setErrorEliminar('Error al eliminar la parcela')
-      
-      } else {
-        const resp = await deleteParcelBack(p.uid_parcel)
-        // console.log({resp}, 'delete')
-         if (!resp.ok) {
-            setErrorEliminar(resp.msg);
-          } else {
-            console.log({resp})
-            setErrorEliminar(null);
-            deleteParcel(p)
-            console.log('parcela eliminada' , resp)
-          }
-      }
-      
-    } catch (error) {
-      console.log(error)
-      setErrorEliminar(error)
-    }
+    useEffect(() => {
+  if (healthData) {
+    console.log('healthData actualizado:', healthData);
   }
+}, [healthData]);
+  
 
 
   return (
@@ -100,7 +81,7 @@ export const  ClickablePolygon = ()  => {
       >
        
       {/* <Popup>
-         <button onClick={()=>eliminarParcela(p)}>Eliminar</button>
+         
         <button onClick={()=>}>Ver salud del campo</button>
        {errorEliminar ? (
           <p>{errorEliminar}</p>
@@ -117,7 +98,10 @@ export const  ClickablePolygon = ()  => {
         )}
 
       </Popup> */}
-      {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
+      
+
+    </Polygon>))}
+    {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay
           url={activeLayer.image_data}
           bounds={healthData.image_bounds}
@@ -139,8 +123,9 @@ export const  ClickablePolygon = ()  => {
       </div>
               )}
       {activeLayer && <Legend data={activeLayer.legend} />}
+ 
+  
 
-    </Polygon>))}
     </>
     
   );
