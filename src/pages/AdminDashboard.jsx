@@ -2,6 +2,7 @@ import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 import usersImg from '/users.jpg';
+import usuarios from '/gestion-usuarios.png'
 
 export const AdminDashboard = () => {
   return (
@@ -26,7 +27,7 @@ export const AdminDashboard = () => {
             <div className="dashboard-grid-cards">
               <article className="producer-card-item">
                 <MenuCard
-                  image={usersImg}
+                  image={usuarios}
                   url='/admin/users'
                 />
               </article>

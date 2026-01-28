@@ -1,6 +1,7 @@
 import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
+import parcelas from '/parcelas-agrosync.png'
 
 export const ConsultantDashboard = () => {
 
@@ -26,8 +27,8 @@ export const ConsultantDashboard = () => {
           <div className="dashboard-grid-cards">
             <article className="producer-card-item">
               <MenuCard
-                text='Ver parcelas de un productor'
-                // image={}
+                //text='Ver parcelas de un productor'
+                 image={parcelas}
                 url='/consultant/fields'
               />
             </article>

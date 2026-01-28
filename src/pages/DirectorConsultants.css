@@ -39,6 +39,39 @@
     text-align: center;
 }
 
+.consultantCard select {
+    width: 100%;
+  height: 48px;
+  padding-left: 44px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-color: white;
+  box-sizing: border-box; /* Crucial para que el padding no desplace el ancho */
+}
+
+.assignedConsultantItem {
+    background-color: white;
+}
+
+.consultantCard .delete-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: 14px; /* Unificado para ambos */
+    font-size: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    font-weight: bold;
+}
+
 button {
     cursor: pointer;
     border: none;
@@ -72,18 +105,10 @@ button.unassignButton:hover {
     background-color: #dc2626;
 }
 
-.consultantCard > button {
-    background-color: #2563eb;
-    color: white;
-}
-
 .consultantCard > button:first-of-type {
     margin-bottom: 1rem;
 }
 
-.consultantCard > button:hover {
-    background-color: #1e40af;
-}
 
 select {
     width: 100%;
@@ -95,11 +120,6 @@ select {
     background-color: #f9fafb;
 }
 
-select:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-}
 
 .assignedConsultants {
     width: 100%;
@@ -123,7 +143,8 @@ select:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f3f4f6;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 0.3rem 0.5rem;
     border-radius: 6px;
     margin-bottom: 0.3rem;

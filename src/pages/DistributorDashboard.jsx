@@ -1,6 +1,7 @@
 import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
+import rutas from '/rutas-distribucion-agrosync.png'
 
 export const DistributorDashboard = () => {
   return (
@@ -25,8 +26,7 @@ export const DistributorDashboard = () => {
               <div className="dashboard-grid-cards">
                 <article className="producer-card-item">
                   <MenuCard
-                    text='Mis rutas'
-                    // image={}
+                    image={rutas}
                     url='/distributor/routes'
                   />
                 </article>

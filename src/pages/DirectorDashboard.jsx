@@ -1,7 +1,9 @@
 import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
-import plantas from '/plantas.png';
+import reportes from '/reportes-agrosync.png'
+import parcelas from '/parcelas-agrosync.png' 
+import productores from '/productores-agrosync.png'
 
 export const DirectorDashboard = () => {
   return (
@@ -27,22 +29,22 @@ export const DirectorDashboard = () => {
               <div className="dashboard-grid-cards">                
                 <article className="producer-card-item">
                   <MenuCard
-                    image={plantas}
+                    image={parcelas}
                     url='/director/fields'
                   />
                 </article>
 
                 <article className="producer-card-item">
                   <MenuCard
-                    text='Reportes'
-                    // image={}
+                    //text='Reportes'
+                     image={reportes}
                     url='/director/reports'
                   />
                 </article>
 
                 <article className="producer-card-item">
                   <MenuCard
-                    // image={messageImg}
+                    image={productores}
                     url='/director/consultants'
                   />
                 </article>

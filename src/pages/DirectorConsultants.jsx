@@ -216,7 +216,7 @@ const handleContratar = async (emailProductor) => {
         {error && <p>Error al cargar datos: {error}</p>}
 
         <section className="flexContainer CenteredContent">
-            <h1 className="centeredText">Mis Productores</h1>
+            <h1 className="centeredText">Mis productores</h1>
 
             {productores.length === 0 && !loading && (
             <p>No hay productores registrados</p>
@@ -231,8 +231,8 @@ const handleContratar = async (emailProductor) => {
                 <h3>{productor.name_user}</h3>
                 <p>{productor.email_user}</p>
                 {/* Botón para descontratar */}
-                <button onClick={() => handleDescontratar(productor.email_user)}>
-                Despedir
+                <button className="delete-btn" onClick={() => handleDescontratar(productor.email_user)}>
+                Eliminar
                 </button>
 
                 {/* SELECT ASESOR */}
@@ -256,8 +256,8 @@ const handleContratar = async (emailProductor) => {
                     ))}
                 </select>
 
-                <button
-                    disabled={assigning}
+                <button className="login-button"
+                    disabled={assigning} 
                     onClick={() =>
                     handleAssign(productor.email_user)
                     }
@@ -308,7 +308,7 @@ const handleContratar = async (emailProductor) => {
             <div key={productor.email_user} className="consultantCard">
                 <h3>{productor.name_user}</h3>
                 <p>{productor.email_user}</p>
-                <button onClick={() => handleContratar(productor.email_user)}>
+                <button className="login-button" onClick={() => handleContratar(productor.email_user)}>
                 Contratar
                 </button>
             </div>
