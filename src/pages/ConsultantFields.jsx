@@ -7,7 +7,6 @@ import { ConsultantSeeProducerFields } from './ConsultantSeeProducerFields';
 export const ConsultantFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();
-
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [productores, setProductores] = useState([]);
@@ -19,14 +18,12 @@ export const ConsultantFields = () => {
 
       try {
         const token = await auth.currentUser.getIdToken();
-
         const response = await fetchData(
           `${backendUrl}/consultant/producers/${user.uid}`,
           'GET',
           null,
           token
         );
-
         setProductores(response.data || []);
       } catch (err) {
         setError('Error al obtener productores');
@@ -36,26 +33,33 @@ export const ConsultantFields = () => {
     getProductores();
   }, [user]);
 
+  const handleSelectChange = (e) => {
+    const selectedEmail = e.target.value;
+    const producer = productores.find(p => p.email_user === selectedEmail);
+    setSelectedProducer(producer || null);
+  };
+
   return (
     <>
-      <h1>Mis productores</h1>
-
+      <h1 className='centeredText'>Mis parcelas</h1>
       {loading && <p>Cargando...</p>}
       {error && <p>{error}</p>}
 
-      <section className="producer-list">
-        {productores.map((producer) => (
-          <div key={producer.email_user}>
-            <h3>{producer.name_user}</h3>
-            <p>{producer.email_user}</p>
-            <button onClick={() => setSelectedProducer(producer)}>
-              Ver parcelas
-            </button>
-          </div>
-        ))}
-      </section>
+      {/* SELECT DE PRODUCTORES */}
 
-      {/* 🔥 AQUÍ se llama al otro */}
+      <div className="producer-select">
+        <h2>Productores</h2>
+        <select value={selectedProducer?.email_user || ''} onChange={handleSelectChange}>
+          <option value="">Selecciona un productor</option>
+          {productores.map((producer) => (
+            <option key={producer.email_user} value={producer.email_user}>
+              {producer.name_user} ({producer.email_user})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Mostrar parcelas del productor seleccionado */}
       {selectedProducer && (
         <ConsultantSeeProducerFields producer={selectedProducer} />
       )}

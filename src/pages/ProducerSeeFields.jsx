@@ -180,11 +180,6 @@ export const ProducerSeeFields = () => {
   }, [parcel, backendUrl]);
 
 
-
- 
-
-  
-
   return (
     <>
       {loading && <p>Cargando parcelas...</p>}
@@ -219,8 +214,6 @@ export const ProducerSeeFields = () => {
     <VegetationIndex vegetation={vegetation} />
   </div>}
         </article>
-
-        
       {parcel &&  ( 
         <article id='detailsParcelBox'>
            <ParcelDetails />
