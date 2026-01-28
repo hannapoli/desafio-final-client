@@ -288,7 +288,7 @@ export const ProducerReports = () => {
                         <h2>¿Eliminar reporte?</h2>
                         {popupError && <p className='errorMessage'>{popupError}</p>}
                         <div className='flexContainer'>
-                            <button className='delete-btn' onClick={confirmDelete} disabled={submitLoading}>Sí, eliminar</button>
+                            <button className='api-btn' onClick={confirmDelete} disabled={submitLoading}>Sí, eliminar</button>
                             <button onClick={() => setShowDeletePopup(false)} disabled={submitLoading}>Cancelar</button>
                         </div>
                     </div>

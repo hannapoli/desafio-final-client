@@ -58,7 +58,6 @@ div.popup-content label, input, textarea {
 .file-list {
     margin-top: 0.5em;
     font-size: 0.9em;
-    color: var(--text-light);
     opacity: 0.8;
 }
 

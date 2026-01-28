@@ -317,7 +317,7 @@ export const ParcelDetails = () => {
       <article>
 
         <button
-          className="btn-report"
+          className="login-button"
           onClick={handleOpenViewer}
           style={{ cursor: parcel ? 'pointer' : 'not-allowed' }}
           disabled={!parcel}
@@ -332,7 +332,7 @@ export const ParcelDetails = () => {
           <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
           <button
             onClick={handleOpenPopup}
-            className='btn-report'
+            className='login-button'
             style={{
               cursor: selectedParcelId ? 'pointer' : 'not-allowed'
             }}
@@ -345,7 +345,7 @@ export const ParcelDetails = () => {
           )}
         </div>
         <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-          <h2>Crear Reporte</h2>
+          <h2>Crear reporte</h2>
           {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
           {submitError && <p className='errorMessage'>{submitError}</p>}
           <Report
@@ -381,7 +381,7 @@ export const ParcelDetails = () => {
           </div>
         </ViewerPopup>
     
-          <button id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>
+          <button className="delete-btn" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>
   </article>
 
 

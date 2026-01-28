@@ -21,13 +21,13 @@
 }
 
 .popup-content .flexContainer .delete-btn {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    margin: 1rem;
+
+    background: var(--grey-medium);
+    color: var(--dark-blue);
 }
 
-.popup-content .flexContainer .delete-btn {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    margin: 1rem;
+.popup-content .flexContainer .api-btn {
+   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
 /* ================= CONTENIDO (Estilo Glass) ================= */

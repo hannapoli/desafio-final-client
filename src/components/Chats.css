@@ -21,9 +21,9 @@
   background: var(--chat-bg);
   position: relative;
   min-height: 0;
-  overflow: hidden;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   height: 100vh;
+  overflow: hidden
 }
 
 /* ================================================= */
