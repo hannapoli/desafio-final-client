@@ -99,7 +99,7 @@ export const ProducerSeeFields = () => {
 
       try {
         const responsePoints = await fetchData(
-          `${infoParcelUrl}/analyze`,
+          infoParcelUrl,
           'POST',
           { image_url: parcel.photo_url }
         );
@@ -107,21 +107,35 @@ export const ProducerSeeFields = () => {
         const receivedPoints = responsePoints.data;
         console.log('Points received:', receivedPoints);
 
-        // Convertir a array para mapear
-        const pointsToPrint = Object.entries(receivedPoints).map(([key, value]) => {
-          const { x, y, z } = value.aframe_position;
+        if (receivedPoints?.error || receivedPoints?.status === 'error') {
+          console.error('Error del servidor:', receivedPoints);
+          throw new Error(receivedPoints.error || receivedPoints.message || 'Error desconocido del servidor');
+        }
 
-          return {
-            id: key,
-            position: `${x} ${y} ${z}`
-          }
-        });
+        if (!receivedPoints || typeof receivedPoints !== 'object' || Object.keys(receivedPoints).length === 0) {
+          console.warn('No se recibieron puntos válidos del servidor');
+          setDataPoints([]);
+          setError(null);
+          return;
+        }
+
+        // Convertir a array para mapear
+        const pointsToPrint = Object.entries(receivedPoints)
+          .filter(([key, value]) => value?.aframe_position) 
+          .map(([key, value]) => {
+            const { x, y, z } = value.aframe_position;
+
+            return {
+              id: key,
+              position: `${x} ${y} ${z}`
+            }
+          });
 
         setDataPoints(pointsToPrint);
         setError(null);
       } catch (err) {
-        setDataPoints(null);
-        setError("Error al obtener los puntos de la imagen");
+        setDataPoints([]);
+        setError("Error al obtener los puntos de la imagen: " + err.message);
       }
     }
 
