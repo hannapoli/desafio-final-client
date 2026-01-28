@@ -4,7 +4,7 @@ import { AppLayout } from '../pages/templates/AppLayout';
 import { PublicLayout } from '../pages/templates/PublicLayout';
 import { AuthLayout } from '../pages/templates/AuthLayout';
 
-import { HomePage, DirectorConsultants, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerFieldInfo, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
+import { HomePage, DirectorConsultants, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
 
 import { Chats } from '../components/Chats';
 import { PrivateRoutes } from './PrivateRoutes';
