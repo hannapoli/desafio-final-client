@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Polygon, useMap, Popup, GeoJSON, ImageOverlay } from 'react-leaflet';
 import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
@@ -8,9 +8,12 @@ import './Legend.css'
 
 export const  ClickablePolygon = ()  => {
 
-  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo, selectedLayerType, setSelectedLayerType} = useContext(MapsContext)
+  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
+  const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+
+  
 
   const [errorEliminar, setErrorEliminar] = useState(null)
 
@@ -56,8 +59,13 @@ export const  ClickablePolygon = ()  => {
     console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
     console.log({healthData})
+    
   }
-
+    useEffect(() => {
+  if (healthData) {
+    console.log('healthData actualizado:', healthData);
+  }
+}, [healthData]);
   
 
 
@@ -90,7 +98,10 @@ export const  ClickablePolygon = ()  => {
         )}
 
       </Popup> */}
-      {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
+      
+
+    </Polygon>))}
+    {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay
           url={activeLayer.image_data}
           bounds={healthData.image_bounds}
@@ -112,8 +123,9 @@ export const  ClickablePolygon = ()  => {
       </div>
               )}
       {activeLayer && <Legend data={activeLayer.legend} />}
+ 
+  
 
-    </Polygon>))}
     </>
     
   );

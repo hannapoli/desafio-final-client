@@ -227,10 +227,7 @@ export const ProducerSeeFields = () => {
         </article>
       )}
       </section>
-      
-      {!loading && <Map parcels={parcels} />}
-
-      {parcel && <ParcelDetails />}
+    
       
     </>
   );

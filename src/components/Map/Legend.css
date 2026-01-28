@@ -1,4 +1,4 @@
-/* .legend {
+ .legend {
      position: absolute; 
      bottom: 20px; 
      right: 20px; 
@@ -62,69 +62,4 @@
 
 .button-360 {
   max-width: 500px;
-} */
- :root {
-  --legend-bg: #ffffff;
-  --legend-radius: 12px;
-  --legend-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --text-main: #2d3436;
-  --text-muted: #636e72;
-}
-
-.c-legend {
-  background: var(--legend-bg);
-  padding: 1.5rem;
-  border-radius: var(--legend-radius);
-  box-shadow: var(--legend-shadow);
-  max-width: 250px;
-  font-family: 'Inter', -apple-system, sans-serif;
-}
-
-.c-legend__title {
-  margin: 0 0 1rem 0;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-}
-
-.c-legend__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.c-legend__item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  transition: transform 0.2s ease;
-}
-
-.c-legend__item:hover {
-  transform: translateX(4px);
-}
-
-.c-legend__color-box {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  /* El gradiente se genera usando el color que viene por props */
-  background: linear-gradient(135deg, var(--accent-color), rgba(0,0,0,0.1));
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-}
-
-.c-legend__content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 0.85rem;
-  color: var(--text-main);
-  font-weight: 500;
-}
-
-.c-legend__value {
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums; /* Mantiene los números alineados */
-}
+ } 
