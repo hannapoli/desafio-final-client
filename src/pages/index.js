@@ -12,7 +12,6 @@ export * from './templates/AdminLayout.jsx';
 //Pájinas Productor
 export * from './ProducerDashboard.jsx';
 export * from './ProducerSeeFields.jsx';
-export * from './ProducerFieldInfo.jsx';
 export * from './ProducerReports.jsx';
 
 //Páginas Director

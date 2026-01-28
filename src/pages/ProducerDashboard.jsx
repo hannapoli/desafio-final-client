@@ -45,13 +45,6 @@ export const ProducerDashboard = () => {
 
             <article className="producer-card-item">
               <MenuCard
-                image={cropImg}
-                url="/producer/fields/manage"
-              />
-            </article>
-
-            <article className="producer-card-item">
-              <MenuCard
                 image={messageImg}
                 url="/producer/messages"
               />

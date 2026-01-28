@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
@@ -8,19 +7,21 @@ import { userMap } from '../hooks/userMap';
 import { MapsContext } from '../contexts/MapsContext';
 import { ParcelDetails } from '../components/ParcelDetails';
 import { PopUp } from '../components/PopUp';
+import { ViewerPopup } from '../components/ViewerPopup';
 import { Report } from '../components/Report';
-import './ProducerSeeFields.css';
+import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 
+import './ProducerSeeFields.css';
 
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();
   // const [parcels, setParcels] = useState([]);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { getAllAlertsByUser, getAllInfoMeteoByUser } = userMap()
   const { parcels, setParcels, parcel, selectedParcelId } = useContext(MapsContext)
-
+  
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [reportData, setReportData] = useState({
     email_creator: '',
     email_receiver: '',
@@ -30,6 +31,12 @@ export const ProducerSeeFields = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  
+  const [dataPoints, setDataPoints] = useState(null);
+  const [dataPhoto, setDataPhoto] = useState(null);
+  
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
 
   useEffect(() => {
     const getParcels = async () => {
@@ -78,6 +85,82 @@ export const ProducerSeeFields = () => {
       }));
     }
   }, [user]);
+
+  // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
+  useEffect(() => {
+    const getDataPoints = async () => {
+      if (!parcel?.photo_url) {
+        setDataPoints(null);
+        return;
+      }
+
+      try {
+        const responsePoints = await fetchData(
+          `${infoParcelUrl}/analyze`,
+          'POST',
+          { image_url: parcel.photo_url }
+        );
+
+        const receivedPoints = responsePoints.data;
+        console.log('Points received:', receivedPoints);
+
+        // Convertir a array para mapear
+        const pointsToPrint = Object.entries(receivedPoints).map(([key, value]) => {
+          const { x, y, z } = value.aframe_position;
+
+          return {
+            id: key,
+            position: `${x} ${y} ${z}`
+          }
+        });
+
+        setDataPoints(pointsToPrint);
+        setError(null);
+      } catch (err) {
+        setDataPoints(null);
+        setError("Error al obtener los puntos de la imagen");
+      }
+    }
+
+    getDataPoints();
+  }, [parcel, infoParcelUrl, fetchData]);
+
+  // FETCH PARA OBTENER DATOS DE LA IMAGEN 360
+  useEffect(() => {
+    const getDataPhoto = async () => {
+      if (!parcel?.uid_parcel) {
+        setDataPhoto(null);
+        return;
+      }
+
+      try {
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) {
+          setError('No hay usuario autenticado');
+          return;
+        }
+
+        const token = await firebaseUser.getIdToken();
+
+        const response = await fetch(
+          `${backendUrl}/producer/parcel/data/${parcel.uid_parcel}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+        const result = await response.json();
+        setDataPhoto(result.data || null);
+      } catch (err) {
+        setDataPhoto(null);
+        console.error("Error al obtener la información de los datos de la parcela:", err);
+      }
+    }
+
+    getDataPhoto();
+  }, [parcel, backendUrl]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -178,6 +261,14 @@ export const ProducerSeeFields = () => {
     setSubmitSuccess(false);
   };
 
+  const handleOpenViewer = () => {
+    if (!parcel) {
+      setError('Por favor, selecciona una parcela en el mapa primero');
+      return;
+    }
+    setIsViewerOpen(true);
+  };
+
   return (
     <>
       {loading && <p>Cargando parcelas...</p>}
@@ -206,7 +297,16 @@ export const ProducerSeeFields = () => {
       {!loading && <Map parcels={parcels} />}
 
       {parcel && <ParcelDetails />}
+      <button
+        className="btn-report"
+        onClick={handleOpenViewer}
+        style={{ cursor: parcel ? 'pointer' : 'not-allowed' }}
+        disabled={!parcel}
+      >
+        Ver la parcela 360°
+      </button>
 
+      {/* CREAR UN REPORTE */}
       <div className='btn-container'>
         <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
         <button
@@ -237,6 +337,29 @@ export const ProducerSeeFields = () => {
           disabledFields={{ email_creator: true }}
         />
       </PopUp>
+
+      {/* Visor 360° Popup */}
+      <ViewerPopup isOpen={isViewerOpen} onClose={() => setIsViewerOpen(false)}>
+        <div className='heading-container'>
+          <h2 className='heading2'>
+            Vista 360° - {parcel?.name_parcel || 'Parcela'}
+          </h2>
+          {!dataPoints && (
+            <p className='loading'>
+              Cargando hotspots...
+            </p>
+          )}
+          {parcel && dataPoints && (
+            <div className='viewer-container'>
+              <ViewerParcelProducer
+                imageUrl={parcel.photo_url}
+                points={dataPoints}
+                dataPhoto={dataPhoto}
+              />
+            </div>
+          )}
+        </div>
+      </ViewerPopup>
     </>
   );
 }
