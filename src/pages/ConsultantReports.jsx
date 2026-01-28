@@ -92,8 +92,8 @@ export const ConsultantReports = () => {
     };
     
     return (
-        <>
-            <section>
+        <section className=''>
+            <div>
                 <h1 className='centeredText'>Mis reportes</h1>
                 {loading && <p>Cargando reportes...</p>}
                 {error && <p className='errorMessage'>{error}</p>}
@@ -134,7 +134,7 @@ export const ConsultantReports = () => {
                         </li>
                     ))}
                 </ul>
-            </section>
-        </>
+            </div>
+        </section>
     )
 }

@@ -48,7 +48,7 @@ export const ConsultantFields = () => {
         getParcels();
     };
   return (
-    <>
+    <section className=''>
         {loading && <p>Cargando parcelas...</p>}
         {error && <p>Error al cargar parcelas: {error}</p>}
         {<section className='flexContainer CenteredContent'>
@@ -81,7 +81,7 @@ export const ConsultantFields = () => {
       )}   
     </section>}
     {!loading && <Map parcels= {parcels}/>}
-    </>
+    </section>
   );
 }
 

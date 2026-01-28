@@ -1,18 +1,21 @@
 .menu-card {
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow);
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 16 / 11; /* Mantiene el rectángulo horizontal siempre */
-  transition: transform 0.25s ease;
+  aspect-ratio: 16 / 11;
+  transition: all 0.3s ease;
 }
 
 .menu-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--green-light);
 }
 
 .menu-card-header {
@@ -21,14 +24,20 @@
   gap: 10px;
   padding: 12px 15px;
   flex-shrink: 0;
+  background: rgba(76, 175, 80, 0.05);
 }
 
-.menu-card-logo { font-size: 1.5rem; }
+.menu-card-logo { 
+  font-size: 1.5rem;
+}
 
 .menu-card-text {
   font-size: 18px;
-  font-weight: 800;
-  color: var(--dark-green);
+  font-weight: 700;
+  background: var(--green-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .img-container {

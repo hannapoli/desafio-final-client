@@ -49,7 +49,7 @@ export const DirectorFields = () => {
 
 
   return (
-    <>
+    <section className='page-container'>
         {loading && <p>Cargando parcelas...</p>}
         {error && <p>Error al cargar parcelas: {error}</p>}
         {<section className='flexContainer CenteredContent'>        
@@ -72,7 +72,7 @@ export const DirectorFields = () => {
       )}   
     </section>}
     {!loading && <Map parcels= {parcels}/>}
-    </>
+    </section>
   );
 }
 

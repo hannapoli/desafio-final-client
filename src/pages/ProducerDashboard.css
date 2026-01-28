@@ -6,6 +6,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: var(--dark-bg);
+  min-height: calc(100vh - 3.7em - 60px);
 }
 
 
@@ -14,6 +16,10 @@
 .dashboard-producer-bg {
   position: absolute;
   inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.05) 0%,
+    rgba(15, 23, 42, 0.95) 50%,
+    rgba(76, 175, 80, 0.05) 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -41,13 +47,17 @@
 .dashboard-logo-icon {
   width: 80px;
   margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 12px rgba(76, 175, 80, 0.3));
 }
 
 .dashboard-title {
   font-size: clamp(2.2rem, 6vw, 3.8rem);
   font-weight: 800;
   margin-bottom: 1rem;
-  color: var(--green-principal)
+  background: var(--green-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .dashboard-description {
@@ -57,6 +67,8 @@
   line-height: 1.6;
   padding: 0.5rem 1rem;
   border-radius: 12px;
+  color: var(--text-light);
+  opacity: 0.9;
 }
 
 /* ================= CONTENIDO CENTRAL ================= */

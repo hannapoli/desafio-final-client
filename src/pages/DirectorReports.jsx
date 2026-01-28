@@ -92,8 +92,8 @@ export const DirectorReports = () => {
 
 
     return (
-        <>
-            <section>
+        <section className='page-container'>
+            <div>
                 <h1 className='centeredText'>Mis reportes</h1>
                 {loading && <p>Cargando reportes...</p>}
                 {error && <p className='errorMessage'>{error}</p>}
@@ -123,7 +123,7 @@ export const DirectorReports = () => {
                         </li>
                     ))}
                 </ul>
-            </section>
-        </>
+            </div>
+        </section>
     )
 }

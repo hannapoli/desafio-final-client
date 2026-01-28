@@ -62,7 +62,7 @@ export const AdminUserEdit = () => {
     };
 
     return (
-        <>
+        <section className='page-container'>
             <h1>Gestión de usuarios</h1>
 
             <article className='flexColumn centeredContent'>
@@ -131,6 +131,6 @@ export const AdminUserEdit = () => {
                     </div>
                 </form>
             </article>
-        </>
+        </section>
     );
 }

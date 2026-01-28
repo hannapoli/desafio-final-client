@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    padding: 1.2rem;
-    background: var(--grey);
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
 
     width: 100%; 
     min-width: 100%;
@@ -14,10 +15,15 @@
     margin-top: 2rem;
 }
 
+div.popup-content label, input, textarea {
+  color: #000;
+}
+
 .report {
     margin-left: 2rem;
     margin-right: 2rem;
 }
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -27,52 +33,58 @@
 .report-form label {
     font-size: 1rem;
     font-weight: 500;
-    color: var(--dark-blue);
+    color: #000;
 }
 
 .report-form input,
 .report-form textarea {
-    padding: 0.7rem 1rem;
-    border: 1px solid var(--grey);
-    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(27, 9, 9, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border 0.2s;
-    width: 100%; box-sizing: border-box;
+    transition: all 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .report-form input:focus,
 .report-form textarea:focus {
-    border-color: var(--dark-green);
+    outline: none;
+    border-color: var(--green-light);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .file-list {
     margin-top: 0.5em;
     font-size: 0.9em;
-    color: var(--grey);
+    color: var(--text-light);
+    opacity: 0.8;
 }
 
 .report-form .submit-btn {
     margin-top: 0.5rem;
     padding: 0.9rem 1.2rem;
-    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
-    color: #fff;
+    background: var(--green-gradient);
+    color: white;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.3s;
 }
 
 .report-form .submit-btn:hover {
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transform: translateY(-1px);
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
 }
 
 .report-form .submit-btn:disabled {
-    background: linear-gradient(180deg, #6bb850 0%, var(--green-principal) 100%);
+    opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
 }
 
 @media (min-width: 480px) {

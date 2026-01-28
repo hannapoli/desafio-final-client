@@ -5,7 +5,8 @@ nav.flexContainer {
     align-items: center;
     padding: 0 1rem;
     height: 3.7em;
-    background-color: var(--grey);
+    background-color: var(--white);
+    border-bottom: 1px solid var(--grey-medium);
     position: relative;
     z-index: 1000;
 }
@@ -21,21 +22,22 @@ nav.flexContainer {
 .logo {
     width: 2rem;
     height: auto;
-    transition: filter 0.3s;
+    transition: all 0.3s;
 }
 
 .brand-name {
     font-size: 1.2rem;
     font-weight: bold;
-    background: linear-gradient(to right, var(--green-principal) 50%, var(--dark-green) 50%);
+    background: var(--green-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .brand-group .logo:hover {
-  filter: brightness(1.1); 
-  transform: scale(1.05); 
-  transition: all 0.3s ease;
+    filter: brightness(1.1);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 /* 3. MENÚ (MÓVIL POR DEFECTO - HASTA 899px) */
@@ -49,9 +51,68 @@ nav.flexContainer {
     align-items: center;
     padding: 1em 0;
     gap: 0.5em;
-    background-color: var(--grey);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    border-bottom: 1px solid var(--grey-medium);
+    box-shadow: var(--shadow);
     z-index: 999;
+}
+
+.navMenu.visible {
+    display: flex !important;
+    animation: slideDown 0.3s ease forwards;
+}
+
+nav li {
+    list-style: none;
+    width: 90%;
+    text-align: center;
+}
+
+.navMenu a {
+    display: block;
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 0.6em 1.2em;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.navMenu a:hover,
+.nav-link-active {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--green-primary) !important;
+    transform: translateY(-1px);
+}
+
+.logout-link {
+    color: var(--error-color) !important;
+    font-weight: 700 !important;
+}
+
+.logout-link:hover {
+    background: rgba(220, 38, 38, 0.1) !important;
+}
+
+/* 5. ICONO HAMBURGUESA */
+.navMenuIcon {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: transform 0.3s;
+}
+
+.navMenuIcon span {
+    width: 25px;
+    height: 3px;
+    background: var(--green-primary);
+    border-radius: 2px;
+}
+
+.navMenuIcon:active {
+    transform: scale(0.9);
 }
 
 .navMenu.visible {

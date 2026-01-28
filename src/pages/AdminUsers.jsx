@@ -181,7 +181,7 @@ export const AdminUsers = () => {
                         {deleteLoading ? 'Eliminando...' : 'Sí, eliminar'}
                     </button>
                     <button
-                        className='register-btn'
+                        className='register-bt.delete-btn'
                         onClick={() => {
                             setShowDeletePopup(false);
                             setUserToDelete(null);
