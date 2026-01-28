@@ -179,6 +179,10 @@ footer.footer {
   font-weight: 600;
 }
 
+.margin-block {
+  margin-block: 1em;
+}
+
 
 
 /* ================= NOTA IMPORTANTE ================= */

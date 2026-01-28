@@ -15,20 +15,19 @@ section label {
 }
 
 .itemInfo {
-    background: var(--grey);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     transition: all 0.3s ease;
-    box-shadow: var(--shadow);
-    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.itemInfo>div,
-.itemInfo>p {
+.itemInfo > div,
+.itemInfo > p {
     color: var(--dark-blue);
     font-size: 0.95rem;
     line-height: 1.5;
@@ -97,6 +96,50 @@ section label {
     padding: 1.8em;
 }
 
+.found-user {
+    width: 35em;;
+}
+
+.userManagementActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 0.6em;
+}
+
+.userManagementActions button {
+    width: 10em;
+    padding: 0.8em 0.7em;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    background: #6b7280;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #4b5563;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.delete-btn {
+    background: #c31717dc;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #ba1e1e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
 
 @media (min-width: 640px) {
     .infoActions {
@@ -129,4 +172,49 @@ section label {
     .itemInfo {
         padding: 2em;
     }
+}
+
+.found-card {
+    padding: 1.5em;
+    text-align: center;
+}
+
+.user-name {
+    font-size: 1.6rem;
+    margin-bottom: 0.3em;
+    color: #1f2937;
+}
+
+.itemInfo>p {
+    font-size: 1.3rem;
+    color: #374151;
+}
+
+.userList .itemInfo h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.userList .itemInfo p {
+    font-size: 1rem;
+}
+
+.userList .itemInfo .flexContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.userList .itemInfo .flexContainer button {
+    flex: 1;
+    max-width: 10em;
+    padding: 0.6em 1.2em;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }

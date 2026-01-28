@@ -162,8 +162,13 @@
   }
 }
 
+.edit-btn  {
+  background: linear-gradient(135deg, #d67922dc 0%, #eac211 100%);
+  color: white;
+}
+
 .delete-btn {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #782020dc 0%, #dc2626 100%);
   color: white;
 }
 

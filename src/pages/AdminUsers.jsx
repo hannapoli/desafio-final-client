@@ -4,6 +4,8 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import { PopUp } from '../components/PopUp';
 import { InfoList } from '../components/InfoList';
+import '../components/ParcelDetails.css';
+import '../components/InfoList.css';
 
 export const AdminUsers = () => {
     const [email, setEmail] = useState('');
@@ -125,22 +127,24 @@ export const AdminUsers = () => {
                 {deleteSuccess && <p className='successMessage'>{deleteSuccess}</p>}
                 {searchError && <p className='errorMessage'>{searchError}</p>}
                 {foundUser && (
-                    <article className='flexColumn centeredContent'>
-                        <h2>Información del usuario encontrado:</h2>
-                        <h3>{foundUser.name_user}</h3>
-                        <p><span className='bold'>UID:</span> {foundUser.firebase_uid_user}</p>
-                        <p><span className='bold'>Email:</span> {foundUser.email_user}</p>
-                        <p><span className='bold'>Role:</span> {foundUser.rol_type}</p>
+                    <article className='flexColumn centeredContent found-card'>
+                        <h2 className='margin-block'>Información del usuario encontrado:</h2>
+                        <div className='itemInfo found-user'>
+                            <h3 className='user-name'>{foundUser.name_user}</h3>
+                            <p><span className='bold'>UID:</span> {foundUser.firebase_uid_user}</p>
+                            <p><span className='bold'>Email:</span> {foundUser.email_user}</p>
+                            <p><span className='bold'>Role:</span> {foundUser.rol_type}</p>
 
-                        <div className='userManagementActions'>
-                            <Link to={`/admin/users/edit/${foundUser.firebase_uid_user}`} state={{ user: foundUser }}>
-                                <button className='edit-btn'>Modificar</button>
-                            </Link>
-                            <button onClick={() => openDeletePopup(foundUser)} className='delete-btn'>Eliminar</button>
+                            <div className='userManagementActions'>
+                                <Link to={`/admin/users/edit/${foundUser.firebase_uid_user}`} state={{ user: foundUser }}>
+                                    <button className='edit-btn'>Modificar</button>
+                                </Link>
+                                <button onClick={() => openDeletePopup(foundUser)} className='delete-btn'>Eliminar</button>
+                            </div>
                         </div>
                     </article>
                 )}
-                <h2>Lista de todos los usuarios:</h2>
+                <h2 className='margin-block'>Lista de todos los usuarios:</h2>
                 <section className='userList'>
                     {loading && <p>Cargando usuarios...</p>}
                     {users.length === 0 && !loading && <p>No hay usuarios registrados.</p>}
@@ -167,15 +171,13 @@ export const AdminUsers = () => {
             >
                 <h2 className="text-green centeredText">¿Eliminar este usuario?</h2>
                 {userToDelete && (
-                    <p className="text-dark centeredText">
-                        <strong>{userToDelete.email_user}</strong>
-                    </p>
+                    <p className="text-dark centeredText user-delete">{userToDelete.email_user}</p>
                 )}
                 {deleteError && <p className='errorMessage'>{deleteError}</p>}
                 <div className='flexContainer'>
                     <button
                         onClick={handleDeleteUser}
-                        className='login-button'
+                        className='edit-btn'
                         disabled={deleteLoading}
                     >
                         {deleteLoading ? 'Eliminando...' : 'Sí, eliminar'}

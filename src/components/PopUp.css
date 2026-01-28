@@ -184,3 +184,96 @@
     padding: 10px;
     border-radius: 8px;
 }
+
+.user-delete {
+    font-weight: 700;
+    margin: 0;
+    padding: 1em;
+    font-size: 1.5rem;
+}
+/* ================= CONTACT POPUP ================= */
+.contact-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.contact-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green-principal);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.contact-info h3 {
+    color: var(--green-principal);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+    color: var(--dark-blue);
+    font-size: 0.95rem;
+}
+
+.contact-form {
+    width: 100%;
+}
+
+.contact-form h3 {
+    color: var(--dark-blue);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.contact-form label {
+    display: block;
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.contact-form .register-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background: white;
+    color: var(--dark-blue);
+}
+
+.contact-form .register-input:focus {
+    outline: none;
+    border-color: var(--green-principal);
+    box-shadow: 0 0 0 3px rgba(107, 184, 80, 0.1);
+}
+
+.contact-textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+.contact-submit {
+    width: 100%;
+    margin-top: 1rem;
+}

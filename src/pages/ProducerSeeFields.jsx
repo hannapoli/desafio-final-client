@@ -6,10 +6,6 @@ import { Map } from '../components/Map'
 import { userMap } from '../hooks/userMap';
 import { MapsContext } from '../contexts/MapsContext';
 import { ParcelDetails } from '../components/ParcelDetails';
-import { PopUp } from '../components/PopUp';
-import { ViewerPopup } from '../components/ViewerPopup';
-import { Report } from '../components/Report';
-import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 
 import '../components/ParcelDetails.css'
 
@@ -23,17 +19,12 @@ export const ProducerSeeFields = () => {
   const { getAllAlertsByUser, getAllInfoMeteoByUser } = userMap()
   const { parcels, setParcels, parcel, selectedParcelId, vegetation } = useContext(MapsContext)
   
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [reportData, setReportData] = useState({
     email_creator: '',
     email_receiver: '',
     content_message: '',
     attached: null
   });
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
   
   const [dataPoints, setDataPoints] = useState(null);
   const [dataPhoto, setDataPhoto] = useState(null);
