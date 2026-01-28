@@ -18,6 +18,7 @@ export * from './ProducerReports.jsx';
 export * from './DirectorDashboard.jsx';
 export * from './DirectorReports.jsx';
 export * from './DirectorFields.jsx';
+export * from './DirectorConsultants.jsx';
 
 //Páginas Asesor
 export * from './ConsultantDashboard.jsx';
