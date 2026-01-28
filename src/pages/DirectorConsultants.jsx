@@ -94,7 +94,9 @@ export const DirectorConsultants = () => {
 
         try {
         setAssigning(true);
-        const token = await auth.currentUser.getIdToken();
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
 
         await fetchData(
             `${backendUrl}/director/consultant/assign/${emailProductor}/${emailConsultant}`,
@@ -118,7 +120,9 @@ export const DirectorConsultants = () => {
             return;
         }
         try {
-            const token = await auth.currentUser.getIdToken();
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+            const token = await firebaseUser.getIdToken();
 
             await fetchData(
             `${backendUrl}/director/consultant/unassign/${emailProductor}/${emailConsultant}`,
@@ -137,8 +141,9 @@ export const DirectorConsultants = () => {
 /* ================= PRODUCTORES PARA CONTRATAR ================= */
 const handleContratar = async (emailProductor) => {
         try {
-            const token = await auth.currentUser.getIdToken();
-                // Llamada al backend
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+            const token = await firebaseUser.getIdToken();
             await fetchData(
             `${backendUrl}/director/productor/contratar/${emailProductor}`,
             'POST',
@@ -156,7 +161,9 @@ const handleContratar = async (emailProductor) => {
 
     const handleDescontratar = async (emailProductor) => {
         try {
-            const token = await auth.currentUser.getIdToken();
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
             await fetchData(
             `${backendUrl}/director/productor/despedir/${emailProductor}`,
             'DELETE',
@@ -173,7 +180,9 @@ const handleContratar = async (emailProductor) => {
 
     const getProductoresParaContratar = async () => {
         try {
-        const token = await auth.currentUser.getIdToken();
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
         const response = await fetchData(
             `${backendUrl}/director/productor/getAll`,
             'GET',
