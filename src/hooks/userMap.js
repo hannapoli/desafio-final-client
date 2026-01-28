@@ -147,6 +147,8 @@ const getAllAlertsByUser = useCallback(async (email) => {
                     return response
               } else {
                 setError("No Se ha podido guardar las alertas de la parcela creada")
+                console.log('Problemas en guardar alertas en la parcela creada')
+                return 
               }
                     
                     
@@ -213,7 +215,7 @@ const getAllAlertsByUser = useCallback(async (email) => {
             formData.append('id_cultivo', id_cultivo);
             formData.append('coordinates_parcel', JSON.stringify(coordinates_parcel));
             if (photo) formData.append('photo', photo);
-          // console.log('entra en create Parcel', {formData})
+          console.log('entra en create Parcel', {formData})
             const response = await fetch(`${backendUrl}/producer/createParcel`, {
               method: 'POST',
               headers: {

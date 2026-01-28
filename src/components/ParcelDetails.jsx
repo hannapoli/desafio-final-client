@@ -13,7 +13,7 @@ import { ViewerParcelProducer } from './ViewerParcelProducer'
 
 
 export const ParcelDetails = () => {
-  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId } = useContext(MapsContext)
+  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData } = useFetch()
 
@@ -22,12 +22,13 @@ export const ParcelDetails = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorEliminar, setErrorEliminar] = useState(null)
   const [reportData, setReportData] = useState({
-    email_creator: '',
-    email_receiver: '',
-    content_message: '',
-    attached: null
-  });
+      email_creator: '',
+      email_receiver: '',
+      content_message: '',
+      attached: null
+    });
 
   const [dataPoints, setDataPoints] = useState(null);
   const [dataPhoto, setDataPhoto] = useState(null);
@@ -376,7 +377,7 @@ export const ParcelDetails = () => {
           </div>
         </ViewerPopup>
     
-          <button id='btn-eliminar-parcela' onClick={()=>eliminarParcela(p)}>Eliminar Parcela</button>
+          <button id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>
   </article>
 
 

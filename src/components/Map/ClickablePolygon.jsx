@@ -15,7 +15,7 @@ export const  ClickablePolygon = ()  => {
 
   
 
-  const [errorEliminar, setErrorEliminar] = useState(null)
+ 
 
   
 
