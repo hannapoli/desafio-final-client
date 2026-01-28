@@ -1,0 +1,10 @@
+#mapBoard {
+  width: 100%;
+  aspect-ratio: 1.618 / 1; /* Proporción áurea */
+  background: #e0e0e0;      
+  position: relative;
+  border-radius: 5px;
+  /* overflow: hidden; */
+}
+
+

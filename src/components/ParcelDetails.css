@@ -1,0 +1,237 @@
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#parcel-section {
+  max-width: 1100px;
+  margin: 0 auto;
+ }
+
+/* ===== TÍTULO PARCELA ===== */
+#parcel-section > h2.parcel-title {
+  /* font-size: 2rem; */
+  font-weight: 700;
+  /* margin-bottom: 1rem; */
+  /* color: #1f3d1f; */
+}
+
+/* ===== ARTÍCULOS ===== */
+.article-card {
+  /* background: #ffffff; */
+  /* border-radius: 12px; */
+  /* padding: 1.25rem 1.5rem; */
+  /* margin-bottom: 1.5rem; */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+
+/* ===== PÁRRAFOS ===== */
+.article-card p {
+  margin: 0.35rem 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ===== PRODUCTO Y VARIEDAD ===== */
+.article-card p.product-info {
+  font-weight: 600;
+  color: #245b24;
+}
+
+/* ===== ALERTAS ===== */
+.alert {
+  /* margin-top: 0.5rem; */
+  padding: 0.5rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  border-left: 4px solid;
+  width: 200px;
+}
+
+/* ALERTAS SEGÚN TIPO */
+.alert-plaga {
+  background: #fff3cd;
+  color: #8a5d00;
+  border-color: #f0ad4e;
+}
+
+.alert-inundacion {
+  background: #d1ecf1;
+  color: #0c5460;
+  border-color: #17a2b8;
+}
+
+.alert-helada {
+  background: #cce5ff;
+  color: #004085;
+  border-color: #004085;
+}
+
+.alert-sequia {
+  background: #fff5e6;
+  color: #856404;
+  border-color: #ffc107;
+}
+
+/* ===== METEOROLOGÍA ===== */
+#meteo-section h3.meteo-title {
+  /* margin-bottom: 0.75rem; */
+  font-size: 1.2rem;
+  /* font-weight: 600; */
+  /* color: #244f6b; */
+}
+
+/* ===== VEGETATION INDEX ===== */
+#vegetation-section {
+  /* padding: 1.5rem; */
+}
+
+/* Grid para índices de vegetación */
+#vegetation-section .indices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* Tarjeta individual de índice */
+.index-card {
+  background: #ffffff;
+  border-radius: 10px;
+  border-top: 5px solid;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Encabezado del índice */
+.index-card .index-header {
+  margin-bottom: 0.5rem;
+}
+
+.index-card .index-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1f3d1f;
+}
+
+.index-card .index-desc {
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 0.2rem;
+}
+
+/* Valor del índice */
+.index-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+/* Estado textual */
+.index-status {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Barra de progreso */
+.progress-container {
+  background: #e0e0e0;
+  border-radius: 6px;
+  height: 10px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 6px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #parcel-section {
+    padding: 1rem;
+  }
+
+  #parcel-section > h2.parcel-title {
+    font-size: 1.6rem;
+  }
+
+  .article-card {
+    padding: 1rem;
+  }
+}
+
+    /* ===== ARTÍCULO METEO ===== */
+#meteo-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #2c2c2c;
+}
+
+/* ===== TÍTULO ===== */
+.meteo-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #84ca66;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+  color: #006837;
+}
+
+/* ===== CONTENEDOR DE INFO ===== */
+#meteo-section div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* separación entre líneas */
+}
+
+/* ===== CADA LÍNEA DE DATO ===== */
+#meteo-section p {
+  font-size: 1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+/* Hover opcional para resaltar la línea */
+#meteo-section p:hover {
+  background: #f0f8f0;
+}
+
+/* ===== EMOJIS ESTÁTICOS PARA DATOS ===== */
+#meteo-section p:nth-child(1)::before { content: "🌡️"; }
+#meteo-section p:nth-child(2)::before { content: "💧"; }
+#meteo-section p:nth-child(3)::before { content: "☔"; }
+#meteo-section p:nth-child(4)::before { content: "☁️"; }
+#meteo-section p:nth-child(5)::before { content: "🌬️"; }
+#meteo-section p:nth-child(6)::before { content: "🧭"; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  #meteo-section {
+    padding: 1rem;
+  }
+
+  .meteo-title {
+    font-size: 1.1rem;
+  }
+
+  #meteo-section p {
+    font-size: 0.95rem;
+  }
+}
+
+  }
+}

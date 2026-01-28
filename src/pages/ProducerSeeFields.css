@@ -52,3 +52,68 @@
 /* .viewer-container {
     flex: 1;
 } */
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#seeFieldsContainer {
+  display: flex;
+  flex-wrap: wrap;            
+  justify-content: space-between;  
+  align-items: center;  
+  gap: 1.5rem;                
+  padding: 2rem;
+}
+
+/* ===== ARTÍCULOS ===== */
+#seeFieldsContainer article {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  padding: 1rem;
+  flex-grow: 1;               /* permite que los artículos crezcan si hay espacio */
+  transition: all 0.3s ease;
+}
+
+/* ===== MAPA ===== */
+#mapBox {
+  min-width: 60%;      
+  max-width: 800px;   
+  flex: 1 1 60%;       /* flexible, ocupa al menos 60% */
+}
+
+/* ===== DETALLES ===== */
+#detailsParcelBox {
+  min-width: 300px;   
+  max-width: 40%;      
+  flex: 1 1 300px;     /* flexible: crece si hay espacio */
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  #seeFieldsContainer {
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  #mapBox,
+  #detailsParcelBox {
+    flex-basis: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  #seeFieldsContainer {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  #mapBox,
+  #detailsParcelBox {
+    flex-basis: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
+}

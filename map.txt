@@ -235,3 +235,33 @@ Si quieres, puedo hacer una versión **mejorada** que dibuje **todos los polígo
 //   type: "FeatureCollection",
 //   features: geojsonFeatures,
 // };
+
+
+
+
+// <section>
+    //   <h2>{parcel.name_parcel}</h2>
+    //   <article >
+    //       <hr />
+    //       {crop && (<p> Producto: {crop.nombre_cultivo}</p>)}
+    //       {crop && (<p> Variedad: {crop.nombre_variedad}</p>)}
+          
+    //       {/* <p>📅 Fecha: {new Date(parcel.fecha).toLocaleDateString()}</p> */}
+    //       <p>👤 productor: {alert.name_user}</p>
+    //       {alert.alerta_plaga && <p className='alert'>⚠️ Alerta de plagas: {alert.alerta_plaga}</p>}
+    //       {alert.alerta_inundacion && <p className='alert'>⚠️ Alerta de inundación: {alert.alerta_inundacion}</p>}
+    //       {alert.alerta_helada && <p className='alert'>⚠️ Alerta de helada: {alert.alerta_helada}</p>}
+    //       {alert.alerta_sequia && <p className='alert'>⚠️ Alerta_ de sequía: {alert.alerta_sequia}</p>} 
+    //   </article>
+
+    //   <article>
+    //     <h3>Información meteorologica</h3>
+    //     {infoMeteo && (
+    //             <InfoMeteo p={parcel} infoMeteo={infoMeteo} />
+    //           )}
+    //   </article>
+
+    //   <article>
+    //     <VegetationIndex vegetation={vegetation}/>
+    //   </article>
+    // </section>
