@@ -233,5 +233,9 @@
   }
 }
 
-  }
+#btn-eliminar-parcela {
+  background-color: #492f36;
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: rgb(159, 159, 159);
 }

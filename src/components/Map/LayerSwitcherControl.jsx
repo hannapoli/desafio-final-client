@@ -1,48 +1,51 @@
-import { useEffect } from "react";
+
+import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
+import "./LayerSwitcherControl.css";
 
 export default function LayerSwitcherControl({ setCurrentLayer }) {
   const map = useMap();
+  const controlRef = useRef(null);
 
   useEffect(() => {
-    const controlDiv = L.DomUtil.create("div", "leaflet-bar leaflet-control leaflet-control-custom");
+    if (!controlRef.current) return;
 
-    controlDiv.style.background = "white";
-    controlDiv.style.padding = "5px";
-    controlDiv.style.display = "flex";
-    controlDiv.style.flexDirection = "column";
-
-    const layers = [
-      { name: "OSM", key: "osm" },
-      { name: "Carto Light", key: "cartoLight" },
-      { name: "Carto Dark", key: "cartoDark" },
-      { name: "Topo", key: "topo" }
-    ];
-
-    layers.forEach(layer => {
-      const button = L.DomUtil.create("button", "", controlDiv);
-      button.innerText = layer.name;
-      button.style.margin = "2px";
-      button.style.cursor = "pointer";
-      button.style.fontSize = "12px";
-
-      L.DomEvent.on(button, "click", (e) => {
-        e.stopPropagation();
-        setCurrentLayer(layer.key);
-      });
-    });
-
-    const customControl = L.Control.extend({
+    const Control = L.Control.extend({
       options: { position: "topright" },
-      onAdd: () => controlDiv
+      onAdd: () => controlRef.current
     });
 
-    const instance = new customControl();
-    map.addControl(instance);
+    const controlInstance = new Control();
+    map.addControl(controlInstance);
 
-    return () => map.removeControl(instance); // limpieza al desmontar
-  }, [map, setCurrentLayer]);
+    return () => {
+      map.removeControl(controlInstance);
+    };
+  }, [map]);
 
-  return null; // no renderiza nada en JSX
+  const layers = [
+    { name: "OSM", key: "osm" },
+    { name: "Carto Light", key: "cartoLight" },
+    { name: "Carto Dark", key: "cartoDark" },
+    { name: "Topo", key: "topo" }
+  ];
+
+  return (
+    <div
+      ref={controlRef}
+      className="layer-switcher leaflet-bar leaflet-control"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {layers.map(layer => (
+        <button
+          key={layer.key}
+          className="layer-switcher__button"
+          onClick={() => setCurrentLayer(layer.key)}
+        >
+          {layer.name}
+        </button>
+      ))}
+    </div>
+  );
 }

@@ -3,16 +3,15 @@ import { Polygon, useMap, Popup, GeoJSON, ImageOverlay } from 'react-leaflet';
 import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
 import { Legend } from './Legend';
-import { InfoMeteo } from '../InfoMeteo';
 import './Legend.css'
 
 
 export const  ClickablePolygon = ()  => {
 
-  const {deleteParcel, parcels, setParcel, setSelectedParcelId, infoMeteo, setInfoMeteo} = useContext(MapsContext)
+  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo, selectedLayerType, setSelectedLayerType} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
-  const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+
   const [errorEliminar, setErrorEliminar] = useState(null)
 
   
@@ -56,36 +55,10 @@ export const  ClickablePolygon = ()  => {
     const respuesta = await HealthMap(uid_parcel)
     console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
+    console.log({healthData})
   }
 
-  const eliminarParcela = async(p) => {
-    if(!p.uid_parcel) return
-    try {
-      const resp1 = await deleteParcelApi(p.uid_parcel)
-      // const resp1= {res: 'ok'}
-      if(resp1.res === 'Error'){
-        setErrorEliminar(resp1.info)}
-      if(!resp1){
-        setErrorEliminar('Error al eliminar la parcela')
-      
-      } else {
-        const resp = await deleteParcelBack(p.uid_parcel)
-        // console.log({resp}, 'delete')
-         if (!resp.ok) {
-            setErrorEliminar(resp.msg);
-          } else {
-            console.log({resp})
-            setErrorEliminar(null);
-            deleteParcel(p)
-            console.log('parcela eliminada' , resp)
-          }
-      }
-      
-    } catch (error) {
-      console.log(error)
-      setErrorEliminar(error)
-    }
-  }
+  
 
 
   return (
@@ -100,7 +73,7 @@ export const  ClickablePolygon = ()  => {
       >
        
       {/* <Popup>
-         <button onClick={()=>eliminarParcela(p)}>Eliminar</button>
+         
         <button onClick={()=>}>Ver salud del campo</button>
        {errorEliminar ? (
           <p>{errorEliminar}</p>
