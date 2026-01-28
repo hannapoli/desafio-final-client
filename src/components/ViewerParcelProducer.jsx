@@ -92,11 +92,6 @@ export const ViewerParcelProducer = ({ imageUrl, points, dataPhoto }) => {
                             </div>
                         )}
                     </div>
-
-                    {/*Si hay imagen pero no hay puntos */}
-                    {imageUrl && pointsToPrint.length === 0 && (
-                        <p>No se detectaron hotspots en la imagen</p>
-                    )}
                 </>
             )}
         </article>

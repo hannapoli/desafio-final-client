@@ -124,10 +124,13 @@ export default function MapView({ alertas }) {
               : a.coordinates_parcel;
                 return (
                   
-        <Marker onClick={handleAlerta(a)}
+        <Marker 
           key={a.uid_parcel} 
           position={bboxCenter([coords])} 
-          icon={alertIcon} 
+          icon={alertIcon}
+          eventHandlers={{
+            click: () => handleAlerta(a)
+          }}
         >
           
         </Marker>
