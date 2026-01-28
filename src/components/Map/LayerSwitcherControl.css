@@ -1,0 +1,23 @@
+.layer-switcher {
+  background-color: #fff;
+ 
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.layer-switcher__button {
+  background: none;
+  padding: 4px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.layer-switcher__button:hover {
+  background-color: #f0f0f0;
+}
+
+.layer-switcher__button:active {
+  background-color: #e0e0e0;
+}

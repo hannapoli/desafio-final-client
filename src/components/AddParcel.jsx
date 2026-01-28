@@ -68,7 +68,7 @@ export const AddParcel = ({polygon}) => {
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-      const {bboxCenter, addParcelApi, createParcel} = userMap()
+      const {bboxCenter, addParcelApi, createParcel, saveAlertsByParcel} = userMap()
       const { polygons, setPolygons, addParcel, addPolygon, center,setCenter} = useContext(MapsContext);
       const {user} = useContext(AuthContext)
 
@@ -108,6 +108,8 @@ export const AddParcel = ({polygon}) => {
           if (!respuesta.ok) {
             setErrorCrear(respuesta.msg);
           } else {
+            await saveAlertsByParcel(crear.id_cultivo)
+            
             setErrorCrear(null);
             setCreatedParcel(true);
             addPolygon(polygon)

@@ -10,8 +10,8 @@ import { Report } from '../components/Report';
 
 
 export const ParcelDetails = () => {
-    const {parcel, setparcels, meteo, alert, setAlert, infoMeteo, vegetation, setVegetation, crop, setCrop, selectedParcelId} = useContext(MapsContext)
-    const {getAlertByParcel, getParcelCrops, getParcelVegetation} = userMap()
+    const {parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId} = useContext(MapsContext)
+    const {getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack} = userMap()
 
       const [isPopupOpen, setIsPopupOpen] = useState(false);
       const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -152,6 +152,35 @@ export const ParcelDetails = () => {
       setSubmitLoading(false);
     }
   };
+
+  const eliminarParcela = async(p) => {
+      if(!p.uid_parcel) return
+      try {
+        const resp1 = await deleteParcelApi(p.uid_parcel)
+        // const resp1= {res: 'ok'}
+        if(resp1.res === 'Error'){
+          setErrorEliminar(resp1.info)}
+        if(!resp1){
+          setErrorEliminar('Error al eliminar la parcela')
+        
+        } else {
+          const resp = await deleteParcelBack(p.uid_parcel)
+          // console.log({resp}, 'delete')
+           if (!resp.ok) {
+              setErrorEliminar(resp.msg);
+            } else {
+              console.log({resp})
+              setErrorEliminar(null);
+              deleteParcel(p)
+              console.log('parcela eliminada' , resp)
+            }
+        }
+        
+      } catch (error) {
+        console.log(error)
+        setErrorEliminar(error)
+      }
+    }
     
   return (
     <section id="parcel-section">
@@ -183,6 +212,8 @@ export const ParcelDetails = () => {
           >
             Ver la parcela 360°
           </button>
+
+          
     
           {/* CREAR UN REPORTE */}
           <div className='btn-container'>
@@ -238,6 +269,8 @@ export const ParcelDetails = () => {
               )}
             </div>
           </ViewerPopup>
+
+          <button id='btn-eliminar-parcela' onClick={()=>eliminarParcela(p)}>Eliminar Parcela</button>
   </article>
 
   
