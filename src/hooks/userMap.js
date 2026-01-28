@@ -137,7 +137,7 @@ const getAllAlertsByUser = useCallback(async (email) => {
                     // console.log('llamada')
                     const response = await fetchData(
                     
-                      `${apiDataUrl}/agrosync-api/alertas_tiempo_parcela`,
+                      `${apiDataUrl}/alertas_tiempo_parcela`,
                       'POST',
                       body,
                       null
