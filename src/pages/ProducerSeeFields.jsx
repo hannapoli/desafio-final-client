@@ -11,14 +11,17 @@ import { ViewerPopup } from '../components/ViewerPopup';
 import { Report } from '../components/Report';
 import { ViewerParcelProducer } from "../components/ViewerParcelProducer";
 
+import '../components/ParcelDetails.css'
+
 import './ProducerSeeFields.css';
+import { VegetationIndex } from '../components/Map/VegetationIndex';
 
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();
   // const [parcels, setParcels] = useState([]);
   const { getAllAlertsByUser, getAllInfoMeteoByUser } = userMap()
-  const { parcels, setParcels, parcel, selectedParcelId } = useContext(MapsContext)
+  const { parcels, setParcels, parcel, selectedParcelId, vegetation } = useContext(MapsContext)
   
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -162,112 +165,11 @@ export const ProducerSeeFields = () => {
     getDataPhoto();
   }, [parcel, backendUrl]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setReportData(currentData => ({
-      ...currentData,
-      [name]: value
-    }));
-  };
 
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    setReportData(currentData => ({
-      ...currentData,
-      attached: files && files.length > 0 ? Array.from(files) : null
-    }));
-  };
 
-  const handleSubmitReport = async (e) => {
-    e.preventDefault();
+ 
 
-    if (!selectedParcelId) {
-      setSubmitError('No se ha seleccionado ninguna parcela.');
-      return;
-    }
-    setSubmitLoading(true);
-    setSubmitError(null);
-    setSubmitSuccess(false);
-
-    try {
-      const firebaseUser = auth.currentUser;
-      if (!firebaseUser) {
-        setSubmitError('No hay usuario autenticado');
-        return;
-      }
-
-      const token = await firebaseUser.getIdToken();
-
-      const formData = new FormData();
-      formData.append('email_creator', reportData.email_creator);
-      formData.append('email_receiver', reportData.email_receiver);
-      formData.append('content_message', reportData.content_message);
-      if (reportData.attached) {
-        if (Array.isArray(reportData.attached)) {
-          reportData.attached.forEach((file) => {
-            formData.append('attached', file);
-          });
-        } else {
-          formData.append('attached', reportData.attached);
-        }
-      }
-
-      const response = await fetch(
-        `${backendUrl}/producer/reports/create/${user.email}/${selectedParcelId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          body: formData
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Error al mandar el reporte: ${response.status}`);
-      }
-
-      const result = await response.json();
-      // console.log('Reporte creado:', result);
-      setSubmitSuccess(true);
-
-      setReportData({
-        email_creator: user.email,
-        email_receiver: '',
-        content_message: '',
-        attached: null
-      });
-
-      // Resetear las entradas del formulario y el archivo
-      e.target.reset();
-      setTimeout(() => {
-        setIsPopupOpen(false);
-        setSubmitSuccess(false);
-      }, 2000);
-    } catch (err) {
-      setSubmitError('Error al crear el reporte. Inténtalo de nuevo.');
-    } finally {
-      setSubmitLoading(false);
-    }
-  };
-
-  const handleOpenPopup = () => {
-    if (!selectedParcelId) {
-      alert('Por favor, selecciona una parcela en el mapa primero');
-      return;
-    }
-    setIsPopupOpen(true);
-    setSubmitError(null);
-    setSubmitSuccess(false);
-  };
-
-  const handleOpenViewer = () => {
-    if (!parcel) {
-      setError('Por favor, selecciona una parcela en el mapa primero');
-      return;
-    }
-    setIsViewerOpen(true);
-  };
+  
 
   return (
     <>
@@ -293,76 +195,25 @@ export const ProducerSeeFields = () => {
           ))}
         </article>
       )}    */}
+
       </section>
-      {!loading && <Map parcels={parcels} />}
 
-      {parcel && <ParcelDetails />}
-      <div className="btn-container">
-        <button
-        className="login-button button-360"
-        onClick={handleOpenViewer}
-        style={{ cursor: parcel ? 'pointer' : 'not-allowed' }}
-        disabled={!parcel}
-      >
-        Ver la parcela 360°
-      </button>
-      </div>
+      <section id='seeFieldsContainer'>
+        <article id='mapBox'>
+          {!loading && <Map parcels={parcels} />}
+          {parcel && <div className="article-card" id="vegetation-section">
+    <VegetationIndex vegetation={vegetation} />
+  </div>}
+        </article>
 
-
-      {/* CREAR UN REPORTE */}
-      <div className='btn-container'>
-        <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
-        <button
-          onClick={handleOpenPopup}
-          className='login-button'
-          style={{
-            cursor: selectedParcelId ? 'pointer' : 'not-allowed'
-          }}
-          disabled={!selectedParcelId}
-        >Crear un reporte</button>
-        {selectedParcelId && (
-          <p className='selectedParcel'>
-            Parcela seleccionada: {selectedParcelId}
-          </p>
-        )}
-      </div>
-      <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <h2>Crear Reporte</h2>
-        {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
-        {submitError && <p className='errorMessage'>{submitError}</p>}
-        <Report
-          reportData={reportData}
-          onChange={handleInputChange}
-          onFileChange={handleFileChange}
-          onSubmit={handleSubmitReport}
-          submitLoading={submitLoading}
-          submitLabel='Crear Reporte'
-          disabledFields={{ email_creator: true }}
-        />
-      </PopUp>
-
-      {/* Visor 360° Popup */}
-      <ViewerPopup isOpen={isViewerOpen} onClose={() => setIsViewerOpen(false)}>
-        <div className='heading-container'>
-          <h2 className='heading2'>
-            Vista 360° - {parcel?.name_parcel || 'Parcela'}
-          </h2>
-          {!dataPoints && (
-            <p className='loading'>
-              Cargando hotspots...
-            </p>
-          )}
-          {parcel && dataPoints && (
-            <div className='viewer-container'>
-              <ViewerParcelProducer
-                imageUrl={parcel.photo_url}
-                points={dataPoints}
-                dataPhoto={dataPhoto}
-              />
-            </div>
-          )}
-        </div>
-      </ViewerPopup>
+        
+      {parcel &&  ( 
+        <article id='detailsParcelBox'>
+           <ParcelDetails />
+        </article>
+      )}
+      </section>
+      
     </>
   );
 }

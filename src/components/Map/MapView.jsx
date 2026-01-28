@@ -8,6 +8,7 @@ import { MapsContext } from '../../contexts/MapsContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { userMap } from '../../hooks/userMap';
 import { AddParcel } from '../AddParcel';
+import '../Map.css'
 
 export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
@@ -97,8 +98,8 @@ export default function MapView({ alertas }) {
 
   return (
     
-<div className="map-container">
-    <MapContainer center={center} zoom={15} style={{ height: '400px', width: '100%' }} >
+<div>
+    <MapContainer center={center} zoom={15} id='mapBoard'>
       <TileLayer {...tileLayers[currentLayer]} />
 
       <DrawControl onPolygonCreated={handlePolygonCreated} />

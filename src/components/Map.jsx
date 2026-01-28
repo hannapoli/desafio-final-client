@@ -26,7 +26,7 @@ export const Map = ({parcels}) => {
   fetchAlerts();
 }, [user?.email]);
 
-console.log({alertas})
+// console.log({alertas})
 
 
   useEffect(() => { 
@@ -35,12 +35,12 @@ console.log({alertas})
   }, [setParcels, havePolygons])
 
   return (
-    <div>
+    
         
         <MapView alertas={alertas}/>
         
        
-    </div>
+    
   )
 }
 

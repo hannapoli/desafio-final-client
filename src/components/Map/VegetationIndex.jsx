@@ -1,82 +1,108 @@
-import React from 'react';
+
+
+import React, { useMemo } from 'react';
 import './VegetationIndex.css';
 
-export const VegetationIndex = ({ data }) => {
+export const VegetationIndex = ({ vegetation }) => {
   const legends = {
     ndvi: [
-      { v: 0.0,  c: "#a50026", l: "Suelo desnudo" },
-      { v: 0.25, c: "#f98e52", l: "Poco vigor" },
-      { v: 0.5,  c: "#feffbe", l: "Vigor medio" },
-      { v: 0.75, c: "#84ca66", l: "Vigor alto" },
-      { v: 1.0,  c: "#006837", l: "Muy alto vigor" }
+      { v: 0.0,  color: "#a50026", label: "Suelo desnudo" },
+      { v: 0.25, color: "#f98e52", label: "Poco vigor" },
+      { v: 0.5,  color: "#feffbe", label: "Vigor medio" },
+      { v: 0.75, color: "#84ca66", label: "Vigor alto" },
+      { v: 1.0,  color: "#006837", label: "Muy alto vigor" }
     ],
     ndwi: [
-      { v: -1.0, c: "#a50026", l: "Muy Seco" },
-      { v: -0.5, c: "#f98e52", l: "Seco" },
-      { v: 0.0,  c: "#feffc0", l: "Neutro" },
-      { v: 0.5,  c: "#8ec2dc", l: "Húmedo" },
-      { v: 1.0,  c: "#313695", l: "Agua" }
+      { v: -1.0, color: "#a50026", label: "Muy seco" },
+      { v: -0.5, color: "#f98e52", label: "Seco" },
+      { v: 0.0,  color: "#feffc0", label: "Neutro" },
+      { v: 0.5,  color: "#8ec2dc", label: "Húmedo" },
+      { v: 1.0,  color: "#313695", label: "Agua" }
     ],
     savi: [
-      { v: 0.0, c: "#a50026", l: "Bajo" },
-      { v: 0.2, c: "#f98e52", l: "Medio-Bajo" },
-      { v: 0.4, c: "#feffbe", l: "Medio" },
-      { v: 0.6, c: "#84ca66", l: "Alto" },
-      { v: 0.8, c: "#006837", l: "Muy Alto" }
+      { v: 0.0, color: "#a50026", label: "Bajo" },
+      { v: 0.2, color: "#f98e52", label: "Medio-bajo" },
+      { v: 0.4, color: "#feffbe", label: "Medio" },
+      { v: 0.6, color: "#84ca66", label: "Alto" },
+      { v: 0.8, color: "#006837", label: "Muy alto" }
     ]
   };
+
   legends.gndvi = legends.ndvi;
 
+  const INDEX_KEYS = [
+    { key: 'ndvi',  desc: 'Vigor y densidad de la vegetación verde' },
+    { key: 'gndvi', desc: 'Clorofila y actividad fotosintética temprana' },
+    { key: 'ndwi',  desc: 'Contenido hídrico de vegetación o suelo' },
+    { key: 'savi',  desc: 'Vigor vegetal corrigiendo influencia del suelo' }
+  ];
+
   const getInfo = (key, value) => {
-    const palette = legends[key.toLowerCase()] || legends.ndvi;
-    return palette.reduce((prev, curr) => (value >= curr.v ? curr : prev));
+    const palette = legends[key] || legends.ndvi;
+    return palette.reduce((prev, curr) =>
+      value >= curr.v ? curr : prev
+    );
   };
 
-  // Calcula el porcentaje para la barra (Normaliza según el rango del índice)
   const getPercentage = (key, value) => {
-    if (key === 'ndwi') return ((value + 1) / 2) * 100; // Rango -1 a 1
-    return Math.min(Math.max(value * 100, 0), 100);    // Rango 0 a 1
+    if (key === 'ndwi') return ((value + 1) / 2) * 100;
+    return Math.min(Math.max(value * 100, 0), 100);
   };
 
-  if (!data) return null;
+  const cards = useMemo(() => {
+    if (!vegetation) return [];
+
+    return INDEX_KEYS.map(({ key, desc }) => {
+      const val = Number(vegetation[key]);
+      if (Number.isNaN(val)) return null;
+
+      const info = getInfo(key, val);
+      const percentage = getPercentage(key, val);
+
+      return {
+        key,
+        desc,
+        val,
+        info,
+        percentage
+      };
+    }).filter(Boolean);
+  }, [vegetation]);
+
+  if (!cards.length) return null;
 
   return (
     <div className="indices-grid">
-      {Object.entries(data).map(([key, val]) => {
-        const info = getInfo(key, val);
-        const percentage = getPercentage(key.toLowerCase(), val);
-
-        return (
-          <div 
-            key={key} 
-            className="index-card" 
-            style={{ borderTopColor: info.color }}
-          >
-            <div className="index-header">
-              <span className="index-name">{key}</span>
-            </div>
-            
-            <div className="index-value" style={{ color: info.color }}>
-              {val.toFixed(3)}
-            </div>
-
-            <div className="index-status">
-              {info.label}
-            </div>
-
-            <div className="progress-container">
-              <div 
-                className="progress-bar" 
-                style={{ 
-                  width: `${percentage}%`, 
-                  backgroundColor: info.color 
-                }}
-              ></div>
-            </div>
+      {cards.map(({ key, desc, val, info, percentage }) => (
+        <div
+          key={key}
+          className="index-card"
+          style={{ borderTopColor: info.color }}
+        >
+          <div className="index-header">
+            <span className="index-name">{key.toUpperCase()}</span>
+            <p className="index-desc">{desc}</p>
           </div>
-        );
-      })}
+
+          <div className="index-value" style={{ color: info.color }}>
+            {val.toFixed(3)}
+          </div>
+
+          <div className="index-status">
+            {info.label}
+          </div>
+
+          <div className="progress-container">
+            <div
+              className="progress-bar"
+              style={{
+                width: `${percentage}%`,
+                backgroundColor: info.color
+              }}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
-
