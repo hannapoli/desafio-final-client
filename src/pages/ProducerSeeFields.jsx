@@ -223,7 +223,7 @@ export const ProducerSeeFields = () => {
         
       {parcel &&  ( 
         <article id='detailsParcelBox'>
-           <ParcelDetails />
+           <ParcelDetails parcel={parcel}/>
         </article>
       )}
       </section>

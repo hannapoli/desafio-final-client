@@ -10,7 +10,7 @@ import { userMap } from '../../hooks/userMap';
 import { AddParcel } from '../AddParcel';
 import '../Map.css'
 
-export default function MapView({ alertas }) {
+export default function MapView({ alertas, parcels }) {
   const [polygon, setPolygon] = useState([]);
   const [currentLayer, setCurrentLayer] = useState('osm');
   const [popupPosition, setPopupPosition] = useState(null);
@@ -18,7 +18,7 @@ export default function MapView({ alertas }) {
   const [unmark, setUnmark] = useState(null)
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
-  const { polygons, addParcel, addPolygon, center, alert, setAlert, parcel } = useContext(MapsContext);
+  const { polygons, addPolygon, center, setAlert } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   
@@ -85,11 +85,13 @@ export default function MapView({ alertas }) {
       addPolygon(polygon);
       // bboxCenter([polygon]);
     }
-  }, [polygon]);
+  }, []);
 
   const handleAlerta = (a) => {
     // console.log('alerta', e.target)
     setAlert(a)}
+  
+    const centro =  bboxCenter(polygons)
     
 
   
@@ -160,7 +162,7 @@ export default function MapView({ alertas }) {
 
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
       {/* <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
-      <ClickablePolygon positions={polygons}  />
+      <ClickablePolygon positions={polygons} parcels={parcels} />
     </MapContainer>
      <pre>{JSON.stringify(polygon, null, 2)}</pre> 
      </div>

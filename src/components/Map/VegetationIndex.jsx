@@ -6,7 +6,7 @@ import { MapsContext } from '../../contexts/MapsContext';
 
 export const VegetationIndex = ({ vegetation }) => {
   
-  const {setSelectedLayerType} = useContext(MapsContext)
+  // const {setSelectedLayerType} = useContext(MapsContext)
 
   const legends = {
     ndvi: [
@@ -82,7 +82,7 @@ export const VegetationIndex = ({ vegetation }) => {
           key={key}
           className="index-card"
           style={{ borderTopColor: info.color }}
-          onClick={setSelectedLayerType(key)}
+          // onClick={setSelectedLayerType(key)}
         >
           <div className="index-header">
             <span className="index-name">{key.toUpperCase()}</span>

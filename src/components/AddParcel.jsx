@@ -86,6 +86,7 @@ export const AddParcel = ({polygon}) => {
         const id_cultivo = selectedOption.value;    
         // console.log({id_cultivo})
         try {
+          console.log('entra en crear')
           const crear = await addParcelApi(nombreparcela, polygon);
     
           if (crear.res === 'error') {
@@ -93,6 +94,7 @@ export const AddParcel = ({polygon}) => {
             console.log({error})
             return;
           }
+          console.log({crear}, 'es la resp de addParcel')
     
           const polygonClosed = [...polygon, polygon[0]];
         
@@ -105,6 +107,7 @@ export const AddParcel = ({polygon}) => {
             polygonClosed,
             imagen
           );
+          console.log({respuesta}, 'create')
           if (!respuesta.ok) {
             setErrorCrear(respuesta.msg);
           } else {

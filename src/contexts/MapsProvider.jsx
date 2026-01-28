@@ -13,8 +13,8 @@ export const MapsProvider = ({ children }) => {
   const [vegetation, setVegetation] = useState(null)
   const [crop, setCrop] = useState(null)
   const [selectedParcelId, setSelectedParcelId] = useState(null)
-    const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
-      const [healthData, setHealthData] = useState(null);
+    // const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+    //   const [healthData, setHealthData] = useState(null);
 
 
   const havePolygons = useCallback((respuesta) => {
@@ -60,13 +60,13 @@ export const MapsProvider = ({ children }) => {
     )
     setPolygons(prev => //prev es la versión már reciente del estado
       prev.filter(pol => pol !== parcel.coordinates_parcel))
-    if (polygons.length) bboxCenter()
+    if (polygons.length) bboxCenter(polygons)
   }
 
 
   const bboxCenter = (polygons) => {
 
-    if (polygons.length === 0) return
+    if (!polygons || polygons.length === 0) return
     let minLat = Infinity, maxLat = -Infinity;
     let minLng = Infinity, maxLng = -Infinity;
 
@@ -123,10 +123,10 @@ export const MapsProvider = ({ children }) => {
       setVegetation,
       selectedParcelId,
       setSelectedParcelId,
-      selectedLayerType,
-      setSelectedLayerType,
-      healthData,
-      setHealthData
+      // selectedLayerType,
+      // setSelectedLayerType,
+      // healthData,
+      // setHealthData
     }}>
       {children}
     </MapsContext.Provider>

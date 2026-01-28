@@ -31,13 +31,13 @@ export const Map = ({parcels}) => {
 
   useEffect(() => { 
     havePolygons(parcels)
-    setParcels(parcels)
-  }, [setParcels, havePolygons])
+    // setParcels(parcels)
+  }, [])
 
   return (
     
         
-        <MapView alertas={alertas}/>
+        <MapView alertas={alertas} parcels={parcels}/>
         
        
     

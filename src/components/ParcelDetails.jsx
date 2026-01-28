@@ -12,8 +12,8 @@ import { Report } from '../components/Report'
 import { ViewerParcelProducer } from './ViewerParcelProducer'
 
 
-export const ParcelDetails = () => {
-  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
+export const ParcelDetails = ({parcel}) => {
+  const { alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel, setParcel } = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData } = useFetch()
 
@@ -23,6 +23,7 @@ export const ParcelDetails = () => {
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorEliminar, setErrorEliminar] = useState(null)
+  const [parcela, setParcela] = useState(null)
   const [reportData, setReportData] = useState({
       email_creator: '',
       email_receiver: '',
@@ -56,7 +57,7 @@ export const ParcelDetails = () => {
     }
     getDatos()
     // return funcionPrueba()
-  }, [parcel])
+  }, [parcela, parcel])
 
   // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
   useEffect(() => {
@@ -263,8 +264,8 @@ export const ParcelDetails = () => {
   const eliminarParcela = async(p) => {
       if(!p.uid_parcel) return
       try {
-        const resp1 = await deleteParcelApi(p.uid_parcel)
-        // const resp1= {res: 'ok'}
+        // const resp1 = await deleteParcelApi(p.uid_parcel)
+        const resp1= {res: 'ok'}
         if(resp1.res === 'Error'){
           setErrorEliminar(resp1.info)}
         if(!resp1){
@@ -279,6 +280,7 @@ export const ParcelDetails = () => {
               console.log({resp})
               setErrorEliminar(null);
               deleteParcel(p)
+              setParcel(null)
               console.log('parcela eliminada' , resp)
             }
         }

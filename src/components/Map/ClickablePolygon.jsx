@@ -1,36 +1,32 @@
 import { useContext, useEffect, useState } from 'react';
 import { Polygon, useMap, Popup, GeoJSON, ImageOverlay } from 'react-leaflet';
 import { MapsContext } from '../../contexts/MapsContext'
-import {userMap} from '../../hooks/userMap'
+import { userMap } from '../../hooks/userMap'
 import { Legend } from './Legend';
 import './Legend.css'
 
 
-export const  ClickablePolygon = ()  => {
+export const ClickablePolygon = ({ parcels }) => {
 
-  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
-  const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
+  const { setParcel, setSelectedParcelId, setInfoMeteo } = useContext(MapsContext)
+  const { HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack } = userMap()
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
+  const [loading, setLoading] = useState(false)
 
-  
-
- 
-
-  
 
   const map = useMap();
 
   // console.log({parcels}, 'desde clickable polygon')
-  
-//   const parcela = parcels.filter(p => JSON.parse(p.coordinates_parcel)  == positions )
-//  console.log({parcela}, 'on clickable polygon')
+
+  //   const parcela = parcels.filter(p => JSON.parse(p.coordinates_parcel)  == positions )
+  //  console.log({parcela}, 'on clickable polygon')
 
   // CÁLCULO DE LA CAPA ACTIVA (Fuera de cualquier función para que el render la vea)
-  const activeLayer = healthData?.layers?.find(l => l.type === selectedLayerType);
 
- const handleClick = async(e, p) => {
- console.log('Entra en el hadleClick')
+
+  const handleClick = async (e, p) => {
+    console.log('Entra en el hadleClick')
     const zoomToFeature = (e) => {
       const bounds = e.target.getBounds();
       map.fitBounds(bounds, {
@@ -39,48 +35,51 @@ export const  ClickablePolygon = ()  => {
         animate: true,
       });
     };
+
     zoomToFeature(e)
+
 
     setSelectedParcelId(p.uid_parcel);
 
     const data = await getInfoMeteoByParcel(p.uid_parcel)
-    console.log({data})
+    console.log({ data })
     setInfoMeteo(data.data)
     setParcel(p)
     overLay(p.uid_parcel)
     // setUnmark(p.uid_parcel)
     // console.log({p},'desde el polígono')
- }
-  
+  }
+
 
   const overLay = async (uid_parcel) => {
-    
+
     const respuesta = await HealthMap(uid_parcel)
-    console.log('Health map' ,{respuesta})
+    if (respuesta.error) setLoading(true)
+    console.log('Health map', { respuesta })
     setHealthData(respuesta)
-    console.log({healthData})
-    
   }
-    useEffect(() => {
-  if (healthData) {
-    console.log('healthData actualizado:', healthData);
-  }
-}, [healthData]);
-  
 
 
+  useEffect(() => {
+    if (healthData) {
+      console.log('healthData actualizado:', healthData);
+
+    }
+
+  }, [healthData]);
+  const activeLayer = healthData?.layers?.find(l => l.type === selectedLayerType);
   return (
     <>
-     {parcels.map(p => (
-      <Polygon
-        key={`${p.uid_parcel}`}
-        positions={JSON.parse(p.coordinates_parcel)}
-        eventHandlers={{//no se puede utilizar onClick con react-leaflet
-          click: (e) => handleClick(e, p),
-        }}
-      >
-       
-      {/* <Popup>
+      {parcels.map(p => (
+        <Polygon
+          key={`${p.uid_parcel}`}
+          positions={JSON.parse(p.coordinates_parcel)}
+          eventHandlers={{//no se puede utilizar onClick con react-leaflet
+            click: (e) => handleClick(e, p),
+          }}
+        >
+
+          {/* <Popup>
          
         <button onClick={()=>}>Ver salud del campo</button>
        {errorEliminar ? (
@@ -98,10 +97,10 @@ export const  ClickablePolygon = ()  => {
         )}
 
       </Popup> */}
-      
 
-    </Polygon>))}
-    {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
+
+        </Polygon>))}
+      {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 && (
         <ImageOverlay
           url={activeLayer.image_data}
           bounds={healthData.image_bounds}
@@ -110,23 +109,26 @@ export const  ClickablePolygon = ()  => {
           zIndex={500}
         />
       )}
-      {healthData && (
+      {!loading && healthData && activeLayer && (
         <div className='select-overlay' >
-                <select 
-                  value={selectedLayerType} 
-                  onChange={(e) => setSelectedLayerType(e.target.value)}
-                >
-                  {healthData.layers.map(l => (
-                    <option key={l.type} value={l.type}>{l.type}</option>
-                  ))}
-                </select>
-      </div>
-              )}
+          <select
+            value={selectedLayerType}
+            onChange={(e) => setSelectedLayerType(e.target.value)}
+          >
+            {healthData.layers.map(l => (
+              <option key={l.type} value={l.type}>{l.type}</option>
+            ))}
+          </select>
+        </div>
+      )
+    
+    
+    }
       {activeLayer && <Legend data={activeLayer.legend} />}
- 
-  
+
+
 
     </>
-    
+
   );
 }
