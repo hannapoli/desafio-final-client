@@ -32,13 +32,13 @@ export const ParcelDetails = () => {
 
   const [dataPoints, setDataPoints] = useState(null);
   const [dataPhoto, setDataPhoto] = useState(null);
+  
+  
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
 
-  const funcionPrueba = () => {
-    setCrop(null)
-  }
+
   useEffect(() => {
     const getDatos = async () => {
 
@@ -288,6 +288,96 @@ export const ParcelDetails = () => {
         setErrorEliminar(error)
       }
     }
+
+  //    // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
+  // useEffect(() => {
+  //   const getDataPoints = async () => {
+  //     if (!parcel?.photo_url) {
+  //       setDataPoints(null);
+  //       return;
+  //     }
+
+  //     try {
+  //       const responsePoints = await fetchData(
+  //         infoParcelUrl,
+  //         'POST',
+  //         { image_url: parcel.photo_url }
+  //       );
+
+  //       const receivedPoints = responsePoints.data;
+  //       console.log('Points received:', receivedPoints);
+
+  //       if (receivedPoints?.error || receivedPoints?.status === 'error') {
+  //         console.error('Error del servidor:', receivedPoints);
+  //         throw new Error(receivedPoints.error || receivedPoints.message || 'Error desconocido del servidor');
+  //       }
+
+  //       if (!receivedPoints || typeof receivedPoints !== 'object' || Object.keys(receivedPoints).length === 0) {
+  //         console.warn('No se recibieron puntos válidos del servidor');
+  //         setDataPoints([]);
+  //         setError(null);
+  //         return;
+  //       }
+
+  //       // Convertir a array para mapear
+  //       const pointsToPrint = Object.entries(receivedPoints)
+  //         .filter(([key, value]) => value?.aframe_position) 
+  //         .map(([key, value]) => {
+  //           const { x, y, z } = value.aframe_position;
+
+  //           return {
+  //             id: key,
+  //             position: `${x} ${y} ${z}`
+  //           }
+  //         });
+
+  //       setDataPoints(pointsToPrint);
+  //       setError(null);
+  //     } catch (err) {
+  //       setDataPoints([]);
+  //       setError("Error al obtener los puntos de la imagen: " + err.message);
+  //     }
+  //   }
+
+  //   getDataPoints();
+  // }, [parcel, infoParcelUrl, fetchData]);
+
+  // // FETCH PARA OBTENER DATOS DE LA IMAGEN 360
+  // useEffect(() => {
+  //   const getDataPhoto = async () => {
+  //     if (!parcel?.uid_parcel) {
+  //       setDataPhoto(null);
+  //       return;
+  //     }
+
+  //     try {
+  //       const firebaseUser = auth.currentUser;
+  //       if (!firebaseUser) {
+  //         setError('No hay usuario autenticado');
+  //         return;
+  //       }
+
+  //       const token = await firebaseUser.getIdToken();
+
+  //       const response = await fetch(
+  //         `${backendUrl}/producer/parcel/data/${parcel.uid_parcel}`,
+  //         {
+  //           method: 'GET',
+  //           headers: {
+  //             'Authorization': `Bearer ${token}`
+  //           }
+  //         }
+  //       );
+  //       const result = await response.json();
+  //       setDataPhoto(result.data || null);
+  //     } catch (err) {
+  //       setDataPhoto(null);
+  //       console.error("Error al obtener la información de los datos de la parcela:", err);
+  //     }
+  //   }
+
+  //   getDataPhoto();
+  // }, [parcel, backendUrl]);
     
 
   if (!alert) {
@@ -299,7 +389,7 @@ export const ParcelDetails = () => {
       <h2 className="parcel-title">{parcel.name_parcel}</h2>
 
       <article className="article-card">
-        <p>👤 Productor: {alert.name_user}</p>
+        {/* <p>👤 Productor: {alert.name_user}</p> */}
         {crop && <p className="product-info">Producto: {crop.nombre_cultivo}</p>}
         {crop && <p className="product-info">Variedad: {crop.nombre_variedad}</p>}
 

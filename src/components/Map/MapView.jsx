@@ -166,33 +166,3 @@ export default function MapView({ alertas }) {
      </div>
   );
 }
-
-// // ¿Qué es un TileLayer?
-// // Un TileLayer es una capa de imágenes en mosaico (tiles) que:
-// // Vienen de un servidor de mapas (OpenStreetMap, Google, etc.)
-// // Se descargan dinámicamente
-// // Se organizan por niveles de zoom
-
-// // Las llaves:
-// // {z} → nivel de zoom
-// // {x} {y} → coordenadas del tile
-
-
-/* <Popup>
-            <div style={{ minWidth: '150px' }}>
-              <h3 style={{ margin: '0 0 5px 0' }}>{a.name_parcel}</h3>
-              <hr />
-              <p><strong>📦 Producto:</strong> {a.product_parcel}</p>
-              <p><strong>📅 Fecha:</strong> {new Date(a.fecha).toLocaleDateString()}</p>
-              <p><strong>👤 productor:</strong> {a.name_user}</p>
-              {a.alerta_plaga && <p><strong>⚠️ Alerta de plagas:</strong> {a.alerta_plaga}</p>}
-              {a.alerta_inundacion && <p><strong>⚠️ Alerta de inundación:</strong> {a.alerta_inundacion}</p>}
-              {a.alerta_helada && <p><strong>⚠️ Alerta de helada:</strong> {a.alerta_helada}</p>}
-              {a.alerta_sequia && <p><strong>⚠️ Alerta_ de sequía:</strong> {a.alerta_sequia}</p>}
-              
-              {/* Si quieres un botón para ejecutar alguna acción adicional */
-          //     {/* <button onClick={() => console.log("Detalles de:", a.uid_parcel)}>
-          //       Ver más detalles
-          //     </button> */}
-          //   </div>
-          // </Popup> */
