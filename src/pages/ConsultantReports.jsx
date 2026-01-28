@@ -122,7 +122,7 @@ export const ConsultantReports = () => {
                                             <a href={fileUrl} target='_blank' rel='noopener noreferrer'>
                                                 Archivo {index + 1}
                                             </a>
-                                            <button className='api-btn' onClick={() => handleDisease (fileUrl)}>Prediccion enfermedades</button>
+                                            <button className='api-btn' onClick={() => handleDisease (fileUrl)}>Predicción enfermedades</button>
                                         </li>
                                     ))}
                                 </ul>
