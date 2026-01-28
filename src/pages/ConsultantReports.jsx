@@ -2,139 +2,183 @@ import { auth } from '../firebase/firebaseConfig';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
-import {normalizeFileData} from '../helpers/normalizeFileData';
+import { normalizeFileData } from '../helpers/normalizeFileData';
+import { Disease } from '../components/Disease';
 import '../components/List.css';
 
 export const ConsultantReports = () => {
-  const { user } = useAuth();
+    const { user } = useAuth();
     const { fetchData, loading, error, setError } = useFetch();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const diseaseUrl = import.meta.env.VITE_API_DISEASE_URL;
-    const [producerEmail, setProducerEmail] = useState('');
+    const [showDiseasePopup, setShowDiseasePopup] = useState(false);
+    const [productores, setProductores] = useState([]);
+    const [selectedProducer, setSelectedProducer] = useState('');
     const [reports, setReports] = useState([]);
     const [disease, setDisease] = useState(null);
 
-        const fetchReports = async () => {
-            if (!user?.email) return;
-            try {
-                const token = user.token || await auth.currentUser?.getIdToken();
-                const response = await fetchData(
-                    `${backendUrl}/consultant/reports/getAll/${producerEmail}`,
-                    'GET',
-                    null,
-                    token
-                );
-
-                const reportsData = Array.isArray(response.data) ? response.data : response.data ? [response.data] : [];
-                
-                const normalizedReports = reportsData.map(report => ({
-                    ...report,
-                    attached: normalizeFileData(report.attached)
-                }));
-
-                setReports(normalizedReports);
-            } catch (err) {
-                setError('Error al obtener los reportes');
-            }
-        };
-
-    const sortedReports = [...reports].sort((a, b) => {
-        if (!a.created_at || !b.created_at) return 0;
-        return new Date(b.created_at) - new Date(a.created_at);
-    });
-
-    const handleDownload = async (id) => {
-        try {
-        const token = user.token || await auth.currentUser?.getIdToken();
-            const res = await fetch(
-                `${backendUrl}/producer/reports/download/${id}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (!res.ok) {
-                throw new Error(data.msg);
-            }
-            
-            const blob = await res.blob();// Convertimos la respuesta en un Blob
-            const url = window.URL.createObjectURL(blob); // Creamos una URL temporal
-            const a = document.createElement("a");// Creamos un enlace para descargar el pdf de la url que hemos creado
-            a.href = url;
-            a.download = `reporte_${id}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();// Borramos en elnace una vez lo hemos usado para descargar el pdf
-            window.URL.revokeObjectURL(url);
-            // navigate('/worker/dashboard');
-
-        } catch (error) {
-            console.log("ERROR:", error)
-            alert(error);
-        }
+  // Obtener productores del asesor
+  useEffect(() => {
+    const getProductores = async () => {
+      if (!user?.uid) return;
+      try {
+        const token = await auth.currentUser?.getIdToken();
+        const response = await fetchData(
+          `${backendUrl}/consultant/producers/${user.uid}`,
+          'GET',
+          null,
+          token
+        );
+        setProductores(response.data || []);
+      } catch (err) {
+        setError('Error al obtener productores');
+      }
     };
+    getProductores();
+  }, [user]);
 
-    const handleDisease = async (url) => {
-        try {
-        const res = await fetchData(`${diseaseUrl}/analyze`,'POST', { image_url: url })
-        setDisease(res)
-        } catch{
-        console.log("ERROR:", error)
-        alert(error);
-        }
+  // Obtener reportes del productor seleccionado
+  const fetchReports = async () => {
+    if (!selectedProducer) return;
+    try {
+      const token = user.token || await auth.currentUser?.getIdToken();
+      const response = await fetchData(
+        `${backendUrl}/consultant/reports/getAll/${selectedProducer}`,
+        'GET',
+        null,
+        token
+      );
+
+      const reportsData = Array.isArray(response.data)
+        ? response.data
+        : response.data
+        ? [response.data]
+        : [];
+
+      const normalizedReports = reportsData.map(report => ({
+        ...report,
+        attached: normalizeFileData(report.attached)
+      }));
+
+      setReports(normalizedReports);
+    } catch (err) {
+      setError('Error al obtener los reportes');
     }
-    const handleSearch = (e) => {
-        e.preventDefault();
-        fetchReports();
-    };
-    
-    return (
-        <section className=''>
-            <div>
-                <h1 className='centeredText'>Mis reportes</h1>
-                {loading && <p>Cargando reportes...</p>}
-                {error && <p className='errorMessage'>{error}</p>}
+  };
 
-                <form className='report-form' onSubmit={handleSearch}>
-                    <input
-                        type="email"
-                        placeholder="Email del productor"
-                        value={producerEmail}
-                        onChange={(e) => setProducerEmail(e.target.value)}
-                    />
-                    <button type="submit">Buscar</button>
-                </form>
+  const sortedReports = [...reports].sort((a, b) => {
+    if (!a.created_at || !b.created_at) return 0;
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
 
-                <ul className='report-list'>
-                    {sortedReports.map((report) => (
-                        <li className='report-list-item' key={report.uid_report}>
-                            <div>Parcela: {report.uid_parcel}</div>
-                            <div>Para: {report.email_receiver}</div>
-                            <div>Mensaje: {report.content_message}</div>
-                                                    {report.attached && report.attached.length > 0 && (
-                            <div>Archivos adjuntos ({report.attached.length}):
-                                <ul>
-                                    {report.attached.map((fileUrl, index) => (
-                                        <li key={index}>
-                                            <a href={fileUrl} target='_blank' rel='noopener noreferrer'>
-                                                Archivo {index + 1}
-                                            </a>
-                                            <button className='api-btn' onClick={() => handleDisease (fileUrl)}>Predicción enfermedades</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                        <div className='report-actions'>
-                            <button className='download-btn' onClick={() => handleDownload(report.uid_report)}>Descargar</button>
-                        </div>
-                        </li>
+  const handleDownload = async (id) => {
+    try {
+      const token = user.token || await auth.currentUser?.getIdToken();
+      const res = await fetch(`${backendUrl}/producer/reports/download/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error('Error al descargar el reporte');
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reporte_${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+      console.log('ERROR:', error);
+      alert(error);
+    }
+  };
+
+  const handleDisease = async (url) => {
+    console.log("Entra <============================>")
+    try {
+        const res = await fetchData(`${diseaseUrl}/analyze`, 'POST', { image_url: url });
+        console.log(res, "RESPUESTA DEL FETCH")
+        setDisease(res);
+        setShowDiseasePopup(true);
+    } catch (error) {
+      console.log('ERROR:', error);
+      alert(error);
+    }
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectedProducer(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchReports();
+  };
+
+  return (
+    <section className=''>
+      <div>
+        <h1 className='centeredText'>Mis reportes</h1>
+        {loading && <p>Cargando...</p>}
+        {error && <p className='errorMessage'>{error}</p>}
+
+        {/* SELECT DE PRODUCTORES */}
+        <h2>Productores</h2>
+        <form className='report-form' onSubmit={handleSearch}>
+          <select value={selectedProducer} onChange={handleSelectChange}>
+            <option value=''>Selecciona un productor</option>
+            {productores.map((producer) => (
+              <option key={producer.email_user} value={producer.email_user}>
+                {producer.name_user} ({producer.email_user})
+              </option>
+            ))}
+          </select>
+          <button type='submit' disabled={!selectedProducer}>Ver reportes</button>
+        </form>
+
+        <ul className='report-list'>
+          {sortedReports.map((report) => (
+            <li className='report-list-item' key={report.uid_report}>
+              <div>Parcela: {report.uid_parcel}</div>
+              <div>Para: {report.email_receiver}</div>
+              <div>Mensaje: {report.content_message}</div>
+
+              {report.attached && report.attached.length > 0 && (
+                <div>Archivos adjuntos ({report.attached.length}):
+                  <ul>
+                    {report.attached.map((fileUrl, index) => (
+                      <li key={index}>
+                        <a href={fileUrl} target='_blank' rel='noopener noreferrer'>
+                          Archivo {index + 1}
+                        </a>
+                        <button className='api-btn' onClick={() => handleDisease(fileUrl)}>
+                          Predicción enfermedades
+                        </button>
+                      </li>
                     ))}
-                </ul>
-            </div>
-        </section>
-    )
-}
+                  </ul>
+                </div>
+              )}
+
+              <div className='report-actions'>
+                <button className='download-btn' onClick={() => handleDownload(report.uid_report)}>
+                  Descargar
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+        {showDiseasePopup && disease && (
+        <Disease setShowDiseasePopup= {setShowDiseasePopup} disease={disease} />
+        )}
+    </section>
+  );
+};

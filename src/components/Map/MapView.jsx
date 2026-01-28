@@ -162,7 +162,7 @@ export default function MapView({ alertas }) {
       {/* <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
       <ClickablePolygon positions={polygons}  />
     </MapContainer>
-     <pre>{JSON.stringify(polygon, null, 2)}</pre> 
+     {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
      </div>
   );
 }
