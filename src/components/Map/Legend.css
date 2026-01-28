@@ -17,3 +17,49 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.form-crear-parcela input {
+  width: 100%;
+  height: 48px;
+  padding-left: 30px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-color: white;
+  box-sizing: border-box; /* Crucial para que el padding no desplace el ancho */
+  margin-bottom: 0.5rem;
+}
+
+.label-imagen-articulo {
+    color: var(--dark-blue);
+    text-align: center;
+    font-weight: 600;
+}
+
+.map-container {
+  margin: 2rem;
+}
+
+.map-container .leaflet-container { 
+  border-radius: 16px; 
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);;
+
+}
+
+.btn-container .login-button {
+ max-width: 500px; 
+}
+
+.btn-container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.button-360 {
+  max-width: 500px;
+}

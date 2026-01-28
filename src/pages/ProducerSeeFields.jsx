@@ -274,7 +274,7 @@ export const ProducerSeeFields = () => {
       {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
       <section className='flexContainer CenteredContent'>
-        <h1 className='centeredText'>Mis Parcelas</h1>
+        <h1 className='centeredText'>Mis parcelas</h1>
 
         {/* {parcels.length === 0 ? (
         <p>No tienes parcelas registradas.</p>
@@ -297,21 +297,24 @@ export const ProducerSeeFields = () => {
       {!loading && <Map parcels={parcels} />}
 
       {parcel && <ParcelDetails />}
-      <button
-        className="btn-report"
+      <div className="btn-container">
+        <button
+        className="login-button button-360"
         onClick={handleOpenViewer}
         style={{ cursor: parcel ? 'pointer' : 'not-allowed' }}
         disabled={!parcel}
       >
         Ver la parcela 360°
       </button>
+      </div>
+
 
       {/* CREAR UN REPORTE */}
       <div className='btn-container'>
         <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
         <button
           onClick={handleOpenPopup}
-          className='btn-report'
+          className='login-button'
           style={{
             cursor: selectedParcelId ? 'pointer' : 'not-allowed'
           }}

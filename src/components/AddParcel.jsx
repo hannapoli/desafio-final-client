@@ -130,7 +130,7 @@ export const AddParcel = ({polygon}) => {
     {errorCrear && (<p>{errorCrear}</p>)}
     {createdParcel
      ? <p>Parcela creada correctamente</p>
-     : <form onSubmit={handleSubmit}>
+     : <form onSubmit={handleSubmit} className="form-crear-parcela">
                 <input
                   type="text"
                   name="nombreparcela"
@@ -147,7 +147,7 @@ export const AddParcel = ({polygon}) => {
                     isSearchable={true}
                     required
                 />
-                <label htmlFor="photo">Imagen del Artículo</label>
+                <label htmlFor="photo" className="label-imagen-articulo">Imagen del Artículo</label>
                 <input
                         type="file"
                         id="photo"
@@ -156,7 +156,7 @@ export const AddParcel = ({polygon}) => {
                         onChange={(e) => setImagen(e.target.files[0])}
                         required
                     />
-                <button type="submit">Guardar parcela</button>
+                <button type="submit" className="login-button">Guardar parcela</button>
          </form>
     }
     

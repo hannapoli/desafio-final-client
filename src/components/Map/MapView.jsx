@@ -97,8 +97,8 @@ export default function MapView({ alertas }) {
 
   return (
     
-<div>
-    <MapContainer center={center} zoom={15} style={{ height: '400px', width: '100%' }}>
+<div className="map-container">
+    <MapContainer center={center} zoom={15} style={{ height: '400px', width: '100%' }} >
       <TileLayer {...tileLayers[currentLayer]} />
 
       <DrawControl onPolygonCreated={handlePolygonCreated} />

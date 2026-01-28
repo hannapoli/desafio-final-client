@@ -62,16 +62,16 @@ export const AdminUserEdit = () => {
     };
 
     return (
-        <section className='page-container'>
-            <h1>Gestión de usuarios</h1>
+        <section className='page-container form-admin-users'>
+            <h1 className="centeredText">Gestión de usuarios</h1>
 
             <article className='flexColumn centeredContent'>
                 <h2>Modificar usuario</h2>
                 {modifySuccess && <p className='successMessage'>{modifySuccess}</p>}
                 {modifyError && <p className='errorMessage'>{modifyError}</p>}
 
-                <form onSubmit={handleModifyUser} className='flexColumn centeredContent'>
-                    <div className='flexColumn'>
+                <form onSubmit={handleModifyUser}>
+                    <div>
                         <label htmlFor='firebase_uid'>Firebase UID:</label>
                         <input
                             type='text'
@@ -82,7 +82,7 @@ export const AdminUserEdit = () => {
                         />
                     </div>
 
-                    <div className='flexColumn'>
+                    <div>
                         <label htmlFor='name'>Nombre:</label>
                         <input
                             type='text'
@@ -96,7 +96,7 @@ export const AdminUserEdit = () => {
                         />
                     </div>
 
-                    <div className='flexColumn'>
+                    <div>
                         <label htmlFor='email'>Email:</label>
                         <input
                             type='email'
@@ -110,8 +110,8 @@ export const AdminUserEdit = () => {
                         />
                     </div>
 
-                    <div className='register-select flexColumn'>
-                        <label htmlFor='role'>Role</label>
+                    <div className='register-select'>
+                        <label htmlFor='role'>Rol:</label>
                         <select name='role' id='role' value={formData.role} onChange={handleChange} noValidate>
                             <option value='' disabled>--Selecciona tu rol--</option>
                             <option value='productor' name='productor' id='productor'>Productor/a</option>
@@ -125,8 +125,8 @@ export const AdminUserEdit = () => {
                     </div>
 
                     <div>
-                        <button type='submit' disabled={modifyLoading} className='register-btn'>
-                            {modifyLoading ? 'Modificando...' : 'Modificar usuario'}
+                        <button type='submit' disabled={modifyLoading} className='login-button'>
+                            {modifyLoading ? 'Modificando...' : 'Modificar'}
                         </button>
                     </div>
                 </form>

@@ -104,7 +104,7 @@ export const AdminUsers = () => {
             <section className='flexColumn centeredContent'>
                 <h1>Gestión de usuarios</h1>
 
-                <form onSubmit={handleSearch} className='flexColumn centeredContent'>
+                <form onSubmit={handleSearch} className='flexColumn centeredContent form-get-users'>
                     <div className='flexColumn'>
                         <label htmlFor='email'>Buscar usuario por email:</label>
                         <input
@@ -134,9 +134,9 @@ export const AdminUsers = () => {
 
                         <div className='userManagementActions'>
                             <Link to={`/admin/users/edit/${foundUser.firebase_uid_user}`} state={{ user: foundUser }}>
-                                <button className='register-btn'>Modificar</button>
+                                <button className='edit-btn'>Modificar</button>
                             </Link>
-                            <button onClick={() => openDeletePopup(foundUser)} className='register-btn'>Eliminar</button>
+                            <button onClick={() => openDeletePopup(foundUser)} className='delete-btn'>Eliminar</button>
                         </div>
                     </article>
                 )}
@@ -175,13 +175,13 @@ export const AdminUsers = () => {
                 <div className='flexContainer'>
                     <button
                         onClick={handleDeleteUser}
-                        className='register-btn'
+                        className='login-button'
                         disabled={deleteLoading}
                     >
                         {deleteLoading ? 'Eliminando...' : 'Sí, eliminar'}
                     </button>
                     <button
-                        className='register-bt.delete-btn'
+                        className='delete-btn'
                         onClick={() => {
                             setShowDeletePopup(false);
                             setUserToDelete(null);

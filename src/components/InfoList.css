@@ -7,30 +7,15 @@
     margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-    .userList {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-        padding: 1.5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .userList {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-        padding: 2rem;
-    }
-}
 
 section label {
-    color: var(---dark-blue);
+    color: var(--dark-blue);
     text-align: center;
     font-weight: 600;
 }
 
 .itemInfo {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--grey);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 1.5rem;
@@ -42,23 +27,15 @@ section label {
     
 }
 
-.itemInfo:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--green-light);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-
 .itemInfo>div,
 .itemInfo>p {
-    color: #000;
+    color: var(--dark-blue);
     font-size: 0.95rem;
     line-height: 1.5;
 }
 
 .itemInfo .bold,
 .itemInfo strong {
-    color: var(--green-light);
     font-weight: 600;
 }
 
@@ -67,12 +44,6 @@ section label {
     flex-direction: column;
     gap: 0.75rem;
     margin-top: 0.75rem;
-}
-
-@media (min-width: 640px) {
-    .infoActions {
-        flex-direction: row;
-    }
 }
 
 .infoActions button,
@@ -122,12 +93,31 @@ section label {
     background: rgba(255, 255, 255, 0.08);
 }
 
-.userList {
-    grid-template-columns: repeat(2, 1fr);
-}
-
 .itemInfo {
     padding: 1.8em;
+}
+
+
+@media (min-width: 640px) {
+    .infoActions {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 768px) {
+    .userList {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .userList {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        padding: 2rem;
+    }
 }
 
 @media screen and (min-width: 1200px) {

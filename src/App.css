@@ -44,9 +44,8 @@
 /* ================= BASE ================= */
 
 body {
-  background-color: var(--white);
-  color: var(--text-main);
   font-family: var(--font-body);
+  background-color: white;
   -webkit-font-smoothing: antialiased;
   margin: 0;
   padding: 0;
@@ -61,17 +60,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .page-container {
-  background: var(--dark-bg);
-  color: var(--text-light);
   min-height: calc(100vh - 3.7em - 60px);
   padding: 1.5rem;
 }
 
-.page-container h1,
-.page-container h2,
-.page-container h3 {
-  color: var(--text-light);
-}
 
 .scrollable-content {
   max-height: calc(100vh - 200px);
