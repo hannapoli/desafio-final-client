@@ -36,6 +36,9 @@ export const ParcelDetails = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
 
+  const funcionPrueba = () => {
+    setCrop(null)
+  }
   useEffect(() => {
     const getDatos = async () => {
 
@@ -52,6 +55,7 @@ export const ParcelDetails = () => {
       console.log({ parcel })
     }
     getDatos()
+    // return funcionPrueba()
   }, [parcel])
 
   // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
