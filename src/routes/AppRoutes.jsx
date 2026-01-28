@@ -4,7 +4,7 @@ import { AppLayout } from '../pages/templates/AppLayout';
 import { PublicLayout } from '../pages/templates/PublicLayout';
 import { AuthLayout } from '../pages/templates/AuthLayout';
 
-import { HomePage, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerFieldInfo, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
+import { HomePage, DirectorConsultants, LoginPage, ConsultantFields, DirectorFields, ConsultantReports, RegisterPage, ProducerDashboard, DistributorDashboard, ConsultantDashboard, AnalystDashboard, DirectorDashboard, ProducerLayout, DistributorLayout, ConsultantLayout, AnalystLayout, DirectorLayout, ProducerSeeFields, ProducerFieldInfo, ProducerReports, DirectorReports, AdminLayout, AdminDashboard, AdminUsers, AdminUserEdit } from '../pages';
 
 import { Chats } from '../components/Chats';
 import { PrivateRoutes } from './PrivateRoutes';
@@ -84,6 +84,7 @@ export const AppRoutes = () => {
           <Route path='fields' element={<DirectorFields />} />
           <Route path='messages' element={<Chats />} />
           <Route path='reports' element={<DirectorReports />} />
+          <Route path='consultants' element={<DirectorConsultants />} />
         </Route>
 
         {/* ---------- DISTRIBUTOR ---------- */}

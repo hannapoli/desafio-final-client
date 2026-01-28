@@ -58,6 +58,13 @@ export const DirectorNav = () => {
 
                 <li>
                     <NavLink
+                        to='/director/consultants'
+                        className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
+                        Mis productores
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
                         to='/director/messages'
                         className={({ isActive }) => isActive ? 'nav-link-active' : ''}>
                         Mensajes

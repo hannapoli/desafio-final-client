@@ -9,7 +9,14 @@ export const DirectorDashboard = () => {
     <div className="dashboard-producer-container">
             <h1 className='centeredText'>Panel de Gestión</h1>
             <section className="dashboard-producer-content">
-              <div className="dashboard-grid-cards">
+              <div className="dashboard-grid-cards">                
+                <article className="producer-card-item">
+                  <MenuCard
+                    image={plantas}
+                    url='/director/fields'
+                  />
+                </article>
+
                 <article className="producer-card-item">
                   <MenuCard
                     text='Reportes'
@@ -17,18 +24,18 @@ export const DirectorDashboard = () => {
                     url='/director/reports'
                   />
                 </article>
-                
+
                 <article className="producer-card-item">
                   <MenuCard
-                    image={messageImg}
-                    url='/director/messages'
+                    // image={messageImg}
+                    url='/director/consultants'
                   />
                 </article>
 
                 <article className="producer-card-item">
                   <MenuCard
-                    image={plantas}
-                    url='/director/fields'
+                    image={messageImg}
+                    url='/director/messages'
                   />
                 </article>
               </div>
