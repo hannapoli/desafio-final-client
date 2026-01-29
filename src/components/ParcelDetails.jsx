@@ -16,7 +16,7 @@ import { useAuth } from '../hooks/useAuth'
 export const ParcelDetails = () => {
   const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
-  const { fetchData } = useFetch()
+  const { fetchData, loading } = useFetch()
   const { user } = useAuth();
   const isProducer = user?.role === 'productor';
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -293,7 +293,7 @@ export const ParcelDetails = () => {
     }
     
 
-  if (!parcel) {
+  if (loading) {
     return <p>Cargando detalles de la parcela...</p>;
   }
 
@@ -334,9 +334,9 @@ export const ParcelDetails = () => {
         {isProducer && (
           <>
             <div className='btn-container'>
-              <p className='description-text'>
+              {/* <p className='description-text'>
                 Selecciona la parcela en el mapa para crear un reporte
-              </p>
+              </p> */}
 
               <button
                 onClick={handleOpenPopup}

@@ -99,7 +99,7 @@ export const ProducerSeeFields = () => {
 
       <section id='seeFieldsContainer'>
       
-            <FilterParcelForm allParcels={parcels} />
+            {/* <FilterParcelForm allParcels={parcels} /> */}
         <article id='mapBox'>
           {!loading && 
             
@@ -113,6 +113,7 @@ export const ProducerSeeFields = () => {
            <ParcelDetails />
         </article>
       )}
+     
       </section>
     
       
