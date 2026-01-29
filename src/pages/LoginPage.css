@@ -1,7 +1,8 @@
 /* ================= LOGIN FONDO ================= */
 
 .login-body-container {
-  min-height: calc(100vh - 60px); /* min-height para que no se corte el fondo */
+  min-height: calc(100vh - 60px);
+  /* min-height para que no se corte el fondo */
   background-repeat: no-repeat;
   background-size: 180%;
   background-position: 60% 10%;
@@ -9,7 +10,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 16px; /* Evita que la tarjeta toque los bordes en móviles */
+  padding: 0 16px;
+  /* Evita que la tarjeta toque los bordes en móviles */
 }
 
 /* ================= BLOQUE LOGIN (MOBILE) ================= */
@@ -63,7 +65,7 @@
 /* ================= CONTENEDORES UNIFICADOS (FORM Y GOOGLE) ================= */
 
 /* Forzamos que ambos contenedores midan lo mismo para que los botones sean gemelos */
-.login-form, 
+.login-form,
 .google-container {
   display: flex;
   flex-direction: column;
@@ -91,7 +93,8 @@
   background-repeat: no-repeat;
   background-position: 10px center;
   background-color: white;
-  box-sizing: border-box; /* Crucial para que el padding no desplace el ancho */
+  box-sizing: border-box;
+  /* Crucial para que el padding no desplace el ancho */
 }
 
 .email-input {
@@ -110,7 +113,8 @@
 .login-google {
   width: 100%;
   height: 50px;
-  border-radius: 14px; /* Unificado para ambos */
+  border-radius: 14px;
+  /* Unificado para ambos */
   font-size: 16px;
   cursor: pointer;
   box-sizing: border-box;
@@ -147,7 +151,8 @@
   background-color: white;
   color: rgba(0, 0, 0, 0.65);
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left: 30px; /* Compensación para centrar texto con el icono */
+  padding-left: 30px;
+  /* Compensación para centrar texto con el icono */
 }
 
 .login-google:hover {
@@ -156,7 +161,8 @@
   transform: translateY(-1px);
 }
 
-.login-button:active, .login-google:active {
+.login-button:active,
+.login-google:active {
   transform: translateY(0);
 }
 
@@ -223,7 +229,7 @@
     margin-top: 0;
   }
 
-  .login-form, 
+  .login-form,
   .google-container {
     max-width: 400px;
   }
@@ -240,7 +246,7 @@
     max-width: 560px;
   }
 
-  .login-form, 
+  .login-form,
   .google-container {
     max-width: 480px;
   }
@@ -262,9 +268,10 @@
     padding: 3rem 7rem;
   }
 
-  .login-form, 
+  .login-form,
   .google-container {
-    max-width: 420px; /* Reducción ligera para legibilidad */
+    max-width: 420px;
+    /* Reducción ligera para legibilidad */
   }
 
   .login-title {
@@ -274,6 +281,27 @@
   .brand-name-login {
     font-size: 80px;
   }
+}
+
+.reset-popup .flexColumn {
+  align-items: center;
+  gap: 1em;
+}
+
+.reset-popup .popup-content {
+  height: 18em;
+}
+
+.reset-popup .password-reset {
+  width: 20em !important;
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+input#reset-email.password-reset {
+  margin-inline: 0 !important;
 }
 
 /* ================= MODO OSCURO AUTOMÁTICO ================= */

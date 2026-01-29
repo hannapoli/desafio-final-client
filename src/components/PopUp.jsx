@@ -1,10 +1,10 @@
 import './PopUp.css'
 
-export const PopUp = ({ isOpen, onClose, children }) => {
+export const PopUp = ({ isOpen, onClose, children, className }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="popup-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+        <div className={`popup-overlay ${className ? ' ' + className : ''}`} onClick={(e) => e.target === e.currentTarget && onClose()}>
             <div className="popup-content">
                 <button className="popup-close" onClick={onClose}>x</button>
                 {children}

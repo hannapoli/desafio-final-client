@@ -45,7 +45,7 @@ export const RegisterPage = () => {
         state: { message: '¡Gracias por registrarte! Por favor, inicia la sesión.' }
       });
     } catch (error) {
-      setAuthError(error.message || 'Error al registrarse');
+      setAuthError(getFirebaseErrorMessage(error));
     }
   };
 
