@@ -69,7 +69,7 @@ export const AddParcel = ({polygon}) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
       const {bboxCenter, addParcelApi, createParcel, saveAlertsByParcel} = userMap()
-      const {addParcel, addPolygon, setParcel} = useContext(MapsContext);
+      const {addParcel, addPolygon, setParcel, setError} = useContext(MapsContext);
       const {user} = useContext(AuthContext)
 
       const [errorCrear, setErrorCrear] = useState(null)
@@ -112,7 +112,7 @@ export const AddParcel = ({polygon}) => {
 
           } else {
             console.log("saveAlertsByParcel <========================================0>")
-            await saveAlertsByParcel(crear.id_cultivo)
+            await saveAlertsByParcel(crear.id_lote)
             console.log("saveAlertsByParcel <========================================1>")
 
             setErrorCrear(null);

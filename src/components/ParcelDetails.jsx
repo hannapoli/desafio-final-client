@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/useAuth'
 
 
 export const ParcelDetails = () => {
-  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, setSelectedParcelId, deleteParcel} = useContext(MapsContext)
+  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, setSelectedParcelId, deleteParcel, setParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData, loading } = useFetch()
   const { user } = useAuth();
@@ -34,6 +34,7 @@ export const ParcelDetails = () => {
 
   const [dataPoints, setDataPoints] = useState(null);
   const [dataPhoto, setDataPhoto] = useState(null);
+  const [verBotonElimar, setVerBotonEliminar] = useState(true)
   
   
 
@@ -282,6 +283,7 @@ export const ParcelDetails = () => {
               console.log({resp})
               setErrorEliminar(null);
               deleteParcel(p)
+              setParcel(null)
               console.log('parcela eliminada' , resp)
             }
         }
@@ -398,8 +400,22 @@ export const ParcelDetails = () => {
             )}
           </div>
         </ViewerPopup>
-          {isProducer && (
-          <button className="eliminar-parcela" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar parcela</button>)}
+          {isProducer && verBotonElimar && (
+            <button
+              className="eliminar-parcela"
+              id="btn-eliminar-parcela"
+              onClick={()=>setVerBotonEliminar(false)}
+            >
+              Eliminar parcela
+            </button>
+          )}
+           {isProducer && !verBotonElimar && (
+            <div id='preguntaEliminar'>
+            <p>¿Seguro que quieres elimiar la parcela?</p> 
+            <button onClick={() => eliminarParcela(parcel)}>Sí</button>
+            <button onClick={()=>setVerBotonEliminar(true)}>No</button>
+            </div>
+           )}
   </article>
 
 
