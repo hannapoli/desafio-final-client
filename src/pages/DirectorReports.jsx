@@ -7,21 +7,24 @@ import '../components/List.css';
 import { Disease } from '../components/Disease';
 
 export const DirectorReports = () => {
-    const { user } = useAuth();
-    const { fetchData, loading, error, setError } = useFetch();
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const diseaseUrl = import.meta.env.VITE_API_DISEASE_URL;
-    const [showDiseasePopup, setShowDiseasePopup] = useState(false);
-    const [productores, setProductores] = useState([]);
-    const [selectedProducer, setSelectedProducer] = useState('');
-    const [reports, setReports] = useState([]);
-    const [disease, setDisease] = useState(null);
+  const { user } = useAuth();
+  const { fetchData, loading, error, setError } = useFetch();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const diseaseUrl = import.meta.env.VITE_API_DISEASE_URL;
 
+  const [showDiseasePopup, setShowDiseasePopup] = useState(false);
+  const [productores, setProductores] = useState([]);
+  const [selectedProducer, setSelectedProducer] = useState('');
+  const [reports, setReports] = useState([]);
+  const [disease, setDisease] = useState(null);
+
+  // Obtener productores
   useEffect(() => {
     const fetchProductores = async () => {
       if (!user?.uid) return;
+
       try {
-      const token = user.token || await auth.currentUser?.getIdToken();
+        const token = user.token || await auth.currentUser?.getIdToken();
         const response = await fetchData(
           `${backendUrl}/director/productor/getAll/${user.uid}`,
           'GET',
@@ -33,42 +36,50 @@ export const DirectorReports = () => {
         setError('Error al obtener productores');
       }
     };
+
     fetchProductores();
   }, [user]);
 
-  const fetchReports = async (producerEmail) => {
-    if (!producerEmail) return;
-    setReports([])
+  // Obtener reportes (solo al submit)
+  const fetchReports = async () => {
+    if (!selectedProducer) return;
+
+    setReports([]);
+
     try {
-        const token = user.token || await auth.currentUser?.getIdToken();
-        const response = await fetchData(
-        `${backendUrl}/director/reports/getAll/${producerEmail}`,
+      const token = user.token || await auth.currentUser?.getIdToken();
+      const response = await fetchData(
+        `${backendUrl}/director/reports/getAll/${selectedProducer}`,
         'GET',
         null,
         token
-        );
-        console.log(response.data)
-        const reportsData = Array.isArray(response.data)
-            ? response.data
-            : response.data
-            ? [response.data]
-            : [];
+      );
 
-        const normalizedReports = reportsData.map(report => ({
-            ...report,
-            attached: normalizeFileData(report.attached)
-        }));
+      const reportsData = Array.isArray(response.data)
+        ? response.data
+        : response.data
+        ? [response.data]
+        : [];
 
-        setReports(normalizedReports);
+      const normalizedReports = reportsData.map(report => ({
+        ...report,
+        attached: normalizeFileData(report.attached)
+      }));
+
+      setReports(normalizedReports);
     } catch (err) {
-    setError('Error al obtener los reportes');
+      setError('Error al obtener los reportes');
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchReports();
+  };
+
   const handleSelectChange = (e) => {
-    const email = e.target.value;
-    setSelectedProducer(email);
-    fetchReports(email); // Cargar reportes automáticamente al seleccionar
+    setSelectedProducer(e.target.value);
+    setReports([]); // limpia reportes anteriores al cambiar productor
   };
 
   const handleDownload = async (id) => {
@@ -99,14 +110,16 @@ export const DirectorReports = () => {
     }
   };
 
-    const handleDisease = async (url) => {
+  const handleDisease = async (url) => {
     try {
-        const res = await fetchData(`${diseaseUrl}/analyze`, 'POST', { image_url: url });
-        setDisease(res);
-        setShowDiseasePopup(true);
+      const res = await fetchData(`${diseaseUrl}/analyze`, 'POST', {
+        image_url: url,
+      });
+      setDisease(res);
+      setShowDiseasePopup(true);
     } catch (error) {
-        console.log('ERROR:', error);
-        alert(error);
+      console.log('ERROR:', error);
+      alert(error);
     }
   };
 
@@ -122,8 +135,8 @@ export const DirectorReports = () => {
         {loading && <p>Cargando...</p>}
         {error && <p className='errorMessage'>{error}</p>}
 
-        {/* SELECT DE PRODUCTORES */}
-        <div className='producer-select'>
+        {/* SELECT + SUBMIT */}
+        <form className='report-form' onSubmit={handleSubmit}>
           <select value={selectedProducer} onChange={handleSelectChange}>
             <option value=''>Selecciona un productor</option>
             {productores.map((producer) => (
@@ -132,7 +145,11 @@ export const DirectorReports = () => {
               </option>
             ))}
           </select>
-        </div>
+
+          <button type='submit' disabled={!selectedProducer}>
+            Ver reportes
+          </button>
+        </form>
 
         <ul className='report-list'>
           {sortedReports.map((report) => (
@@ -143,14 +160,22 @@ export const DirectorReports = () => {
               <div>Mensaje: {report.content_message}</div>
 
               {report.attached && report.attached.length > 0 && (
-                <div>Archivos adjuntos ({report.attached.length}):
+                <div>
+                  Archivos adjuntos ({report.attached.length}):
                   <ul>
                     {report.attached.map((fileUrl, index) => (
                       <li key={index}>
-                        <a href={fileUrl} target='_blank' rel='noopener noreferrer'>
+                        <a
+                          href={fileUrl}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
                           Archivo {index + 1}
                         </a>
-                        <button className='api-btn' onClick={() => handleDisease(fileUrl)}>
+                        <button
+                          className='api-btn'
+                          onClick={() => handleDisease(fileUrl)}
+                        >
                           Predicción enfermedades
                         </button>
                       </li>
@@ -160,7 +185,10 @@ export const DirectorReports = () => {
               )}
 
               <div className='report-actions'>
-                <button className='download-btn' onClick={() => handleDownload(report.uid_report)}>
+                <button
+                  className='download-btn'
+                  onClick={() => handleDownload(report.uid_report)}
+                >
                   Descargar
                 </button>
               </div>
@@ -168,9 +196,13 @@ export const DirectorReports = () => {
           ))}
         </ul>
       </div>
-        {showDiseasePopup && disease && (
-            <Disease setShowDiseasePopup= {setShowDiseasePopup} disease={disease} />
-        )}
+
+      {showDiseasePopup && disease && (
+        <Disease
+          setShowDiseasePopup={setShowDiseasePopup}
+          disease={disease}
+        />
+      )}
     </section>
   );
 };

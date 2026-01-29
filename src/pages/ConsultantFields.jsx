@@ -41,14 +41,14 @@ export const ConsultantFields = () => {
 
   return (
     <>
-      <h1 className='centeredText'>Mis parcelas</h1>
+      <h1 className='centeredText'>Parcelas de mis productores</h1>
       {loading && <p>Cargando...</p>}
       {error && <p>{error}</p>}
 
       {/* SELECT DE PRODUCTORES */}
 
       <div className="producer-select">
-        <h2>Productores</h2>
+        <h2>Productores asignados</h2>
         <select value={selectedProducer?.email_user || ''} onChange={handleSelectChange}>
           <option value="">Selecciona un productor</option>
           {productores.map((producer) => (

@@ -10,13 +10,15 @@ import { PopUp } from './PopUp'
 import { ViewerPopup } from './ViewerPopup'
 import { Report } from '../components/Report'
 import { ViewerParcelProducer } from './ViewerParcelProducer'
+import { useAuth } from '../hooks/useAuth'
 
 
 export const ParcelDetails = () => {
   const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData } = useFetch()
-
+  const { user } = useAuth();
+  const isProducer = user?.role === 'productor';
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -418,36 +420,51 @@ export const ParcelDetails = () => {
           
 
         {/* CREAR UN REPORTE */}
-        <div className='btn-container'>
-          <p className='description-text'>Selecciona la parcela en el mapa para crear un reporte</p>
-          <button
-            onClick={handleOpenPopup}
-            className='login-button'
-            style={{
-              cursor: selectedParcelId ? 'pointer' : 'not-allowed'
-            }}
-            disabled={!selectedParcelId}
-          >Crear un reporte</button>
-          {selectedParcelId && (
-            <p className='selectedParcel'>
-              Parcela seleccionada: {selectedParcelId}
-            </p>
-          )}
-        </div>
-        <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-          <h2>Crear reporte</h2>
-          {submitSuccess && <p className='successMessage'>¡Reporte creado exitosamente!</p>}
-          {submitError && <p className='errorMessage'>{submitError}</p>}
-          <Report
-            reportData={reportData}
-            onChange={handleInputChange}
-            onFileChange={handleFileChange}
-            onSubmit={handleSubmitReport}
-            submitLoading={submitLoading}
-            submitLabel='Crear Reporte'
-            disabledFields={{ email_creator: true }}
-          />
-        </PopUp>
+        {isProducer && (
+          <>
+            <div className='btn-container'>
+              <p className='description-text'>
+                Selecciona la parcela en el mapa para crear un reporte
+              </p>
+
+              <button
+                onClick={handleOpenPopup}
+                className='login-button'
+                style={{
+                  cursor: selectedParcelId ? 'pointer' : 'not-allowed'
+                }}
+                disabled={!selectedParcelId}
+              >
+                Crear un reporte
+              </button>
+
+              {selectedParcelId && (
+                <p className='selectedParcel'>
+                  Parcela seleccionada: {selectedParcelId}
+                </p>
+              )}
+            </div>
+
+            <PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+              <h2>Crear reporte</h2>
+              {submitSuccess && (
+                <p className='successMessage'>¡Reporte creado exitosamente!</p>
+              )}
+              {submitError && (
+                <p className='errorMessage'>{submitError}</p>
+              )}
+              <Report
+                reportData={reportData}
+                onChange={handleInputChange}
+                onFileChange={handleFileChange}
+                onSubmit={handleSubmitReport}
+                submitLoading={submitLoading}
+                submitLabel='Crear Reporte'
+                disabledFields={{ email_creator: true }}
+              />
+            </PopUp>
+          </>
+        )}
 
         {/* Visor 360° Popup */}
         <ViewerPopup isOpen={isViewerOpen} onClose={() => setIsViewerOpen(false)}>
@@ -470,8 +487,8 @@ export const ParcelDetails = () => {
             )}
           </div>
         </ViewerPopup>
-    
-          <button className="delete-btn" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>
+          {isProducer && (
+          <button className="delete-btn" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>)}
   </article>
 
 

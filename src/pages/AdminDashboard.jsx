@@ -17,7 +17,7 @@ export const AdminDashboard = () => {
             />
           </span>
 
-          <h1 className="dashboard-title">Panel de Gestión</h1>
+          <h1 className="dashboard-title">Panel de Gestión de Admin</h1>
 
           <p className="dashboard-description">
             ¡Te damos la bienvenida! Aquí puedes gestionar los usuarios de la plataforma y ponerte en contacto a través del chat.

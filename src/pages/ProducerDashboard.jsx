@@ -1,8 +1,8 @@
 import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
-import fieldImg from '/mis_parcelas.png';
-import cropImg from '/parcelas.png';
 import messageImg from '/mensajes.png';
+import reportes from '/reportes-agrosync.png'
+import parcelas from '/parcelas-agrosync.png' 
 
 import "./ProducerDashboard.css";
 
@@ -25,7 +25,7 @@ export const ProducerDashboard = () => {
             />
           </span>
 
-          <h1 className="dashboard-title">Panel de Gestión</h1>
+          <h1 className="dashboard-title">Panel de Gestión de Productor</h1>
 
           <p className="dashboard-description">
             ¡Te damos la bienvenida! Aquí puedes gestionar tus parcelas, monitorear cultivos
@@ -38,11 +38,17 @@ export const ProducerDashboard = () => {
 
             <article className="producer-card-item">
               <MenuCard
-                image={fieldImg}
+                image={parcelas}
                 url="/producer/fields/all"
               />
             </article>
-
+            <article className="producer-card-item">
+              <MenuCard
+                //text='Reportes'
+                  image={reportes}
+                url='/producer/reports'
+              />
+            </article>
             <article className="producer-card-item">
               <MenuCard
                 image={messageImg}
