@@ -53,7 +53,7 @@ export const VegetationIndex = ({ vegetation }) => {
     return Math.min(Math.max(value * 100, 0), 100);
   };
 
-  const cards = useMemo(() => {
+  const cards = useMemo(() => { //parecido al useEffect pero para calcular cosas
     if (!vegetation) return [];
 
     return INDEX_KEYS.map(({ key, desc }) => {

@@ -9,6 +9,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { userMap } from '../../hooks/userMap';
 import { AddParcel } from '../AddParcel';
 import '../Map.css'
+import { MapClickHandler } from './MapClickHandler';
 
 export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
@@ -18,7 +19,7 @@ export default function MapView({ alertas }) {
   const [unmark, setUnmark] = useState(null)
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
-  const { polygons, addParcel, addPolygon, center, alert, setAlert, parcel } = useContext(MapsContext);
+  const { polygons, addParcel, addPolygon, center, setParcel } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   
@@ -57,6 +58,11 @@ export default function MapView({ alertas }) {
     iconAnchor: [15, 15]
   });
     
+  const handleClickOutside = () => {
+    setParcel(null);
+    setSelectedParcelId(null);
+    setInfoMeteo(null);
+  };
 
 
   const alertIcon = L.divIcon({
@@ -87,13 +93,7 @@ export default function MapView({ alertas }) {
     }
   }, [polygon]);
 
-  const handleAlerta = (a) => {
-    // console.log('alerta', e.target)
-    setAlert(a)}
-    
 
-  
-  // console.log({unmark})
   if (!center) return <p>Cargando mapa...</p>;
 
   return (
@@ -101,6 +101,9 @@ export default function MapView({ alertas }) {
 <div>
     <MapContainer center={center} zoom={15} id='mapBoard'>
       <TileLayer {...tileLayers[currentLayer]} />
+
+      <MapClickHandler onClickOutside={handleClickOutside} />
+      
 
       <DrawControl onPolygonCreated={handlePolygonCreated} />
 
@@ -128,39 +131,19 @@ export default function MapView({ alertas }) {
           key={a.uid_parcel} 
           position={bboxCenter([coords])} 
           icon={alertIcon}
-          eventHandlers={{
-            click: () => handleAlerta(a)
-          }}
+          // eventHandlers={{
+          //   click: () => handleAlerta(a)
+          // }}
         >
           
         </Marker>
       ); })}
-      {/* {Array.isArray(alertas) && alertas.map(a => {
-        const coords = typeof a.coordinates_parcel === 'string'
-          ? JSON.parse(a.coordinates_parcel)
-          : a.coordinates_parcel;
-
-        if (unmark === a.uid_parcel) return null;
-
-        return (
-          
-          <Marker
-            key={a.uid_parcel}
-            position={bboxCenter([coords])}
-            icon={alertIcon}
-            eventHandlers={{
-              click: () => handleAlerta(a),
-            }}
-          />
-        );
-      })} */}
-
-      
+    
     
 
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
       {/* <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
-      <ClickablePolygon positions={polygons}  />
+      <ClickablePolygon alertas={alertas}  />
     </MapContainer>
      {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
      </div>

@@ -8,7 +8,7 @@ import './Legend.css'
 
 export const  ClickablePolygon = ()  => {
 
-  const {deleteParcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
+  const {parcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
@@ -58,7 +58,7 @@ export const  ClickablePolygon = ()  => {
     const respuesta = await HealthMap(uid_parcel)
     console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
-    console.log({healthData})
+    // console.log({healthData})
     
   }
     useEffect(() => {
@@ -67,6 +67,12 @@ export const  ClickablePolygon = ()  => {
   }
 }, [healthData]);
   
+useEffect(() => {
+    if (!parcel) {
+      setHealthData(null);
+      setSelectedLayerType('NDVI');
+    }
+  }, [parcel]);
 
 
   return (
@@ -76,29 +82,10 @@ export const  ClickablePolygon = ()  => {
         key={`${p.uid_parcel}`}
         positions={JSON.parse(p.coordinates_parcel)}
         eventHandlers={{//no se puede utilizar onClick con react-leaflet
-          click: (e) => handleClick(e, p),
-        }}
-      >
-       
-      {/* <Popup>
-         
-        <button onClick={()=>}>Ver salud del campo</button>
-       {errorEliminar ? (
-          <p>{errorEliminar}</p>
-        ) : (
-          <>
-            <p>Detalle del campo:</p>
-            <p>Nombre del campo: {p.name_parcel}</p>
-            <p>Cultivo: {p.id_cultivo}</p>
-
-            {infoMeteo && (
-              <InfoMeteo p={p} infoMeteo={infoMeteo} />
-            )}
-          </>
-        )}
-
-      </Popup> */}
-      
+          click: (e) => {
+                handleClick(e, p)
+        }}}
+      >   
 
     </Polygon>))}
     {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
