@@ -67,7 +67,7 @@ const options = [
 export const FilterParcelForm = ({ allParcels }) => {
   const [nameSearch, setNameSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
-  const { setParcels, setAlerts, havePolygons, setAlertas } = useContext(MapsContext);
+  const { setParcels, setAlerts, havePolygons, setAlertas, polygons } = useContext(MapsContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,6 +94,7 @@ export const FilterParcelForm = ({ allParcels }) => {
     havePolygons(allParcels);
     setAlerts([]); // Si quieres restaurar todas las alertas originales, deberías guardar el estado inicial en otro lado
     setAlertas(alerts.filter(a=>a.alerta_helada || a.alerta_inundacion || a.alerta_plaga || a.alerta_sequia ));
+    setPolygons
     }
   
 
