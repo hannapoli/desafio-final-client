@@ -88,18 +88,18 @@ export const AddParcel = ({polygon}) => {
         try {
           const crear = await addParcelApi(nombreparcela, polygon);
     
-          // if (crear?.res === 'error') {
-          // console.log('Error al crear parcela en auravant: ', crear.res)
-          //   setError(crear.info);
-          // setErrorCrear('Error al crear Parcela');
-          //   return;
-          // }
+          if (crear?.res === 'error') {
+          console.log('Error al crear parcela en auravant: ', crear.res)
+            setError(crear.info);
+          setErrorCrear('Error al crear Parcela');
+            return;
+          }
     
           const polygonClosed = [...polygon, polygon[0]];
         
           const respuesta = await createParcel(
-            // crear.id_lote,
-            8933,
+            crear.id_lote,
+            // 8933,
             user.uid,
             nombreparcela,
             id_cultivo,
@@ -111,7 +111,7 @@ export const AddParcel = ({polygon}) => {
             setErrorCrear('Error al crear Parcela');
 
           } else {
-            // await saveAlertsByParcel(crear.id_cultivo)
+            await saveAlertsByParcel(crear.id_cultivo)
             
             setErrorCrear(null);
             setCreatedParcel(true);
