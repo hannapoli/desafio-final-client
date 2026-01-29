@@ -27,8 +27,6 @@ export const ProducerSeeFields = () => {
     attached: null
   });
   
-  const [dataPoints, setDataPoints] = useState(null);
-  const [dataPhoto, setDataPhoto] = useState(null);
   
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;

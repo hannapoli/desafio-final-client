@@ -4,12 +4,14 @@ import { MapsContext } from '../../contexts/MapsContext'
 import {userMap} from '../../hooks/userMap'
 import { Legend } from './Legend';
 import './Legend.css'
+import { useFetch } from '../../hooks/useFetch';
 
 
 export const  ClickablePolygon = ()  => {
 
   const {parcel, parcels, setParcel, setSelectedParcelId,  setInfoMeteo} = useContext(MapsContext)
   const {HealthMap, getInfoMeteoByParcel, deleteParcelApi, deleteParcelBack} = userMap()
+  const {loading, setLoading} = useFetch()
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
 
@@ -32,6 +34,7 @@ export const  ClickablePolygon = ()  => {
 
  const handleClick = async(e, p) => {
  console.log('Entra en el hadleClick')
+    setLoading(true)
    
     zoomToFeature(e)
 
@@ -42,8 +45,7 @@ export const  ClickablePolygon = ()  => {
     setInfoMeteo(data.data)
     setParcel(p)
     overLay(p.uid_parcel)
-    // setUnmark(p.uid_parcel)
-    // console.log({p},'desde el polígono')
+ 
  }
   
 
@@ -53,6 +55,7 @@ export const  ClickablePolygon = ()  => {
     console.log('Health map' ,{respuesta})
     setHealthData(respuesta)
     // console.log({healthData})
+    // setLoading(false)
     
   }
     useEffect(() => {
@@ -82,7 +85,7 @@ useEffect(() => {
       >   
 
     </Polygon>))}
-    {activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
+    { activeLayer && healthData.image_bounds && healthData.image_bounds.length === 2 &&(
         <ImageOverlay
           url={activeLayer.image_data}
           bounds={healthData.image_bounds}

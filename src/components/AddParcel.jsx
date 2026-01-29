@@ -3,6 +3,8 @@ import Select from 'react-select'
 import { userMap } from '../hooks/userMap';
 import { MapsContext } from '../contexts/MapsContext';
 import { AuthContext } from '../contexts/AuthContext';
+import '../Map.css'
+
 
 
 const options = [
@@ -69,8 +71,9 @@ export const AddParcel = ({polygon}) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
       const {bboxCenter, addParcelApi, createParcel, saveAlertsByParcel} = userMap()
-      const {addParcel, addPolygon, setParcel} = useContext(MapsContext);
+      const {addParcel, addPolygon, setParcel, setPolygos} = useContext(MapsContext);
       const {user} = useContext(AuthContext)
+      const [loadingCreate, setLoadingCreate] = useState(false)
 
       const [errorCrear, setErrorCrear] = useState(null)
       const [imagen, setImagen] = useState(null);
@@ -79,27 +82,27 @@ export const AddParcel = ({polygon}) => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setLoadingCreate(true)
         const form = e.target;
         const nombreparcela = form.nombreparcela.value;
         // const cultivo = form.cultivo.value;    
         const id_cultivo = selectedOption.value;    
         // console.log({id_cultivo})
         try {
-          const crear = await addParcelApi(nombreparcela, polygon);
+          // const crear = await addParcelApi(nombreparcela, polygon);
     
-          if (crear?.res === 'error') {
-          console.log('Error al crear parcela en auravant: ', crear.res)
-            setError(crear.info);
-          setErrorCrear('Error al crear Parcela');
-            return;
-          }
+          // if (crear?.res === 'error') {
+          // console.log('Error al crear parcela en auravant: ', crear.res)
+          //   setError(crear.info);
+          // setErrorCrear('Error al crear Parcela');
+          //   return;
+          // }
     
           const polygonClosed = [...polygon, polygon[0]];
         
           const respuesta = await createParcel(
-            crear.id_lote,
-            // 8933,
+            // crear.id_lote,
+            8933456344,
             user.uid,
             nombreparcela,
             id_cultivo,
@@ -109,6 +112,7 @@ export const AddParcel = ({polygon}) => {
           if (!respuesta.ok) {
             console.log('Error al crear parcela en la base de datos: ', respuesta.msg)
             setErrorCrear('Error al crear Parcela');
+            setLoadingCreate(false)
 
           } else {
             await saveAlertsByParcel(crear.id_cultivo)
@@ -119,6 +123,7 @@ export const AddParcel = ({polygon}) => {
             // setCenter(bboxCenter(polygons))
             addParcel(respuesta.data);
             setParcel(respuesta.data)
+            setLoadingCreate(false)
           }
 
     
@@ -134,7 +139,8 @@ export const AddParcel = ({polygon}) => {
   return (
     <>
     {errorCrear && (<p>{errorCrear}</p>)}
-    {createdParcel
+    {loadingCreate && <p>Guardando parcela....</p>}
+    {createdParcel 
      ? <p>Parcela creada correctamente</p>
      : <form onSubmit={handleSubmit} className="form-crear-parcela">
                 <input
