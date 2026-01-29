@@ -17,7 +17,7 @@ export const ProducerSeeFields = () => {
   const { fetchData, loading, error, setError } = useFetch();
   // const [parcels, setParcels] = useState([]);
   const { getAllAlertsByUser, getAllInfoMeteoByUser } = userMap()
-  const { parcels, setParcels, parcel, selectedParcelId, vegetation } = useContext(MapsContext)
+  const { parcels, setParcels, parcel, selectedParcelId, vegetation, setSelectedParcelId, setParcel, setVegetation } = useContext(MapsContext)
   
   const [reportData, setReportData] = useState({
     email_creator: '',
@@ -80,8 +80,13 @@ export const ProducerSeeFields = () => {
     }
   }, [user]);
 
- 
-
+   useEffect(() => {
+    setParcels([]);
+    setSelectedParcelId(null);
+    setParcel(null);
+    setVegetation(null);
+  }, []);
+  
 
   return (
     <>
@@ -89,25 +94,6 @@ export const ProducerSeeFields = () => {
       {error && <p>Error al cargar parcelas: {error}</p>}
       <section className='flexContainer CenteredContent'>
         <h1 className='centeredText'>Mis parcelas</h1>
-
-        {/* {parcels.length === 0 ? (
-        <p>No tienes parcelas registradas.</p>
-      ) : (
-        <article>
-          {parcels.map((parcel, index) => (
-            <Link 
-              key={parcel.uid_parcel || index} 
-              to={`/producer/fields/${parcel.uid_parcel}`}
-            >
-              <div className='clickable'>
-                <h3>Parcela: {parcel.name_parcel || 'Sin nombre'}</h3>
-                <pre>{JSON.stringify(parcel, null, 2)}</pre>
-              </div>
-            </Link>
-          ))}
-        </article>
-      )}    */}
-
       </section>
 
       <section id='seeFieldsContainer'>

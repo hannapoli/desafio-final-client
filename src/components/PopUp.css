@@ -36,7 +36,7 @@
     padding: 2.5rem 2rem;
     border-radius: 16px;
     box-shadow: var(--shadow-lg);
-    max-width: 35em;
+    max-width: 80em;
     width: 100%;
     height: min(90vw, 500px);;
     position: relative;

@@ -19,7 +19,7 @@ export const DirectorDashboard = () => {
             />
           </span>
 
-          <h1 className="dashboard-title">Panel de Gestión</h1>
+          <h1 className="dashboard-title">Panel de Gestión de Director</h1>
 
           <p className="dashboard-description">
             ¡Te damos la bienvenida! Aquí puedes ver el estado de las parcelas de tus productores, ver reportes y ponerte en contacto a través del chat.

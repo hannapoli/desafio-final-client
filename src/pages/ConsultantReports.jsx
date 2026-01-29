@@ -139,7 +139,7 @@ export const ConsultantReports = () => {
                 {producer.name_user} ({producer.email_user})
               </option>
             ))}
-          </select>
+          </select> 
           <button type='submit' disabled={!selectedProducer}>Ver reportes</button>
         </form>
 

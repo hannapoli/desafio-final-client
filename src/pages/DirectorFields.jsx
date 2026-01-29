@@ -5,6 +5,7 @@ import { auth } from '../firebase/firebaseConfig';
 import { Map } from '../components/Map';
 import { MapsContext } from '../contexts/MapsContext';
 import '../components/ParcelDetails.css'
+import './DirectorFields.css'
 import { ParcelDetails } from '../components/ParcelDetails';
 import { PopUp } from '../components/PopUp';
 
@@ -20,7 +21,7 @@ export const DirectorFields = () => {
   const [parcelsBack, setParcelsBack] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupParcel, setPopupParcel] = useState(null);
-  const { parcels, setParcels, parcel, selectedParcelId, vegetation } = useContext(MapsContext)
+  const { parcels, setParcels, parcel, selectedParcelId, vegetation, setSelectedParcelId, setParcel, setVegetation } = useContext(MapsContext)
   const [selectedProducerEmail, setSelectedProducerEmail] = useState('');
   const [producers, setProducers] = useState([]);
   const [showMap, setShowMap] = useState(false); // Para alternar tabla/mapa
@@ -89,16 +90,29 @@ export const DirectorFields = () => {
   };
   const cerrarPopup = () => setPopupParcel(null);
 
+  useEffect(() => {
+    setParcels([]);
+    setSelectedParcelId(null);
+    setParcel(null);
+    setVegetation(null);
+  }, []);
+  
+  useEffect(() => {
+    setSelectedParcelId(null);
+    setParcel(null);
+    setVegetation(null);
+  }, [selectedProducerEmail]);
+
   return (
     <section className='page-container'>
-      <h1 className='centeredText'>Mis parcelas</h1>
+      <h1 className='centeredText'>Parcelas</h1>
 
       {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
 
       {/* SELECT DE PRODUCTORES */}
       <div className="producer-select">
-        <h2>Filtrar por productor</h2>
+        <h2>Mis productores</h2>
         <select
           value={selectedProducerEmail}
           onChange={e => setSelectedProducerEmail(e.target.value)}
@@ -121,7 +135,7 @@ export const DirectorFields = () => {
       <section id='seeFieldsContainer'>
         {showMap ? (
           <article id='mapBox'>
-            {!loading && <Map parcels={parcels} />}
+            {!loading && <Map key={selectedProducerEmail || 'all'} parcels={filteredParcels} />}
             {parcel && (
               <div className="article-card" id="vegetation-section">
                 <VegetationIndex vegetation={vegetation} />
@@ -143,15 +157,15 @@ export const DirectorFields = () => {
               <tbody>
                 {filteredParcels.map((parcel, index) => (
                   <tr key={parcel.uid_parcel || index}>
-                    <td>{parcel.name_parcel}</td>
-                    <td>
+                    <td data-label="Parcela">{parcel.name_parcel}</td>
+                    <td data-label="Coordenadas">
                       <button onClick={() => mostrarCoords(parcel)}>
                         Mostrar Coordenadas
                       </button>
                     </td>
-                    <td>{parcel.nombre_cultivo}</td>
-                    <td>{parcel.nombre_variedad}</td>
-                    <td>{parcel.rendimiento_teorico}</td>
+                    <td data-label="Cultivo">{parcel.nombre_cultivo}</td>
+                    <td data-label="Parcela">{parcel.nombre_variedad}</td>
+                    <td data-label="Rendimiento Kg/m²">{parcel.rendimiento_teorico}</td>
                   </tr>
                 ))}
               </tbody>

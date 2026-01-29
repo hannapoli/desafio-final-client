@@ -8,7 +8,7 @@ import { VegetationIndex } from '../components/Map/VegetationIndex';
 
 export const ConsultantSeeProducerFields = ({ producer }) => {
   const { fetchData, loading, error, setError } = useFetch();
-  const { parcels, setParcels, parcel, vegetation } = useContext(MapsContext);
+  const { parcels, setParcels, parcel, selectedParcelId, vegetation, setSelectedParcelId, setParcel, setVegetation } = useContext(MapsContext)
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -38,6 +38,19 @@ export const ConsultantSeeProducerFields = ({ producer }) => {
     getParcels();
 
   }, [producer]);
+
+  useEffect(() => {
+    setParcels([]);
+    setSelectedParcelId(null);
+    setParcel(null);
+    setVegetation(null);
+  }, []);
+  
+  useEffect(() => {
+    setSelectedParcelId(null);
+    setParcel(null);
+    setVegetation(null);
+  }, [parcels]);
 
   if (!producer) return null;
 
