@@ -168,6 +168,7 @@ export const AdminUsers = () => {
                     setUserToDelete(null);
                     setDeleteError(null);
                 }}
+                className={'delete-popup'}
             >
                 <h2 className="text-green centeredText">¿Eliminar este usuario?</h2>
                 {userToDelete && (
