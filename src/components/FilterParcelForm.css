@@ -1,0 +1,52 @@
+.filter-form-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: space-around;
+
+  gap: 20px;
+  padding: 20px;
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inputs y select ocupan espacio flexible */
+.filter-form-container > div {
+  flex: 1 1 250px;
+  min-width: 220px;
+}
+
+/* Input de texto */
+.filter-form-container input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+
+  border-radius: 4px;
+  border: 1px solid #ccc;
+
+  font-size: 14px;
+}
+
+/* Botones */
+.filter-form-container button {
+  padding: 8px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Botón limpiar (estilo más discreto) */
+.filter-form-container button[type="button"] {
+  background: none;
+  border: none;
+  color: gray;
+}
+
+/* Responsive: en pantallas pequeñas, centrado */
+@media (max-width: 600px) {
+  .filter-form-container {
+    justify-content: center;
+  }
+}

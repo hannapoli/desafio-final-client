@@ -15,6 +15,7 @@ export const MapsProvider = ({ children }) => {
   const [selectedParcelId, setSelectedParcelId] = useState(null)
     const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
       const [healthData, setHealthData] = useState(null);
+      const [alertas, setAlertas] = useState({})
 
 
   const havePolygons = useCallback((respuesta) => {
@@ -60,7 +61,7 @@ export const MapsProvider = ({ children }) => {
     )
     setPolygons(prev => //prev es la versión már reciente del estado
       prev.filter(pol => pol !== parcel.coordinates_parcel))
-    if (polygons.length) bboxCenter()
+    // if (polygons.length) bboxCenter(polygons)
   }
 
 
@@ -102,10 +103,10 @@ export const MapsProvider = ({ children }) => {
       addParcel,
       deleteParcel,
       bboxCenter,
-      center,
+      center,setCenter,
       geoPng,
       havePolygons,
-      alerts,
+      alerts, setAlerts,
       infoMeteo,
       setInfoMeteo,
       parcels,
@@ -126,7 +127,8 @@ export const MapsProvider = ({ children }) => {
       selectedLayerType,
       setSelectedLayerType,
       healthData,
-      setHealthData
+      setHealthData,
+      alertas, setAlertas
     }}>
       {children}
     </MapsContext.Provider>

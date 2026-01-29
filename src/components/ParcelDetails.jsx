@@ -45,7 +45,8 @@ export const ParcelDetails = () => {
     const getDatos = async () => {
 
       const alerta = await getAlertByParcel(parcel.uid_parcel)
-      setAlert(alerta)
+      // console.log({alerta})
+      setAlert(alerta.data)
 
       const vegetacion = await getParcelVegetation(parcel.uid_parcel)
       // console.log({vegetacion})
@@ -265,8 +266,8 @@ export const ParcelDetails = () => {
   const eliminarParcela = async(p) => {
       if(!p.uid_parcel) return
       try {
-        const resp1 = await deleteParcelApi(p.uid_parcel)
-        // const resp1= {res: 'ok'}
+        // const resp1 = await deleteParcelApi(p.uid_parcel)
+        const resp1= {res: 'ok'}
         if(resp1.res === 'Error'){
           setErrorEliminar(resp1.info)}
         if(!resp1){
@@ -290,99 +291,9 @@ export const ParcelDetails = () => {
         setErrorEliminar(error)
       }
     }
-
-  //    // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
-  // useEffect(() => {
-  //   const getDataPoints = async () => {
-  //     if (!parcel?.photo_url) {
-  //       setDataPoints(null);
-  //       return;
-  //     }
-
-  //     try {
-  //       const responsePoints = await fetchData(
-  //         infoParcelUrl,
-  //         'POST',
-  //         { image_url: parcel.photo_url }
-  //       );
-
-  //       const receivedPoints = responsePoints.data;
-  //       console.log('Points received:', receivedPoints);
-
-  //       if (receivedPoints?.error || receivedPoints?.status === 'error') {
-  //         console.error('Error del servidor:', receivedPoints);
-  //         throw new Error(receivedPoints.error || receivedPoints.message || 'Error desconocido del servidor');
-  //       }
-
-  //       if (!receivedPoints || typeof receivedPoints !== 'object' || Object.keys(receivedPoints).length === 0) {
-  //         console.warn('No se recibieron puntos válidos del servidor');
-  //         setDataPoints([]);
-  //         setError(null);
-  //         return;
-  //       }
-
-  //       // Convertir a array para mapear
-  //       const pointsToPrint = Object.entries(receivedPoints)
-  //         .filter(([key, value]) => value?.aframe_position) 
-  //         .map(([key, value]) => {
-  //           const { x, y, z } = value.aframe_position;
-
-  //           return {
-  //             id: key,
-  //             position: `${x} ${y} ${z}`
-  //           }
-  //         });
-
-  //       setDataPoints(pointsToPrint);
-  //       setError(null);
-  //     } catch (err) {
-  //       setDataPoints([]);
-  //       setError("Error al obtener los puntos de la imagen: " + err.message);
-  //     }
-  //   }
-
-  //   getDataPoints();
-  // }, [parcel, infoParcelUrl, fetchData]);
-
-  // // FETCH PARA OBTENER DATOS DE LA IMAGEN 360
-  // useEffect(() => {
-  //   const getDataPhoto = async () => {
-  //     if (!parcel?.uid_parcel) {
-  //       setDataPhoto(null);
-  //       return;
-  //     }
-
-  //     try {
-  //       const firebaseUser = auth.currentUser;
-  //       if (!firebaseUser) {
-  //         setError('No hay usuario autenticado');
-  //         return;
-  //       }
-
-  //       const token = await firebaseUser.getIdToken();
-
-  //       const response = await fetch(
-  //         `${backendUrl}/producer/parcel/data/${parcel.uid_parcel}`,
-  //         {
-  //           method: 'GET',
-  //           headers: {
-  //             'Authorization': `Bearer ${token}`
-  //           }
-  //         }
-  //       );
-  //       const result = await response.json();
-  //       setDataPhoto(result.data || null);
-  //     } catch (err) {
-  //       setDataPhoto(null);
-  //       console.error("Error al obtener la información de los datos de la parcela:", err);
-  //     }
-  //   }
-
-  //   getDataPhoto();
-  // }, [parcel, backendUrl]);
     
 
-  if (!alert) {
+  if (!parcel) {
     return <p>Cargando detalles de la parcela...</p>;
   }
 
@@ -391,20 +302,20 @@ export const ParcelDetails = () => {
       <h2 className="parcel-title">{parcel.name_parcel}</h2>
 
       <article className="article-card">
-        {/* <p>👤 Productor: {alert.name_user}</p> */}
+        {alert?.name_user && <p>👤 Productor: {alert.name_user}</p>}
         {crop && <p className="product-info">Producto: {crop.nombre_cultivo}</p>}
         {crop && <p className="product-info">Variedad: {crop.nombre_variedad}</p>}
 
-        {alert.alerta_plaga && <p className="alert alert-plaga">⚠️ Alerta de plagas: {alert.alerta_plaga}</p>}
-        {alert.alerta_inundacion && <p className="alert alert-inundacion">⚠️ Alerta de inundación: {alert.alerta_inundacion}</p>}
-        {alert.alerta_helada && <p className="alert alert-helada">⚠️ Alerta de helada: {alert.alerta_helada}</p>}
-        {alert.alerta_sequia && <p className="alert alert-sequia">⚠️ Alerta de sequía: {alert.alerta_sequia}</p>}
+        {alert?.alerta_plaga && <p className="alert alert-plaga">⚠️ Alerta de plagas: {alert.alerta_plaga}</p>}
+        {alert?.alerta_inundacion && <p className="alert alert-inundacion">⚠️ Alerta de inundación: {alert.alerta_inundacion}</p>}
+        {alert?.alerta_helada && <p className="alert alert-helada">⚠️ Alerta de helada: {alert.alerta_helada}</p>}
+        {alert?.alerta_sequia && <p className="alert alert-sequia">⚠️ Alerta de sequía: {alert.alerta_sequia}</p>}
       </article>
 
-      <article className="article-card" id="meteo-section">
+      {infoMeteo && <article className="article-card" id="meteo-section">
         <h3 className="meteo-title">Información meteorológica</h3>
-        {infoMeteo && <InfoMeteo p={parcel} infoMeteo={infoMeteo} />}
-      </article>
+        <InfoMeteo p={parcel} infoMeteo={infoMeteo} />
+      </article>}
 
       <article className="visor-reporte">
 

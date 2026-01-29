@@ -11,6 +11,7 @@ import '../components/ParcelDetails.css'
 
 import './ProducerSeeFields.css';
 import { VegetationIndex } from '../components/Map/VegetationIndex';
+import { FilterParcelForm } from '../components/FilterParcelForm';
 
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
@@ -97,8 +98,12 @@ export const ProducerSeeFields = () => {
       </section>
 
       <section id='seeFieldsContainer'>
+      
+            <FilterParcelForm allParcels={parcels} />
         <article id='mapBox'>
-          {!loading && <Map parcels={parcels} />}
+          {!loading && 
+            
+            <Map parcels={parcels} />}
           {parcel && <div className="article-card" id="vegetation-section">
           <VegetationIndex vegetation={vegetation} />
     </div>}
