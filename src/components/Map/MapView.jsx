@@ -112,7 +112,7 @@ export default function MapView({ alertas }) {
     <MapContainer center={center} zoom={15} id='mapBoard'>
       <TileLayer {...tileLayers[currentLayer]} />
 
-      <MapClickHandler onClickOutside={handleClickOutside} />
+      {/* <MapClickHandler onClickOutside={handleClickOutside} /> */}
       
 
       <DrawControl onPolygonCreated={handlePolygonCreated} />
