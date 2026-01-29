@@ -188,7 +188,7 @@
 .user-delete {
     font-weight: 700;
     margin: 0;
-    padding: 1em;
+    padding: 0;
     font-size: 1.5rem;
 }
 /* ================= CONTACT POPUP ================= */
@@ -276,4 +276,11 @@
 .contact-submit {
     width: 100%;
     margin-top: 1rem;
+}
+
+.popup-content.delete-popup {
+    width: 35em !important;
+    padding: 2rem 1.5rem !important;
+    height: auto !important;
+    gap: 0.2em !important;
 }

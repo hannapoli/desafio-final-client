@@ -26,7 +26,7 @@ export const ParcelDetails = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorEliminar, setErrorEliminar] = useState(null)
   const [reportData, setReportData] = useState({
-      email_creator: '',
+      email_creator: user.email,
       email_receiver: '',
       content_message: '',
       attached: null

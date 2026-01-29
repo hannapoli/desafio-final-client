@@ -7,4 +7,21 @@
   overflow: hidden;
 }
 
+.popup-add-parcel .leaflet-popup-content {
+  min-width:  450px;
+  max-width: none;   /* evita el límite por defecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.popup-add-parcel .leaflet-popup-content-wrapper {
+  padding: 12px;
+}
+
+.form-crear-parcela{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 425px;
+}
