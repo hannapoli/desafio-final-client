@@ -100,7 +100,7 @@ export const LoginPage = () => {
             />
             <span className="brand-name-login">AgroSync</span>
           </div>
-          <h2 className="login-title">Bienvenido</h2>
+          <h2 className="login-title">¡Bienvenid@!</h2>
 
           {message && <p className="successMessage">{message}</p>}
           {authError && <p className="errorMessage">{authError}</p>}
@@ -141,14 +141,14 @@ export const LoginPage = () => {
               {loading ? "Iniciando sesión..." : "Iniciar sesión"}
             </button>
           </form>
-          
+
           <section className="google-container">
             <button
               className="login-google"
               onClick={loginWithGoogle}
               disabled={loading}
             >
-                Iniciar sesión con Google
+              Iniciar sesión con Google
             </button>
 
             <p className="login-register">
@@ -161,30 +161,32 @@ export const LoginPage = () => {
           </section>
         </section>
 
-
-          {/* PopUp para reestablecer contraseña */}
-          <PopUp isOpen={showPopUp} onClose={() => setShowPopUp(false)}>
-            <h3>Restablecer contraseña</h3>
-            <div className="flexColumn">
-              <input
-                type="email"
-                name="resetEmail"
-                id="resetEmail"
-                placeholder="Introduce tu email"
-                value={resetEmail}
-                onChange={(e) => setResetEmail(e.target.value)}
-                noValidate
-              />
-            </div>
-            <button onClick={handleResetPassword} disabled={loading}>
+        {/* PopUp para reestablecer contraseña */}
+        <PopUp isOpen={showPopUp} onClose={() => setShowPopUp(false)} className="reset-popup">
+          <h3>Restablecer contraseña</h3>
+          <div className="flexColumn">
+            <input
+              type="email"
+              name="resetEmail"
+              id="resetEmail"
+              placeholder="Introduce tu email"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              noValidate
+              className="password-reset"
+            />
+          </div>
+          <div>
+            <button onClick={handleResetPassword} disabled={loading} className="password-reset">
               {loading ? "Enviando email..." : "Reestablecer contraseña"}
             </button>
-            {resetSent && (
-              <p className="successMessage">
-                Se ha enviado un email para restablecer la contraseña.
-              </p>
-            )}
-          </PopUp>
+          </div>
+          {resetSent && (
+            <p className="successMessage">
+              Se ha enviado un email para restablecer la contraseña.
+            </p>
+          )}
+        </PopUp>
       </main>
     </>
   );
