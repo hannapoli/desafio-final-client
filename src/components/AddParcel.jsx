@@ -155,7 +155,7 @@ export const AddParcel = ({polygon}) => {
                     isSearchable={true}
                     required
                 />
-                <label htmlFor="photo" className="label-imagen-articulo">Imagen del Artículo</label>
+                <label htmlFor="photo" className="label-imagen-articulo">Sube tu imagen 360 de la parcela</label>
                 <input
                         type="file"
                         id="photo"
