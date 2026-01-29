@@ -15,6 +15,7 @@ export const MapsProvider = ({ children }) => {
   const [selectedParcelId, setSelectedParcelId] = useState(null)
     const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
       const [healthData, setHealthData] = useState(null);
+      const [alertas, setAlertas] = useState({})
 
 
   const havePolygons = useCallback((respuesta) => {
@@ -105,7 +106,7 @@ export const MapsProvider = ({ children }) => {
       center,setCenter,
       geoPng,
       havePolygons,
-      alerts,
+      alerts, setAlerts,
       infoMeteo,
       setInfoMeteo,
       parcels,
@@ -126,7 +127,8 @@ export const MapsProvider = ({ children }) => {
       selectedLayerType,
       setSelectedLayerType,
       healthData,
-      setHealthData
+      setHealthData,
+      alertas, setAlertas
     }}>
       {children}
     </MapsContext.Provider>
