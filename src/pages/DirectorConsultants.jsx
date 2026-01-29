@@ -88,7 +88,6 @@ export const DirectorConsultants = () => {
     const handleAssign = async (emailProductor) => {
         const emailConsultant = selectedAsesor[emailProductor];
         if (!emailConsultant) {
-        alert('Selecciona un asesor');
         return;
         }
 
@@ -105,7 +104,6 @@ export const DirectorConsultants = () => {
             token
         );
         await getConsultantsByProductor(emailProductor);
-        alert('Asesor asignado correctamente');
         } catch (err) {
         console.error(err);
         alert('Error al asignar asesor');
@@ -116,9 +114,6 @@ export const DirectorConsultants = () => {
 
   /* ================= DESASIGNAR ================= */
     const handleUnassign = async (emailProductor, emailConsultant) => {
-        if (!window.confirm('¿Seguro que quieres desasignar este asesor?')) {
-            return;
-        }
         try {
             const firebaseUser = auth.currentUser;
             if (!firebaseUser) return;

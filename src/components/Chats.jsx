@@ -169,11 +169,6 @@ export const Chats = () => {
      BORRAR CHAT
   ========================== */
   const deleteChat = async (email) => {
-    const confirmDelete = window.confirm(
-      `¿Seguro que quieres eliminar el chat con ${email}?`
-    );
-
-    if (!confirmDelete) return;
 
     try {
       const token = await getIdToken();
