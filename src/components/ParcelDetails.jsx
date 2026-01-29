@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, memo } from 'react'
+
 import { MapsContext } from '../contexts/MapsContext'
 import { userMap } from '../hooks/userMap'
 import { useFetch } from '../hooks/useFetch'
@@ -13,7 +14,7 @@ import { ViewerParcelProducer } from './ViewerParcelProducer'
 import { useAuth } from '../hooks/useAuth'
 
 
-export const ParcelDetails = () => {
+export const ParcelDetailsComponent = () => {
   const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, setSelectedParcelId, deleteParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData, loading } = useFetch()
@@ -26,7 +27,7 @@ export const ParcelDetails = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorEliminar, setErrorEliminar] = useState(null)
   const [reportData, setReportData] = useState({
-      email_creator: '',
+      email_creator: user.email,
       email_receiver: '',
       content_message: '',
       attached: null
@@ -408,3 +409,6 @@ export const ParcelDetails = () => {
 
   )
 }
+
+
+export const ParcelDetails = memo(ParcelDetailsComponent)

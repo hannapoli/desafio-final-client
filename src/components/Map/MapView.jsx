@@ -96,12 +96,12 @@ export default function MapView({ alertas }) {
     setPopupPosition(center);
   };
 
-  useEffect(() => {
-    if (polygon.length !== 0) {
-      addPolygon(polygon);
-      // bboxCenter([polygon]);
-    }
-  }, [polygon]);
+  // useEffect(() => {
+  //   if (polygon.length !== 0) {
+  //     addPolygon(polygon);
+  //     // bboxCenter([polygon]);
+  //   }
+  // }, [polygon]);
 
 
   if (!center) return <p>Cargando mapa...</p>;
@@ -118,8 +118,8 @@ export default function MapView({ alertas }) {
       <DrawControl onPolygonCreated={handlePolygonCreated} />
 
       
-      {popupPosition && (
-        <Popup 
+        {popupPosition && (
+          <Popup className="popup-add-parcel"
           key={polygon.length}
           autoClose={false}
           position={popupPosition}

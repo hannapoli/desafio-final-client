@@ -3,7 +3,7 @@ import Select from 'react-select'
 import { userMap } from '../hooks/userMap';
 import { MapsContext } from '../contexts/MapsContext';
 import { AuthContext } from '../contexts/AuthContext';
-
+import './Map.css'
 
 const options = [
   { value: 1, label: "Uva de Mesa - Crimson Seedless" },
@@ -67,7 +67,7 @@ const options = [
 export const AddParcel = ({polygon}) => {
 
     const [selectedOption, setSelectedOption] = useState(null);
-
+    const [loadingCreate, setLoadingCreate] = useState(false)
       const {bboxCenter, addParcelApi, createParcel, saveAlertsByParcel} = userMap()
       const {addParcel, addPolygon, setParcel} = useContext(MapsContext);
       const {user} = useContext(AuthContext)
@@ -79,7 +79,7 @@ export const AddParcel = ({polygon}) => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setLoadingCreate(true)
         const form = e.target;
         const nombreparcela = form.nombreparcela.value;
         // const cultivo = form.cultivo.value;    
@@ -91,7 +91,8 @@ export const AddParcel = ({polygon}) => {
           if (crear?.res === 'error') {
           console.log('Error al crear parcela en auravant: ', crear.res)
             setError(crear.info);
-          setErrorCrear('Error al crear Parcela');
+            setErrorCrear('Error al crear Parcela');
+            setLoadingCreate(false)
             return;
           }
     
@@ -112,7 +113,7 @@ export const AddParcel = ({polygon}) => {
 
           } else {
             console.log("saveAlertsByParcel <========================================0>")
-            await saveAlertsByParcel(crear.id_cultivo)
+            await saveAlertsByParcel(crear.id_lote)
             console.log("saveAlertsByParcel <========================================1>")
 
             setErrorCrear(null);
@@ -122,7 +123,7 @@ export const AddParcel = ({polygon}) => {
             addParcel(respuesta.data);
             setParcel(respuesta.data)
           }
-
+            setLoadingCreate(false)
     
           console.log('Parcela creada:', respuesta);
         //   setPopupPosition(null);
@@ -136,7 +137,8 @@ export const AddParcel = ({polygon}) => {
   return (
     <>
     {errorCrear && (<p>{errorCrear}</p>)}
-    {createdParcel
+    {loadingCreate && <p>Guardando parcela....</p>}
+    {createdParcel 
      ? <p>Parcela creada correctamente</p>
      : <form onSubmit={handleSubmit} className="form-crear-parcela">
                 <input
