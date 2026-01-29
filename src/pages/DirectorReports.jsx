@@ -146,7 +146,7 @@ export const DirectorReports = () => {
             ))}
           </select>
 
-          <button type='submit' disabled={!selectedProducer}>
+          <button className="login-button" type='submit' disabled={!selectedProducer}>
             Ver reportes
           </button>
         </form>

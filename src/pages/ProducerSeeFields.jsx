@@ -93,7 +93,7 @@ export const ProducerSeeFields = () => {
       {loading && <p>Cargando parcelas...</p>}
       {error && <p>Error al cargar parcelas: {error}</p>}
       <section className='flexContainer CenteredContent'>
-        <h1 className='centeredText'>Mis parcelas</h1>
+        <h1 className='centeredText text-green'>Mis parcelas</h1>
       </section>
 
       <section id='seeFieldsContainer'>

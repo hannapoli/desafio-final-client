@@ -128,7 +128,7 @@ export const DirectorFields = () => {
 
       {/* BOTÓN PARA ALTERNAR TABLA / MAPA */}
       <div style={{ margin: '15px 0' }}>
-        <button onClick={() => setShowMap(prev => !prev)}>
+        <button className="login-button" onClick={() => setShowMap(prev => !prev)}>
           {showMap ? 'Ver tabla' : 'Ver mapa'}
         </button>
       </div>

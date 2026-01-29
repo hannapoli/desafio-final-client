@@ -123,9 +123,9 @@ export const ConsultantReports = () => {
   };
 
   return (
-    <section className=''>
+    <section className='page-container'>
       <div>
-        <h1 className='centeredText'>Mis reportes</h1>
+        <h1 className='centeredText text-green'>Mis reportes</h1>
         {loading && <p>Cargando...</p>}
         {error && <p className='errorMessage'>{error}</p>}
 
@@ -140,7 +140,7 @@ export const ConsultantReports = () => {
               </option>
             ))}
           </select> 
-          <button type='submit' disabled={!selectedProducer}>Ver reportes</button>
+          <button className="login-button"type='submit' disabled={!selectedProducer}>Ver reportes</button>
         </form>
 
         <ul className='report-list'>

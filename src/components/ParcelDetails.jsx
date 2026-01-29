@@ -406,7 +406,7 @@ export const ParcelDetails = () => {
         {infoMeteo && <InfoMeteo p={parcel} infoMeteo={infoMeteo} />}
       </article>
 
-      <article>
+      <article className="visor-reporte">
 
         <button
           className="login-button"
@@ -488,7 +488,7 @@ export const ParcelDetails = () => {
           </div>
         </ViewerPopup>
           {isProducer && (
-          <button className="delete-btn" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar Parcela</button>)}
+          <button className="eliminar-parcela" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar parcela</button>)}
   </article>
 
 

@@ -49,9 +49,6 @@
 
 }
 
-.btn-container .login-button {
- max-width: 500px; 
-}
 
 .btn-container {
   display: flex; 
