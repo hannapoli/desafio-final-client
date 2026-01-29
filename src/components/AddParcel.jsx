@@ -69,7 +69,7 @@ export const AddParcel = ({polygon}) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
       const {bboxCenter, addParcelApi, createParcel, saveAlertsByParcel} = userMap()
-      const { polygons, setPolygons, addParcel, addPolygon, center,setCenter} = useContext(MapsContext);
+      const {addParcel, addPolygon, setParcel} = useContext(MapsContext);
       const {user} = useContext(AuthContext)
 
       const [errorCrear, setErrorCrear] = useState(null)
@@ -88,17 +88,18 @@ export const AddParcel = ({polygon}) => {
         try {
           const crear = await addParcelApi(nombreparcela, polygon);
     
-          if (crear.res === 'error') {
-            setError(crear.info);
-            console.log({error})
-            return;
-          }
+          // if (crear?.res === 'error') {
+          // console.log('Error al crear parcela en auravant: ', crear.res)
+          //   setError(crear.info);
+          // setErrorCrear('Error al crear Parcela');
+          //   return;
+          // }
     
           const polygonClosed = [...polygon, polygon[0]];
         
           const respuesta = await createParcel(
-            crear.id_lote,
-            // 89983433,
+            // crear.id_lote,
+            8933,
             user.uid,
             nombreparcela,
             id_cultivo,
@@ -106,15 +107,18 @@ export const AddParcel = ({polygon}) => {
             imagen
           );
           if (!respuesta.ok) {
-            setErrorCrear(respuesta.msg);
+            console.log('Error al crear parcela en la base de datos: ', respuesta.msg)
+            setErrorCrear('Error al crear Parcela');
+
           } else {
-            await saveAlertsByParcel(crear.id_cultivo)
+            // await saveAlertsByParcel(crear.id_cultivo)
             
             setErrorCrear(null);
             setCreatedParcel(true);
             addPolygon(polygon)
             // setCenter(bboxCenter(polygons))
             addParcel(respuesta.data);
+            setParcel(respuesta.data)
           }
 
     
@@ -123,7 +127,7 @@ export const AddParcel = ({polygon}) => {
     
         } catch (error) {
           console.error(error);
-          setErrorCrear(error.message);
+          setErrorCrear('Error al crear Parcela');
         }
       };
     

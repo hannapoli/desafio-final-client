@@ -60,7 +60,7 @@ export const MapsProvider = ({ children }) => {
     )
     setPolygons(prev => //prev es la versión már reciente del estado
       prev.filter(pol => pol !== parcel.coordinates_parcel))
-    if (polygons.length) bboxCenter()
+    // if (polygons.length) bboxCenter(polygons)
   }
 
 
@@ -102,7 +102,7 @@ export const MapsProvider = ({ children }) => {
       addParcel,
       deleteParcel,
       bboxCenter,
-      center,
+      center,setCenter,
       geoPng,
       havePolygons,
       alerts,

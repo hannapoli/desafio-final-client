@@ -10,6 +10,7 @@ import { userMap } from '../../hooks/userMap';
 import { AddParcel } from '../AddParcel';
 import '../Map.css'
 import { MapClickHandler } from './MapClickHandler';
+import { FitAllPolygons } from './FitAllPolygons';
 
 export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
@@ -19,10 +20,11 @@ export default function MapView({ alertas }) {
   const [unmark, setUnmark] = useState(null)
   
   const {bboxCenter, addParcelApi, createParcel} = userMap()
-  const { polygons, addParcel, addPolygon, center, setParcel } = useContext(MapsContext);
+  const { polygons, addParcel, addPolygon, center, setCenter, setParcel, setSelectedParcelId, setInfoMeteo } = useContext(MapsContext);
   const {user} = useContext(AuthContext)
 
   
+
   const tileLayers = {
     osm: {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -49,6 +51,13 @@ export default function MapView({ alertas }) {
     },
   };
 
+  
+
+
+  useEffect(()=> {
+    setCenter(bboxCenter(polygons))
+  
+  }, [polygons])
   // console.log({alertas}, `alertas`)
 
   const cornIcon = L.divIcon({
@@ -62,6 +71,7 @@ export default function MapView({ alertas }) {
     setParcel(null);
     setSelectedParcelId(null);
     setInfoMeteo(null);
+    // setPopupPosition(null)
   };
 
 
@@ -144,6 +154,7 @@ export default function MapView({ alertas }) {
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
       {/* <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
       <ClickablePolygon alertas={alertas}  />
+      <FitAllPolygons polygons={polygons} />
     </MapContainer>
      {/* <pre>{JSON.stringify(polygon, null, 2)}</pre>  */}
      </div>

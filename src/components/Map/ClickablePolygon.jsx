@@ -13,32 +13,26 @@ export const  ClickablePolygon = ()  => {
   const [healthData, setHealthData] = useState(null);
   const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
 
-  
-
- 
-
-  
 
   const map = useMap();
 
-  // console.log({parcels}, 'desde clickable polygon')
-  
-//   const parcela = parcels.filter(p => JSON.parse(p.coordinates_parcel)  == positions )
-//  console.log({parcela}, 'on clickable polygon')
 
   // CÁLCULO DE LA CAPA ACTIVA (Fuera de cualquier función para que el render la vea)
   const activeLayer = healthData?.layers?.find(l => l.type === selectedLayerType);
 
+  const zoomToFeature = (e) => {
+        const bounds = e.target.getBounds();
+        map.fitBounds(bounds, {
+          padding: [5, 5],
+          maxZoom: 30,
+          animate: true,
+        });
+      };
+
+
  const handleClick = async(e, p) => {
  console.log('Entra en el hadleClick')
-    const zoomToFeature = (e) => {
-      const bounds = e.target.getBounds();
-      map.fitBounds(bounds, {
-        padding: [5, 5],
-        maxZoom: 25,
-        animate: true,
-      });
-    };
+   
     zoomToFeature(e)
 
     setSelectedParcelId(p.uid_parcel);

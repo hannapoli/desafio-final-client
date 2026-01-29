@@ -266,8 +266,8 @@ export const ParcelDetails = () => {
   const eliminarParcela = async(p) => {
       if(!p.uid_parcel) return
       try {
-        const resp1 = await deleteParcelApi(p.uid_parcel)
-        // const resp1= {res: 'ok'}
+        // const resp1 = await deleteParcelApi(p.uid_parcel)
+        const resp1= {res: 'ok'}
         if(resp1.res === 'Error'){
           setErrorEliminar(resp1.info)}
         if(!resp1){
@@ -293,7 +293,7 @@ export const ParcelDetails = () => {
     }
     
 
-  if (!alert) {
+  if (!parcel) {
     return <p>Cargando detalles de la parcela...</p>;
   }
 
@@ -302,20 +302,20 @@ export const ParcelDetails = () => {
       <h2 className="parcel-title">{parcel.name_parcel}</h2>
 
       <article className="article-card">
-        {alert.name_user && <p>👤 Productor: {alert.name_user}</p>}
+        {alert?.name_user && <p>👤 Productor: {alert.name_user}</p>}
         {crop && <p className="product-info">Producto: {crop.nombre_cultivo}</p>}
         {crop && <p className="product-info">Variedad: {crop.nombre_variedad}</p>}
 
-        {alert.alerta_plaga && <p className="alert alert-plaga">⚠️ Alerta de plagas: {alert.alerta_plaga}</p>}
-        {alert.alerta_inundacion && <p className="alert alert-inundacion">⚠️ Alerta de inundación: {alert.alerta_inundacion}</p>}
-        {alert.alerta_helada && <p className="alert alert-helada">⚠️ Alerta de helada: {alert.alerta_helada}</p>}
-        {alert.alerta_sequia && <p className="alert alert-sequia">⚠️ Alerta de sequía: {alert.alerta_sequia}</p>}
+        {alert?.alerta_plaga && <p className="alert alert-plaga">⚠️ Alerta de plagas: {alert.alerta_plaga}</p>}
+        {alert?.alerta_inundacion && <p className="alert alert-inundacion">⚠️ Alerta de inundación: {alert.alerta_inundacion}</p>}
+        {alert?.alerta_helada && <p className="alert alert-helada">⚠️ Alerta de helada: {alert.alerta_helada}</p>}
+        {alert?.alerta_sequia && <p className="alert alert-sequia">⚠️ Alerta de sequía: {alert.alerta_sequia}</p>}
       </article>
 
-      <article className="article-card" id="meteo-section">
+      {infoMeteo && <article className="article-card" id="meteo-section">
         <h3 className="meteo-title">Información meteorológica</h3>
-        {infoMeteo && <InfoMeteo p={parcel} infoMeteo={infoMeteo} />}
-      </article>
+        <InfoMeteo p={parcel} infoMeteo={infoMeteo} />
+      </article>}
 
       <article>
 
