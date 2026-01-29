@@ -62,6 +62,8 @@ export const MapsProvider = ({ children }) => {
     setPolygons(prev => //prev es la versión már reciente del estado
       prev.filter(pol => pol !== parcel.coordinates_parcel))
     // if (polygons.length) bboxCenter(polygons)
+    setAlerts(alert => alert.uid_parcel !== parcel.uid_parcel)
+    setAlertas(alert => alert.uid_parcel !== parcel.uid_parcel)
   }
 
 
