@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/useAuth'
 
 
 export const ParcelDetails = () => {
-  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
+  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, setSelectedParcelId, deleteParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
   const { fetchData, loading } = useFetch()
   const { user } = useAuth();
@@ -166,7 +166,7 @@ export const ParcelDetails = () => {
 
   const handleOpenPopup = () => {
     if (!selectedParcelId) {
-      alert('Por favor, selecciona una parcela en el mapa primero');
+      window.alert('Por favor, selecciona una parcela en el mapa primero');
       return;
     }
     setIsPopupOpen(true);

@@ -1,7 +1,6 @@
 import './Legend.css'
 
 export const Legend = ({ data }) => {
-  if (!data || !data.palette || !Array.isArray(data.palette)) return null;
   return (
     <div className='legend'>
       <strong>{data.title || 'Leyenda'}</strong>
