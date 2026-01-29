@@ -132,29 +132,28 @@ const getAllAlertsByUser = useCallback(async (email) => {
       const saveAlertsByParcel = async (uid_parcel) => {
         if(!uid_parcel) return
         try {
-            
-                    const body = {uid_parcela: uid_parcel}
-                    // console.log('llamada')
-                    const response = await fetchData(
-                    
-                      `${apiDataUrl}/alertas_tiempo_parcela`,
-                      'POST',
-                      body,
-                      null
-                    );
-              if(response === 'OK') {
-                console.log('Se han guardado las alertas de la parcela creada:', response);
-                    return response
-              } else {
-                setError("No Se ha podido guardar las alertas de la parcela creada")
-                console.log('Problemas en guardar alertas en la parcela creada')
-                return 
-              }
-                    
-                    
-                } catch (error) {
-                  console.log(error, 'Error al guardar las  alertas de las parcela')
-                    setError('Error al guardar las  alertas de las parcela')        }
+          console.log('LLAMANDO A LA TIERRA, ESPERANDO CONTESTACIÓN <==============================>');
+          const body = {uid_parcela: uid_parcel}
+          // console.log('llamada')
+          const response = await fetchData(
+          
+            `${apiDataUrl}/alertas_tiempo_parcela`,
+            'POST',
+            body,
+            null
+          );
+          if(response === 'OK') {
+            console.log('Se han guardado las alertas de la parcela creada:', response);
+            console.log('RESPUESTA CORRECETA PABLO <==============================>');
+                return response
+          } else {
+            setError("No Se ha podido guardar las alertas de la parcela creada")
+            console.log('Problemas en guardar alertas en la parcela creada')
+            return 
+          }
+            } catch (error) {
+              console.log(error, 'Error al guardar las  alertas de las parcela')
+                setError('Error al guardar las  alertas de las parcela')        }
       }
 
     
@@ -253,10 +252,7 @@ const getAllAlertsByUser = useCallback(async (email) => {
                   return;
                  }                   
             
-            const response = await fetchData(`${apiDataUrl}/eliminarlote?lote=${uid_parcel}`)
-
-              
-                    
+            const response = await fetchData(`${apiDataUrl}/eliminarlote?lote=${uid_parcel}`)          
                   console.log('llamada a la api para eliminar parcela', response);
                   return response
 

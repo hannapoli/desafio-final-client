@@ -111,8 +111,10 @@ export const AddParcel = ({polygon}) => {
             setErrorCrear('Error al crear Parcela');
 
           } else {
+            console.log("saveAlertsByParcel <========================================0>")
             await saveAlertsByParcel(crear.id_cultivo)
-            
+            console.log("saveAlertsByParcel <========================================1>")
+
             setErrorCrear(null);
             setCreatedParcel(true);
             addPolygon(polygon)
