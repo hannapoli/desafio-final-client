@@ -63,7 +63,7 @@ export const  ClickablePolygon = ()  => {
   
 useEffect(() => {
     if (!parcel) {
-      setHealthData(null);
+      // setHealthData(null);
       setSelectedLayerType('NDVI');
     }
   }, [parcel]);

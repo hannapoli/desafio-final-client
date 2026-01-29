@@ -152,7 +152,6 @@ export default function MapView({ alertas }) {
     
 
       <LayerSwitcherControl setCurrentLayer={setCurrentLayer} />
-      {/* <ClickablePolygon positions={polygons} onClick={() => setUnmark(alert.uid_parcel)} /> */}
       <ClickablePolygon alertas={alertas}  />
       <FitAllPolygons polygons={polygons} />
     </MapContainer>
