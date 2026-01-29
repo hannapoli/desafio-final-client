@@ -2,7 +2,6 @@
 
 import React, { useContext, useMemo } from 'react';
 import './VegetationIndex.css';
-import { MapsContext } from '../../contexts/MapsContext';
 
 /**
  * VegetationIndex component.

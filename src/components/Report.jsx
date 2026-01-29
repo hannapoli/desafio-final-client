@@ -31,19 +31,6 @@ export const Report = ({
   return (
     <form onSubmit={onSubmit} className='report-form'>
       <div className='form-group'>
-        <label htmlFor='email_creator'>Email de remitente:</label>
-        <input
-          type='email'
-          name='email_creator'
-          id='email_creator'
-          value={reportData.email_creator}
-          onChange={onChange}
-          readOnly={disabledFields.email_creator ?? true}
-          noValidate
-        />
-      </div>
-
-      <div className='form-group'>
         <label htmlFor='email_receiver'>Email de receptor:</label>
         <input
           type='email'

@@ -13,8 +13,6 @@ export const MapsProvider = ({ children }) => {
   const [vegetation, setVegetation] = useState(null)
   const [crop, setCrop] = useState(null)
   const [selectedParcelId, setSelectedParcelId] = useState(null)
-    const [selectedLayerType, setSelectedLayerType] = useState('NDVI');
-      const [healthData, setHealthData] = useState(null);
       const [alertas, setAlertas] = useState({})
 
 
@@ -126,10 +124,6 @@ export const MapsProvider = ({ children }) => {
       setVegetation,
       selectedParcelId,
       setSelectedParcelId,
-      selectedLayerType,
-      setSelectedLayerType,
-      healthData,
-      setHealthData,
       alertas, setAlertas
     }}>
       {children}

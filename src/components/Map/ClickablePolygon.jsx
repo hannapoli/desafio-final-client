@@ -63,13 +63,11 @@ export const  ClickablePolygon = ()  => {
  console.log('Entra en el hadleClick')
    
     zoomToFeature(e)
-
-    setSelectedParcelId(p.uid_parcel);
-
     const data = await getInfoMeteoByParcel(p.uid_parcel)
     console.log({data})
     setInfoMeteo(data.data)
-    setParcel(p)
+    setParcel(p);
+    setSelectedParcelId(p.uid_parcel);
     overLay(p.uid_parcel)
     // setUnmark(p.uid_parcel)
     // console.log({p},'desde el polígono')
@@ -105,7 +103,7 @@ export const  ClickablePolygon = ()  => {
  */
 useEffect(() => {
     if (!parcel) {
-      setHealthData(null);
+      // setHealthData(null);
       setSelectedLayerType('NDVI');
     }
   }, [parcel]);
