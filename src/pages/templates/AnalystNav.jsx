@@ -3,6 +3,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
+/**
+ * AnalystNav component.
+ *
+ * Barra de navegación específica del rol Analista.
+ * Permite el acceso a las distintas secciones
+ * de análisis y dashboards.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const AnaystNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();

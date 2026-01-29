@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/ProducerReports.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/ProducerReports.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { auth } from '../firebase/firebaseConfig';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import { useFetch } from '../hooks/useFetch';
+import { Report } from '../components/Report';
+import {normalizeFileData} from '../helpers/normalizeFileData';
+import '../components/List.css';
+import { Disease } from '../components/Disease';
+
+/**
+ * ProducerReports component.
+ *
+ * Página del rol Productor dedicada a la
+ * visualización y gestión de reportes propios.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
+export const ProducerReports = () => {
+    const { user } = useAuth();
+    const { fetchData, loading, error, setError } = useFetch();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const diseaseUrl = import.meta.env.VITE_API_DISEASE_URL;
+    const [disease, setDisease] = useState(null);
+    const [showDiseasePopup, setShowDiseasePopup] = useState(false);
+    const [reports, setReports] = useState([]);
+    const [editReport, setEditReport] = useState(null);
+    const [showEditPopup, setShowEditPopup] = useState(false);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+    const [submitLoading, setSubmitLoading] = useState(false);
+    const [popupError, setPopupError] = useState(null);
+
+    useEffect(() => {
+        const fetchReports = async () => {
+            if (!user?.email) return;
+            try {
+                const token = user.token || await auth.currentUser?.getIdToken();
+                const response = await fetchData(
+                    `${backendUrl}/producer/reports/getAll/${user.email}`,
+                    'GET',
+                    null,
+                    token
+                );
+                const reportsData = Array.isArray(response.data) ? response.data : response.data ? [response.data] : [];
+
+                const normalizedReports = reportsData.map(report => ({
+                    ...report,
+                    attached: normalizeFileData(report.attached)
+                }));
+
+                setReports(normalizedReports);
+            } catch (err) {
+                setError('Error al obtener los reportes');
+            }
+        };
+        fetchReports();
+    }, [user, backendUrl, fetchData, setError]);
+
+    const handleEdit = (report) => {
+        setEditReport({ ...report });
+        setShowEditPopup(true);
+        setPopupError(null);
+    };
+
+    const handleDelete = (id) => {
+        setDeleteId(id);
+        setShowDeletePopup(true);
+        setPopupError(null);
+    };
+
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditReport((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleEditFileChange = (e) => {
+        const files = e.target.files;
+        setEditReport((prev) => ({ ...prev, attached: files &amp;&amp; files.length > 0 ? Array.from(files) : null }));
+    };
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitLoading(true);
+        setPopupError(null);
+        try {
+            const token = user.token || await auth.currentUser?.getIdToken();
+            const formData = new FormData();
+            formData.append('email_creator', editReport.email_creator);
+            formData.append('email_receiver', editReport.email_receiver);
+            formData.append('content_message', editReport.content_message);
+            if (editReport.attached) {
+                if (Array.isArray(editReport.attached)) {
+                    editReport.attached.forEach((file) => {
+                        if (file instanceof File) {
+                            formData.append('attached', file);
+                        }
+                    });
+                } else if (editReport.attached instanceof File) {
+                    formData.append('attached', editReport.attached);
+                }
+            }
+            const response = await fetch(
+                `${backendUrl}/producer/reports/update/${editReport.uid_report}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                }
+            );
+            if (!response.ok) throw new Error('Error al modificar el reporte');
+            const result = await response.json();
+
+            const normalizedReport = {
+                ...result.data,
+                attached: normalizeFileData(result.data.attached)
+            };
+
+            setShowEditPopup(false);
+            setReports((prev) => prev.map(r => r.uid_report === editReport.uid_report ? normalizedReport : r));
+        } catch (err) {
+            setPopupError('Error al modificar el reporte.');
+        } finally {
+            setSubmitLoading(false);
+        }
+    };
+
+    const confirmDelete = async () => {
+        setSubmitLoading(true);
+        setPopupError(null);
+        try {
+            const token = user.token || await auth.currentUser?.getIdToken();
+            const response = await fetch(
+                `${backendUrl}/producer/reports/delete/${deleteId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            if (!response.ok) throw new Error('Error al eliminar el reporte');
+            setShowDeletePopup(false);
+            setReports((prev) => prev.filter(r => r.uid_report !== deleteId));
+        } catch (err) {
+            setPopupError('Error al eliminar el reporte.');
+        } finally {
+            setSubmitLoading(false);
+        }
+    };
+
+  const handleDownload = async (id) => {
+    try {
+      const token = user.token || await auth.currentUser?.getIdToken();
+        const res = await fetch(
+            `${backendUrl}/producer/reports/download/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (!res.ok) {
+            throw new Error(data.msg);
+        }
+        
+        const blob = await res.blob();// Convertimos la respuesta en un Blob
+        const url = window.URL.createObjectURL(blob); // Creamos una URL temporal
+        const a = document.createElement("a");// Creamos un enlace para descargar el pdf de la url que hemos creado
+        a.href = url;
+        a.download = `reporte_${id}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();// Borramos en elnace una vez lo hemos usado para descargar el pdf
+        window.URL.revokeObjectURL(url);
+        // navigate('/worker/dashboard');
+
+    } catch (error) {
+        console.log("ERROR:", error)
+        alert(error);
+    }
+  };
+
+  const handleDisease = async (url) => {
+    try {
+      const res = await fetchData(`${diseaseUrl}/analyze`,'POST', { image_url: url })
+      // SE HAN ACABADO LOS TOKEN PARA LAS LLAMADAS A LA API EXTERNA ---> ESTO ES SIMULANDO DATOS
+      // const mockDiseaseResponse = {
+      //   health_assessment: {
+      //     is_healthy: false,
+      //     healthy_probability: 0.0017,
+      //     diseases: [
+      //       {
+      //         name: "Mildiu",
+      //         probability: 0.87,
+      //       },
+      //       {
+      //         name: "Oídio",
+      //         probability: 0.62,
+      //       },
+      //     ],
+      //   },
+      //   meta: {
+      //     geo_mode: "global_demo",
+      //     is_plant_probability: 0.9535,
+      //     scan_date: null,
+      //   },
+      //   taxonomy: {
+      //     scientific_name: "Vitis vinifera",
+      //     probability: 0.0439,
+      //     description: "Sin descripción disponible.",
+      //     common_names: [],
+      //     wiki_url: null,
+      //     image_refs: [
+      //       "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/d0c/d670e63c9eb1aa8401224a4e79bcd9d90943b.jpeg",
+      //       "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/963/ebb29e55d122d69ac931e529820aedaa58667.jpeg",
+      //     ],
+      //     taxonomy_tree: {},
+      //   },
+      // };
+      console.log(res)
+      setDisease(res)
+      setShowDiseasePopup(true);
+    } catch{
+      console.log("ERROR:", error)
+      alert(error);
+    }
+  }
+
+  const sortedReports = [...reports].sort((a, b) => {
+    if (!a.created_at || !b.created_at) return 0;
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
+    return (
+        &lt;section>
+            &lt;h1 className='centeredText'>Mis reportes&lt;/h1>
+            {loading &amp;&amp; &lt;p>Cargando reportes...&lt;/p>}
+            {error &amp;&amp; &lt;p className='errorMessage'>{error}&lt;/p>}
+            &lt;ul className='report-list'>
+                {sortedReports.map((report) => (
+                    &lt;li className='report-list-item' key={report.uid_report}>
+                        &lt;div>Parcela: {report.uid_parcel}&lt;/div>
+                        &lt;div>Para: {report.email_receiver}&lt;/div>
+                        &lt;div>Mensaje: {report.content_message}&lt;/div>
+                        {report.attached &amp;&amp; report.attached.length > 0 &amp;&amp; (
+                            &lt;div>Archivos adjuntos ({report.attached.length}):
+                                &lt;ul>
+                                    {report.attached.map((fileUrl, index) => (
+                                        &lt;li key={index}>
+                                            &lt;a href={fileUrl} target='_blank' rel='noopener noreferrer'>
+                                                Archivo {index + 1}
+                                            &lt;/a>
+                                            &lt;button className='api-btn' onClick={() => handleDisease (fileUrl)}>Prediccion enfermedades&lt;/button>
+                                        &lt;/li>
+                                    ))}
+                                &lt;/ul>
+                            &lt;/div>
+                        )}
+                        &lt;div className='report-actions'>
+                            &lt;button className='edit-btn' onClick={() => handleEdit(report)}>Modificar&lt;/button>
+                            &lt;button className='delete-btn' onClick={() => handleDelete(report.uid_report)}>Eliminar&lt;/button>
+                            &lt;button className='download-btn' onClick={() => handleDownload(report.uid_report)}>Descargar&lt;/button>
+                        &lt;/div>
+                    &lt;/li>
+                ))}
+            &lt;/ul>
+
+            {/* Edit Popup */}
+            {showEditPopup &amp;&amp; (
+                &lt;div className='popup-overlay' onClick={e => e.target === e.currentTarget &amp;&amp; setShowEditPopup(false)}>
+                    &lt;div className='popup-content'>
+                        &lt;button className='popup-close' onClick={() => setShowEditPopup(false)}>x&lt;/button>
+                        &lt;h2>Modificar reporte&lt;/h2>
+                        {popupError &amp;&amp; &lt;p className='errorMessage'>{popupError}&lt;/p>}
+                        &lt;Report
+                            reportData={editReport}
+                            onChange={handleEditChange}
+                            onFileChange={handleEditFileChange}
+                            onSubmit={handleEditSubmit}
+                            submitLoading={submitLoading}
+                            submitLabel='Guardar Cambios'
+                            disabledFields={{ email_creator: true }}
+                        />
+                    &lt;/div>
+                &lt;/div>
+            )}
+
+            {/* Delete Popup */}
+            {showDeletePopup &amp;&amp; (
+                &lt;div className='popup-overlay' onClick={e => e.target === e.currentTarget &amp;&amp; setShowDeletePopup(false)}>
+                    &lt;div className='popup-content'>
+                        &lt;button className='popup-close' onClick={() => setShowDeletePopup(false)}>x&lt;/button>
+                        &lt;h2>¿Eliminar reporte?&lt;/h2>
+                        {popupError &amp;&amp; &lt;p className='errorMessage'>{popupError}&lt;/p>}
+                        &lt;div className='flexContainer'>
+                            &lt;button className='api-btn' onClick={confirmDelete} disabled={submitLoading}>Sí, eliminar&lt;/button>
+                            &lt;button onClick={() => setShowDeletePopup(false)} disabled={submitLoading}>Cancelar&lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            )}
+            {showDiseasePopup &amp;&amp; disease &amp;&amp; (
+            &lt;Disease setShowDiseasePopup= {setShowDiseasePopup} disease={disease} />
+            )}
+        &lt;/section>
+    );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contexts_AuthProvider.html">contexts/AuthProvider</a></li><li><a href="module-helpers_firebaseErrorMessages.html">helpers/firebaseErrorMessages</a></li><li><a href="module-hooks_useFetch.html">hooks/useFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddParcel">AddParcel</a></li><li><a href="global.html#AdminDashboard">AdminDashboard</a></li><li><a href="global.html#AdminLayout">AdminLayout</a></li><li><a href="global.html#AdminNav">AdminNav</a></li><li><a href="global.html#AdminUserEdit">AdminUserEdit</a></li><li><a href="global.html#AdminUsers">AdminUsers</a></li><li><a href="global.html#AnalystDashboard">AnalystDashboard</a></li><li><a href="global.html#AnalystLayout">AnalystLayout</a></li><li><a href="global.html#AnaystNav">AnaystNav</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthLayout">AuthLayout</a></li><li><a href="global.html#ChatBot">ChatBot</a></li><li><a href="global.html#ClickablePolygon">ClickablePolygon</a></li><li><a href="global.html#ConsultantDashboard">ConsultantDashboard</a></li><li><a href="global.html#ConsultantFields">ConsultantFields</a></li><li><a href="global.html#ConsultantLayout">ConsultantLayout</a></li><li><a href="global.html#ConsultantNav">ConsultantNav</a></li><li><a href="global.html#ConsultantReports">ConsultantReports</a></li><li><a href="global.html#ConsultantSeeProducerFields">ConsultantSeeProducerFields</a></li><li><a href="global.html#DirectorConsultants">DirectorConsultants</a></li><li><a href="global.html#DirectorDashboard">DirectorDashboard</a></li><li><a href="global.html#DirectorFields">DirectorFields</a></li><li><a href="global.html#DirectorLayout">DirectorLayout</a></li><li><a href="global.html#DirectorNav">DirectorNav</a></li><li><a href="global.html#DirectorReports">DirectorReports</a></li><li><a href="global.html#Disease">Disease</a></li><li><a href="global.html#DistributorDashboard">DistributorDashboard</a></li><li><a href="global.html#DistributorLayout">DistributorLayout</a></li><li><a href="global.html#DistributorNav">DistributorNav</a></li><li><a href="global.html#FieldInfo">FieldInfo</a></li><li><a href="global.html#FilterParcelForm">FilterParcelForm</a></li><li><a href="global.html#Legend">Legend</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MapsContext">MapsContext</a></li><li><a href="global.html#MenuCard">MenuCard</a></li><li><a href="global.html#NavContext">NavContext</a></li><li><a href="global.html#ParcelDetails">ParcelDetails</a></li><li><a href="global.html#PrivateRoutes">PrivateRoutes</a></li><li><a href="global.html#ProducerDashboard">ProducerDashboard</a></li><li><a href="global.html#ProducerLayout">ProducerLayout</a></li><li><a href="global.html#ProducerNav">ProducerNav</a></li><li><a href="global.html#ProducerReports">ProducerReports</a></li><li><a href="global.html#ProducerSeeFields">ProducerSeeFields</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#VegetationIndex">VegetationIndex</a></li><li><a href="global.html#ViewerParcelProducer">ViewerParcelProducer</a></li><li><a href="global.html#ViewerPopup">ViewerPopup</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#normalizeFileData">normalizeFileData</a></li><li><a href="global.html#options">options</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useChatSocket">useChatSocket</a></li><li><a href="global.html#useNav">useNav</a></li><li><a href="global.html#userMap">userMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 29 2026 15:34:36 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

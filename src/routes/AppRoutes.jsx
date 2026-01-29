@@ -9,6 +9,18 @@ import { HomePage, DirectorConsultants, LoginPage, ConsultantFields, DirectorFie
 import { Chats } from '../components/Chats';
 import { PrivateRoutes } from './PrivateRoutes';
 
+
+/**
+ * Componente de configuración de rutas de la aplicación.
+ * 
+ * Gestiona la navegación principal dividiendo el acceso en tres secciones:
+ * - Zona pública para usuarios no autenticados.
+ * - Zona de autenticación para procesos de login y registro.
+ * - Zona privada protegida por roles específicos mediante el componente PrivateRoutes.
+ * 
+ * @component
+ * @returns {JSX.Element} Estructura de rutas y layouts de la aplicación.
+ */
 export const AppRoutes = () => {
   return (
     <Routes>

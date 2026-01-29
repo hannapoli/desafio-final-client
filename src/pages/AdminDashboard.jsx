@@ -4,6 +4,16 @@ import messageImg from '/mensajes.png';
 import usersImg from '/users.jpg';
 import usuarios from '/gestion-usuarios.png'
 
+/**
+ * AdminDashboard component.
+ *
+ * Página principal del panel de control del Administrador.
+ * Muestra una vista general del estado del sistema
+ * y accesos rápidos a las funciones administrativas.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 export const AdminDashboard = () => {
   return (
       <>

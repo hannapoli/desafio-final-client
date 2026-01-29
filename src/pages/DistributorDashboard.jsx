@@ -3,6 +3,17 @@ import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 import rutas from '/rutas-distribucion-agrosync.png'
 
+/**
+ * DistributorDashboard component.
+ *
+ * Panel principal del rol Distribuidor.
+ * Presenta información relevante sobre
+ * parcelas, productos y actividad asociada.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DistributorDashboard = () => {
   return (
     <>

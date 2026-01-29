@@ -4,6 +4,21 @@ import React, { useContext, useMemo } from 'react';
 import './VegetationIndex.css';
 import { MapsContext } from '../../contexts/MapsContext';
 
+/**
+ * VegetationIndex component.
+ *
+ * Muestra indicadores de salud vegetal (NDVI, GNDVI, NDWI, SAVI)
+ * en formato de tarjetas visuales, utilizando escalas de color,
+ * etiquetas descriptivas y barras de progreso.
+ *
+ * Cada índice se interpreta a partir de un valor numérico y se
+ * traduce a un estado cualitativo (vigor, humedad, etc.).
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.vegetation - Valores de índices de vegetación
+ * @returns {JSX.Element|null} Grid de tarjetas de índices o null si no hay datos
+ */
 export const VegetationIndex = ({ vegetation }) => {
   
 
@@ -40,6 +55,15 @@ export const VegetationIndex = ({ vegetation }) => {
     { key: 'savi',  desc: 'Vigor vegetal corrigiendo influencia del suelo' }
   ];
 
+  /**
+   * Obtiene la información visual (color y etiqueta)
+   * correspondiente a un valor de índice.
+   *
+   * @function
+   * @param {string} key - Tipo de índice
+   * @param {number} value - Valor del índice
+   * @returns {{ v: number, color: string, label: string }}
+   */
   const getInfo = (key, value) => {
     const palette = legends[key] || legends.ndvi;
     return palette.reduce((prev, curr) =>
@@ -47,6 +71,15 @@ export const VegetationIndex = ({ vegetation }) => {
     );
   };
 
+  /**
+   * Calcula el porcentaje de representación visual
+   * del valor del índice.
+   *
+   * @function
+   * @param {string} key - Tipo de índice
+   * @param {number} value - Valor del índice
+   * @returns {number} Porcentaje entre 0 y 100
+   */
   const getPercentage = (key, value) => {
     if (key === 'ndwi') return ((value + 1) / 2) * 100;
     return Math.min(Math.max(value * 100, 0), 100);

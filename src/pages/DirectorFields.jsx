@@ -13,6 +13,16 @@ import { PopUp } from '../components/PopUp';
 import './ProducerSeeFields.css';
 import { VegetationIndex } from '../components/Map/VegetationIndex';
 
+/**
+ * DirectorFields component.
+ *
+ * Vista del rol Director para consultar
+ * parcelas y campos bajo su supervisión.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DirectorFields = () => {
   
   const { user } = useAuth();

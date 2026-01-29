@@ -2,6 +2,20 @@ import "aframe";
 import { useState } from "react";
 import "./ViewerParcelProducer.css";
 
+/**
+ * ViewerParcelProducer component.
+ *
+ * Visualizador 360º de parcelas agrícolas para productores.
+ * Muestra una imagen panorámica usando A-Frame e incluye hotspots
+ * interactivos que despliegan información contextual asociada a la imagen.
+ *
+ * @component
+ * @param {Object} props
+ * @param {string} props.imageUrl - URL de la imagen panorámica 360º
+ * @param {Array<{ id: string, position: string }>} props.points - Hotspots a renderizar dentro de la escena
+ * @param {Object} props.dataPhoto - Datos asociados a la imagen (cielo, suelo, cultivo)
+ * @returns {JSX.Element} Visor 360º de parcela con hotspots interactivos
+ */
 export const ViewerParcelProducer = ({ imageUrl, points, dataPhoto }) => {
     const [activeHotspot, setActiveHotspot] = useState(null);
     // Normalizar para que nunca sea null
@@ -13,6 +27,20 @@ export const ViewerParcelProducer = ({ imageUrl, points, dataPhoto }) => {
         crop: "dataCrop"
     }
 
+/**
+ * ViewerParcelProducer component.
+ *
+ * Visualizador 360º de parcelas agrícolas para productores.
+ * Muestra una imagen panorámica usando A-Frame e incluye hotspots
+ * interactivos que despliegan información contextual asociada a la imagen.
+ *
+ * @component
+ * @param {Object} props
+ * @param {string} props.imageUrl - URL de la imagen panorámica 360º
+ * @param {Array<{ id: string, position: string }>} props.points - Hotspots a renderizar dentro de la escena
+ * @param {Object} props.dataPhoto - Datos asociados a la imagen (cielo, suelo, cultivo)
+ * @returns {JSX.Element} Visor 360º de parcela con hotspots interactivos
+ */
     const handleHotspotClick = (id) => {
         const key = dataMap[id]; 
         const info = key && dataPhoto?.[key][0]; // primer objeto del array 

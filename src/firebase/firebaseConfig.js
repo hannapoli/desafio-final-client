@@ -1,6 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+/**
+ * Configuración e inicialización de Firebase.
+ * 
+ * Este módulo centraliza la conexión con los servicios de Firebase 
+ * utilizando las variables de entorno definidas en el proyecto.
+ */
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,

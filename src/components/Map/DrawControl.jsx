@@ -2,10 +2,26 @@ import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
 
+/**
+ * DrawControl component.
+ *
+ * Control de dibujo basado en Leaflet Draw.
+ * Permite al usuario crear polígonos en el mapa
+ * y notifica al componente padre cuando se completa el dibujo.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Function} props.onPolygonCreated - Callback ejecutado al crear un polígono
+ * @returns {null}
+ */
+
 export default function DrawControl({ onPolygonCreated }) {
   const map = useMap();
   
-
+  /**
+   * Inicializa el control de dibujo y registra el evento de creación
+   * de polígonos sobre el mapa.
+   */
   useEffect(() => {
     const drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);

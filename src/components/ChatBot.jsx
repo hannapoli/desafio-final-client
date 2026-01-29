@@ -2,6 +2,17 @@ import { useState } from 'react';
 import './ChatBot.css';
 import { useAuth } from '../hooks/useAuth';
 
+/**
+ * ChatBot component.
+ *
+ * Muestra un botón flotante que permite abrir un chat de soporte técnico
+ * dentro de un popup modal. El chat se integra mediante un iframe externo
+ * al que se le pasan datos del usuario autenticado (ID y rol) mediante
+ * query parameters.
+ *
+ * @component
+ * @returns {JSX.Element} Componente ChatBot renderizado
+ */
 export const ChatBot = () => {
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);

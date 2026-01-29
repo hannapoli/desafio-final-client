@@ -4,6 +4,16 @@ import {useFetch} from './useFetch'
 import { useAuth } from "./useAuth";
 import { auth } from '../firebase/firebaseConfig';
 
+/**
+ * Hook de servicios para la gestión de datos geoespaciales y meteorológicos.
+ * 
+ * Proporciona métodos para interactuar con la API de datos agrícolas (Sentinel),
+ * servicios meteorológicos y la persistencia de parcelas en el backend.
+ * 
+ * @function userMap
+ * @category Hooks
+ * @returns {Object} Funciones de gestión de parcelas, alertas y mapas de salud.
+ */
 export const userMap = () => { 
     const { user } = useAuth();
      const { fetchData, loading, error, setError } = useFetch();
@@ -11,7 +21,12 @@ export const userMap = () => {
      const apiDataUrl = import.meta.env.VITE_API_DATA_URL
     
 
-
+    /**
+     * Obtiene información meteorológica detallada de una parcela específica.
+     * @async
+     * @param {string} uid_parcel - Identificador único de la parcela.
+     * @returns {Promise<Object|undefined>} Datos meteorológicos o undefined si falla.
+     */
       const getInfoMeteoByParcel = async (uid_parcel) => {
         if(!uid_parcel) return
         try {
@@ -60,7 +75,12 @@ export const userMap = () => {
                     setError('Error al cargar los datos de la parcela')        }
       }
 
-    
+/**
+ * Obtiene todas las alertas climáticas asociadas a un usuario por su email.
+ * @async
+ * @param {string} email - Email del usuario.
+ * @returns {Promise<Array|undefined>} Listado de alertas activas.
+ */
 const getAllAlertsByUser = useCallback(async (email) => {
     if(!email) return;
     try {
@@ -128,7 +148,12 @@ const getAllAlertsByUser = useCallback(async (email) => {
       }
 
       
-
+    /**
+     * Solicita a la API externa el procesamiento de alertas para una nueva parcela.
+     * @async
+     * @param {string} uid_parcel - Identificador único de la parcela.
+     * @returns {Promise<string|undefined>} 'OK' si el proceso de guardado fue exitoso.
+     */
       const saveAlertsByParcel = async (uid_parcel) => {
         if(!uid_parcel) return
         try {
@@ -156,7 +181,12 @@ const getAllAlertsByUser = useCallback(async (email) => {
                 setError('Error al guardar las  alertas de las parcela')        }
       }
 
-    
+    /**
+     * Obtiene las URLs de las imágenes PNG (Sentinel-2) que representan la salud del campo.
+     * @async
+     * @param {string} uid_parcel - Identificador único de la parcela.
+     * @returns {Promise<Object|undefined>} Objeto con rutas a imágenes de índices de vegetación.
+     */
       const HealthMap = async (uid_parcel) => {
         if(!uid_parcel) return
         try {
@@ -174,7 +204,13 @@ const getAllAlertsByUser = useCallback(async (email) => {
                     setError('Error al cargar las  alertas de las parcela')    
                 }
       }
-
+    /**
+     * Registra una nueva parcela en la API de procesamiento de datos geoespaciales.
+     * @async
+     * @param {string} nombrecampo - Alias o nombre de la parcela.
+     * @param {Object} shape - Objeto GeoJSON o estructura de coordenadas de la parcela.
+     * @returns {Promise<Object|undefined>} Respuesta de confirmación de la API de datos.
+     */
       const addParcelApi = async (nombrecampo, shape) => {
         if(!nombrecampo || !shape) return
         try {
@@ -195,7 +231,19 @@ const getAllAlertsByUser = useCallback(async (email) => {
                     setError('Error al crear la parcela')    
                 }
       }
-
+    /**
+     * Persiste la creación de una parcela en el backend propio, incluyendo metadatos y fotografía.
+     * Utiliza `FormData` para el envío de archivos multimedia.
+     * 
+     * @async
+     * @param {string} uid_parcel - UID generado para la parcela.
+     * @param {string} uid_producer - UID del productor propietario.
+     * @param {string} name_parcel - Nombre descriptivo.
+     * @param {number} id_cultivo - ID del tipo de cultivo seleccionado.
+     * @param {Array} coordinates_parcel - Array de coordenadas geográficas.
+     * @param {File|null} photo - Archivo de imagen de la parcela.
+     * @returns {Promise<Object>} Respuesta del servidor backend.
+     */
       const createParcel = async (uid_parcel, uid_producer,name_parcel,id_cultivo,coordinates_parcel, photo) => {
         
           try {

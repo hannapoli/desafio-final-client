@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/DirectorConsultants.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/DirectorConsultants.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import { useFetch } from '../hooks/useFetch';
+import { auth } from '../firebase/firebaseConfig';
+import './DirectorConsultants.css'
+
+/**
+ * DirectorConsultants component.
+ *
+ * Página del rol Director para la gestión
+ * y visualización de consultores asociados.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
+export const DirectorConsultants = () => {
+    const { user } = useAuth();
+    const { fetchData, loading, error } = useFetch();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    const [productores, setProductores] = useState([]);
+    const [asesores, setAsesores] = useState([]);
+    const [selectedAsesor, setSelectedAsesor] = useState({});
+    const [assigning, setAssigning] = useState(false);
+    const [consultantsByProductor, setConsultantsByProductor] = useState({});
+    const [productoresParaContratar, setProductoresParaContratar] = useState([]);
+
+  /* ================= PRODUCTORES ================= */
+    const getProductores = async () => {
+        try {
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+
+            const token = await firebaseUser.getIdToken();
+            const response = await fetchData(
+            `${backendUrl}/director/productor/getAll/${user.uid}`,
+            'GET',
+            null,
+            token
+            );
+
+            setProductores(response.data || []);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        getProductores();
+    }, [backendUrl, fetchData, user]);
+
+  /* ================= ASESORES ================= */
+    useEffect(() => {
+        const getConsultants = async () => {
+        try {
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+
+            const token = await firebaseUser.getIdToken();
+            const response = await fetchData(
+            `${backendUrl}/director/consultant/getAll`,
+            'GET',
+            null,
+            token
+            );
+
+            setAsesores(response.data || []);
+        } catch (err) {
+            console.error('ERROR:', err);
+        }
+        };
+
+        getConsultants();
+    }, [backendUrl, fetchData]);
+
+    const getConsultantsByProductor = async (emailProductor) => {
+        try {
+            const token = await auth.currentUser.getIdToken();
+
+            const response = await fetchData(
+            `${backendUrl}/director/productor/getAllConsultants/${emailProductor}`,
+            'GET',
+            null,
+            token
+            );
+
+            setConsultantsByProductor((prev) => ({
+            ...prev,
+            [emailProductor]: response.data || [],
+            }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
+  /* ================= ASIGNAR ================= */
+    const handleAssign = async (emailProductor) => {
+        const emailConsultant = selectedAsesor[emailProductor];
+        if (!emailConsultant) {
+        alert('Selecciona un asesor');
+        return;
+        }
+
+        try {
+        setAssigning(true);
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
+
+        await fetchData(
+            `${backendUrl}/director/consultant/assign/${emailProductor}/${emailConsultant}`,
+            'POST',
+            null,
+            token
+        );
+        await getConsultantsByProductor(emailProductor);
+        alert('Asesor asignado correctamente');
+        } catch (err) {
+        console.error(err);
+        alert('Error al asignar asesor');
+        } finally {
+        setAssigning(false);
+        }
+    };
+
+  /* ================= DESASIGNAR ================= */
+    const handleUnassign = async (emailProductor, emailConsultant) => {
+        if (!window.confirm('¿Seguro que quieres desasignar este asesor?')) {
+            return;
+        }
+        try {
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+            const token = await firebaseUser.getIdToken();
+
+            await fetchData(
+            `${backendUrl}/director/consultant/unassign/${emailProductor}/${emailConsultant}`,
+            'DELETE', // o 'POST' si tu backend lo usa así
+            null,
+            token
+            );
+
+            await getConsultantsByProductor(emailProductor);
+        } catch (err) {
+            console.error(err);
+            alert('Error al desasignar asesor');
+        }
+    };
+
+/* ================= PRODUCTORES PARA CONTRATAR ================= */
+const handleContratar = async (emailProductor) => {
+        try {
+            const firebaseUser = auth.currentUser;
+            if (!firebaseUser) return;
+            const token = await firebaseUser.getIdToken();
+            await fetchData(
+            `${backendUrl}/director/productor/contratar/${emailProductor}`,
+            'POST',
+            null,
+            token
+            );
+
+            await getProductores();
+            await getProductoresParaContratar(); 
+        } catch (err) {
+            console.error(err);
+            alert('Error al contratar productor');
+        }
+    };
+
+    const handleDescontratar = async (emailProductor) => {
+        try {
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
+            await fetchData(
+            `${backendUrl}/director/productor/despedir/${emailProductor}`,
+            'DELETE',
+            null,
+            token
+            );
+            await getProductores();
+            await getProductoresParaContratar(); 
+        } catch (err) {
+            console.error(err);
+            alert('Error al descontratar productor');
+        }
+    };
+
+    const getProductoresParaContratar = async () => {
+        try {
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) return;
+        const token = await firebaseUser.getIdToken();
+        const response = await fetchData(
+            `${backendUrl}/director/productor/getAll`,
+            'GET',
+            null,
+            token
+        );
+
+        setProductoresParaContratar(response.data || []);
+        } catch (err) {
+        console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        getProductoresParaContratar();
+    }, [backendUrl, fetchData]);
+
+    useEffect(() => {
+        if (productores.length === 0) return;
+
+        productores.forEach((productor) => {
+            getConsultantsByProductor(productor.email_user);
+        });
+    }, [productores]);
+
+    const productoresParaContratarFiltrados = productoresParaContratar.filter((productor) => !productores.some(p => p.email_user === productor.email_user));
+
+  return (
+    &lt;>
+        {loading &amp;&amp; &lt;p>Cargando productores...&lt;/p>}
+        {error &amp;&amp; &lt;p>Error al cargar datos: {error}&lt;/p>}
+
+        &lt;section className="flexContainer CenteredContent">
+            &lt;h1 className="centeredText">Mis productores&lt;/h1>
+
+            {productores.length === 0 &amp;&amp; !loading &amp;&amp; (
+            &lt;p>No hay productores registrados&lt;/p>
+            )}
+
+            &lt;div className="consultantsGrid">
+            {productores.map((productor) => (
+                &lt;div
+                key={productor.email_user}
+                className="consultantCard"
+                >
+                &lt;h3>{productor.name_user}&lt;/h3>
+                &lt;p>{productor.email_user}&lt;/p>
+                {/* Botón para descontratar */}
+                &lt;button className="delete-btn" onClick={() => handleDescontratar(productor.email_user)}>
+                Eliminar
+                &lt;/button>
+
+                {/* SELECT ASESOR */}
+                &lt;select
+                    value={selectedAsesor[productor.email_user] || ''}
+                    onChange={(e) =>
+                    setSelectedAsesor({
+                        ...selectedAsesor,
+                        [productor.email_user]: e.target.value,
+                    })
+                    }
+                >
+                    &lt;option value="">Selecciona asesor&lt;/option>
+                    {asesores.map((asesor) => (
+                    &lt;option
+                        key={asesor.email_user}
+                        value={asesor.email_user}
+                    >
+                        {asesor.name_user} ({asesor.email_user})
+                    &lt;/option>
+                    ))}
+                &lt;/select>
+
+                &lt;button className="login-button"
+                    disabled={assigning} 
+                    onClick={() =>
+                    handleAssign(productor.email_user)
+                    }
+                >
+                    Asignar asesor
+                &lt;/button>
+                    {/* ASESORES ASIGNADOS */}
+                    &lt;div className="assignedConsultants">
+                    &lt;h4>Asesores asignados&lt;/h4>
+
+                    {consultantsByProductor[productor.email_user]?.length > 0 ? (
+                        &lt;ul>
+                            {consultantsByProductor[productor.email_user].map((asesor) => (
+                            &lt;li key={asesor.email_user} className="assignedConsultantItem">
+                                &lt;span>
+                                {asesor.name_user} ({asesor.email_user})
+                                &lt;/span>
+
+                                &lt;button
+                                className="unassignButton"
+                                onClick={() =>
+                                    handleUnassign(
+                                    productor.email_user,
+                                    asesor.email_user
+                                    )
+                                }
+                                >
+                                ✕
+                                &lt;/button>
+                            &lt;/li>
+                            ))}
+                        &lt;/ul>
+                    ) : (
+                        &lt;p className="emptyText">No tiene asesores asignados&lt;/p>
+                    )}
+                    &lt;/div>
+                &lt;/div>
+            ))}
+            &lt;/div>
+        &lt;/section>
+        &lt;section className="flexContainer CenteredContent">
+        &lt;h1 className="centeredText">Productores para contratar&lt;/h1>
+
+        {productoresParaContratarFiltrados.length === 0 &amp;&amp; &lt;p>No hay productores disponibles&lt;/p>}
+
+        &lt;div className="consultantsGrid">
+            {productoresParaContratarFiltrados.map((productor) => (
+            &lt;div key={productor.email_user} className="consultantCard">
+                &lt;h3>{productor.name_user}&lt;/h3>
+                &lt;p>{productor.email_user}&lt;/p>
+                &lt;button className="login-button" onClick={() => handleContratar(productor.email_user)}>
+                Contratar
+                &lt;/button>
+            &lt;/div>
+            ))}
+        &lt;/div>
+        &lt;/section>
+    &lt;/>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contexts_AuthProvider.html">contexts/AuthProvider</a></li><li><a href="module-helpers_firebaseErrorMessages.html">helpers/firebaseErrorMessages</a></li><li><a href="module-hooks_useFetch.html">hooks/useFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddParcel">AddParcel</a></li><li><a href="global.html#AdminDashboard">AdminDashboard</a></li><li><a href="global.html#AdminLayout">AdminLayout</a></li><li><a href="global.html#AdminNav">AdminNav</a></li><li><a href="global.html#AdminUserEdit">AdminUserEdit</a></li><li><a href="global.html#AdminUsers">AdminUsers</a></li><li><a href="global.html#AnalystDashboard">AnalystDashboard</a></li><li><a href="global.html#AnalystLayout">AnalystLayout</a></li><li><a href="global.html#AnaystNav">AnaystNav</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthLayout">AuthLayout</a></li><li><a href="global.html#ChatBot">ChatBot</a></li><li><a href="global.html#ClickablePolygon">ClickablePolygon</a></li><li><a href="global.html#ConsultantDashboard">ConsultantDashboard</a></li><li><a href="global.html#ConsultantFields">ConsultantFields</a></li><li><a href="global.html#ConsultantLayout">ConsultantLayout</a></li><li><a href="global.html#ConsultantNav">ConsultantNav</a></li><li><a href="global.html#ConsultantReports">ConsultantReports</a></li><li><a href="global.html#ConsultantSeeProducerFields">ConsultantSeeProducerFields</a></li><li><a href="global.html#DirectorConsultants">DirectorConsultants</a></li><li><a href="global.html#DirectorDashboard">DirectorDashboard</a></li><li><a href="global.html#DirectorFields">DirectorFields</a></li><li><a href="global.html#DirectorLayout">DirectorLayout</a></li><li><a href="global.html#DirectorNav">DirectorNav</a></li><li><a href="global.html#DirectorReports">DirectorReports</a></li><li><a href="global.html#Disease">Disease</a></li><li><a href="global.html#DistributorDashboard">DistributorDashboard</a></li><li><a href="global.html#DistributorLayout">DistributorLayout</a></li><li><a href="global.html#DistributorNav">DistributorNav</a></li><li><a href="global.html#FieldInfo">FieldInfo</a></li><li><a href="global.html#FilterParcelForm">FilterParcelForm</a></li><li><a href="global.html#Legend">Legend</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MapsContext">MapsContext</a></li><li><a href="global.html#MenuCard">MenuCard</a></li><li><a href="global.html#NavContext">NavContext</a></li><li><a href="global.html#ParcelDetails">ParcelDetails</a></li><li><a href="global.html#PrivateRoutes">PrivateRoutes</a></li><li><a href="global.html#ProducerDashboard">ProducerDashboard</a></li><li><a href="global.html#ProducerLayout">ProducerLayout</a></li><li><a href="global.html#ProducerNav">ProducerNav</a></li><li><a href="global.html#ProducerReports">ProducerReports</a></li><li><a href="global.html#ProducerSeeFields">ProducerSeeFields</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#VegetationIndex">VegetationIndex</a></li><li><a href="global.html#ViewerParcelProducer">ViewerParcelProducer</a></li><li><a href="global.html#ViewerPopup">ViewerPopup</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#normalizeFileData">normalizeFileData</a></li><li><a href="global.html#options">options</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useChatSocket">useChatSocket</a></li><li><a href="global.html#useNav">useNav</a></li><li><a href="global.html#userMap">userMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 29 2026 15:34:36 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

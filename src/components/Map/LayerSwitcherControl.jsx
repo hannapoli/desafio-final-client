@@ -4,10 +4,25 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "./LayerSwitcherControl.css";
 
+/**
+ * LayerSwitcherControl component.
+ *
+ * Control personalizado de Leaflet que permite
+ * cambiar la capa base del mapa.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Function} props.setCurrentLayer - Función para actualizar la capa base activa
+ * @returns {JSX.Element}
+ */
+
 export default function LayerSwitcherControl({ setCurrentLayer }) {
   const map = useMap();
   const controlRef = useRef(null);
 
+  /**
+   * Registra el control personalizado dentro del mapa Leaflet.
+   */
   useEffect(() => {
     if (!controlRef.current) return;
 

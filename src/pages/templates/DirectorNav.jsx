@@ -3,6 +3,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
+/**
+ * DirectorNav component.
+ *
+ * Barra de navegación específica del rol Director.
+ * Permite acceder a dashboards, consultores
+ * y reportes bajo su responsabilidad.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DirectorNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();

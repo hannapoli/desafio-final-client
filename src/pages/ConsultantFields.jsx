@@ -4,6 +4,16 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import { ConsultantSeeProducerFields } from './ConsultantSeeProducerFields';
 
+/**
+ * ConsultantFields component.
+ *
+ * Página del rol Consultor para la visualización
+ * y gestión de parcelas asignadas.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ConsultantFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();

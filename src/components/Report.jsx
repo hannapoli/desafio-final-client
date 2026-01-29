@@ -1,5 +1,24 @@
 import './Report.css';
 
+/**
+ * Report component.
+ *
+ * Formulario reutilizable para la creación de reportes.
+ * Recibe los datos del formulario y los handlers desde
+ * el componente padre, manteniendo este componente
+ * libre de lógica de negocio.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.reportData - Estado del formulario del reporte
+ * @param {Function} props.onChange - Handler para cambios en inputs de texto
+ * @param {Function} props.onFileChange - Handler para carga de archivos
+ * @param {Function} props.onSubmit - Handler de envío del formulario
+ * @param {boolean} props.submitLoading - Indica si el formulario está enviando datos
+ * @param {string} [props.submitLabel] - Texto del botón de envío
+ * @param {Object} [props.disabledFields] - Campos deshabilitados del formulario
+ * @returns {JSX.Element} Formulario de creación de reportes
+ */
 export const Report = ({
   reportData,
   onChange,
