@@ -4,6 +4,17 @@ import { useLocation } from 'react-router';
 import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 
+/**
+ * AdminUserEdit component.
+ *
+ * Página de edición de usuarios para el rol Administrador.
+ * Permite modificar información y permisos
+ * de un usuario concreto.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const AdminUserEdit = () => {
     const location = useLocation();
     const { user: foundUser } = location.state || {};

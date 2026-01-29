@@ -3,7 +3,14 @@ import Select from 'react-select';
 import { MapsContext } from '../contexts/MapsContext';
 import './FilterParcelForm.css'
 
-
+/**
+ * Opciones de cultivo disponibles para el filtro.
+ *
+ * Cada opción representa un tipo de cultivo identificado por un ID
+ * que debe coincidir con el campo `id_cultivo` de las parcelas.
+ *
+ * @type {Array<{ value: number, label: string }>}
+ */
 const options = [
   { value: 1, label: "Uva de Mesa - Crimson Seedless" },
   { value: 2, label: "Uva de Mesa - Thompson Seedless" },
@@ -63,12 +70,33 @@ const options = [
 ];
 
 
-
+/**
+ * Componente FilterParcelForm.
+ *
+ * Permite filtrar parcelas por nombre y por tipo de cultivo.
+ * Actualiza el estado global de parcelas, alertas y polígonos
+ * utilizando el contexto de mapas.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array<Object>} props.allParcels - Listado completo de parcelas disponibles
+ * @returns {JSX.Element} Formulario de filtrado de parcelas
+ */
 export const FilterParcelForm = ({ allParcels }) => {
   const [nameSearch, setNameSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const { setParcels, setAlerts, havePolygons, setAlertas, polygons } = useContext(MapsContext)
 
+    /**
+   * Maneja el envío del formulario de búsqueda.
+   *
+   * Filtra las parcelas según el nombre y el cultivo seleccionado,
+   * actualiza las parcelas visibles, las alertas asociadas y los polígonos.
+   *
+   * @function
+   * @param {React.FormEvent<HTMLFormElement>} e
+   * @returns {void}
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -86,7 +114,15 @@ export const FilterParcelForm = ({ allParcels }) => {
     havePolygons(filtered);
   };
 
-  
+    /**
+   * Restablece el formulario y los estados asociados a su valor inicial.
+   *
+   * Limpia los filtros, restaura todas las parcelas y recalcula
+   * los polígonos y alertas visibles.
+   *
+   * @function
+   * @returns {void}
+   */
   const handleReset = () => {
     setNameSearch('');
     setSelectedOption(null);

@@ -3,6 +3,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
+/**
+ * DistributorNav component.
+ *
+ * Barra de navegación específica del rol Distribuidor.
+ * Permite acceder a dashboards y vistas
+ * relacionadas con su actividad.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DistributorNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();

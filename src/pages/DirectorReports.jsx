@@ -6,6 +6,17 @@ import { normalizeFileData } from '../helpers/normalizeFileData';
 import '../components/List.css';
 import { Disease } from '../components/Disease';
 
+/**
+ * DirectorReports component.
+ *
+ * Página del rol Director para la visualización
+ * y supervisión de reportes generados
+ * por consultores y productores.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DirectorReports = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();

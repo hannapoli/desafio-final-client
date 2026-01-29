@@ -6,6 +6,17 @@ import parcelas from '/parcelas-agrosync.png'
 
 import "./ProducerDashboard.css";
 
+/**
+ * ProducerDashboard component.
+ *
+ * Panel principal del rol Productor.
+ * Ofrece una visión general de sus parcelas,
+ * reportes y estado de los cultivos.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ProducerDashboard = () => {
   return (
     <div className="dashboard-producer-container">

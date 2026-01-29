@@ -13,6 +13,16 @@ import './ProducerSeeFields.css';
 import { VegetationIndex } from '../components/Map/VegetationIndex';
 import { FilterParcelForm } from '../components/FilterParcelForm';
 
+/**
+ * ProducerSeeFields component.
+ *
+ * Vista del rol Productor para consultar
+ * el detalle de parcelas y campos disponibles.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ProducerSeeFields = () => {
   const { user } = useAuth();
   const { fetchData, loading, error, setError } = useFetch();

@@ -6,6 +6,16 @@ import { MapsContext } from '../contexts/MapsContext';
 import { ParcelDetails } from '../components/ParcelDetails';
 import { VegetationIndex } from '../components/Map/VegetationIndex';
 
+/**
+ * ConsultantSeeProducerFields component.
+ *
+ * Vista que permite al Consultor analizar
+ * las parcelas de un productor concreto.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ConsultantSeeProducerFields = ({ producer }) => {
   const { fetchData, loading, error, setError } = useFetch();
   const { parcels, setParcels, parcel, selectedParcelId, vegetation, setSelectedParcelId, setParcel, setVegetation } = useContext(MapsContext)

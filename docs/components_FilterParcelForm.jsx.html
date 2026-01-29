@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/FilterParcelForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/FilterParcelForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useContext } from 'react';
+import Select from 'react-select';
+import { MapsContext } from '../contexts/MapsContext';
+import './FilterParcelForm.css'
+
+/**
+ * Opciones de cultivo disponibles para el filtro.
+ *
+ * Cada opción representa un tipo de cultivo identificado por un ID
+ * que debe coincidir con el campo `id_cultivo` de las parcelas.
+ *
+ * @type {Array&lt;{ value: number, label: string }>}
+ */
+const options = [
+  { value: 1, label: "Uva de Mesa - Crimson Seedless" },
+  { value: 2, label: "Uva de Mesa - Thompson Seedless" },
+  { value: 3, label: "Uva de Mesa - Red Globe" },
+  { value: 4, label: "Uva de Mesa - Flame Seedless" },
+  { value: 5, label: "Cereza - Lapins" },
+  { value: 6, label: "Cereza - Santina" },
+  { value: 7, label: "Cereza - Bing" },
+  { value: 8, label: "Cereza - Regina" },
+  { value: 9, label: "Aguacate - Hass" },
+  { value: 10, label: "Aguacate - Edranol" },
+  { value: 11, label: "Aguacate - Fuerte" },
+  { value: 12, label: "Arándano - Duke" },
+  { value: 13, label: "Arándano - Legacy" },
+  { value: 14, label: "Arándano - Brigitta" },
+  { value: 15, label: "Manzana - Royal Gala" },
+  { value: 16, label: "Manzana - Granny Smith" },
+  { value: 17, label: "Manzana - Fuji" },
+  { value: 18, label: "Manzana - Pink Lady" },
+  { value: 19, label: "Pera - Packhams Triumph" },
+  { value: 20, label: "Pera - Abate Fetel" },
+  { value: 21, label: "Mandarina - W. Murcott" },
+  { value: 22, label: "Mandarina - Clementina" },
+  { value: 23, label: "Naranja - Fukumoto" },
+  { value: 24, label: "Limón - Eureka" },
+  { value: 25, label: "Limón - Génova" },
+  { value: 26, label: "Ciruela - Angeleno" },
+  { value: 27, label: "Melocotón - August Red" },
+  { value: 28, label: "Nectarina - Big Top" },
+  { value: 29, label: "Albaricoque - Dina" },
+  { value: 30, label: "Nogal - Chandler" },
+  { value: 31, label: "Nogal - Serr" },
+  { value: 32, label: "Almendro - Nonpareil" },
+  { value: 33, label: "Kiwi - Hayward" },
+  { value: 34, label: "Kiwi - Jintao" },
+  { value: 35, label: "Granada - Wonderful" },
+  { value: 36, label: "Frambuesa - Heritage" },
+  { value: 37, label: "Mora - Lochness" },
+  { value: 38, label: "Tomate - Limachino" },
+  { value: 39, label: "Tomate - Larga Vida" },
+  { value: 40, label: "Tomate - Industrial" },
+  { value: 41, label: "Pimiento - Cuatro Cascos" },
+  { value: 42, label: "Guindilla/Ají - Cacho de Cabra" },
+  { value: 43, label: "Maíz - Choclo Pastelero" },
+  { value: 44, label: "Maíz - Dulce" },
+  { value: 45, label: "Patata - Desiree" },
+  { value: 46, label: "Patata - Yagana" },
+  { value: 47, label: "Cebolla - Valenciana" },
+  { value: 48, label: "Ajo - Chino/Rosado" },
+  { value: 49, label: "Calabaza - Camote" },
+  { value: 50, label: "Calabacín - Italiano" },
+  { value: 51, label: "Melón - Tuna (Verde)" },
+  { value: 52, label: "Melón - Calameño/Cantaloup" },
+  { value: 53, label: "Sandía - Klondike" },
+  { value: 54, label: "Lechuga - Escarola" },
+  { value: 55, label: "Judía - Granado" },
+];
+
+
+/**
+ * Componente FilterParcelForm.
+ *
+ * Permite filtrar parcelas por nombre y por tipo de cultivo.
+ * Actualiza el estado global de parcelas, alertas y polígonos
+ * utilizando el contexto de mapas.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array&lt;Object>} props.allParcels - Listado completo de parcelas disponibles
+ * @returns {JSX.Element} Formulario de filtrado de parcelas
+ */
+export const FilterParcelForm = ({ allParcels }) => {
+  const [nameSearch, setNameSearch] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { setParcels, setAlerts, havePolygons, setAlertas, polygons } = useContext(MapsContext)
+
+    /**
+   * Maneja el envío del formulario de búsqueda.
+   *
+   * Filtra las parcelas según el nombre y el cultivo seleccionado,
+   * actualiza las parcelas visibles, las alertas asociadas y los polígonos.
+   *
+   * @function
+   * @param {React.FormEvent&lt;HTMLFormElement>} e
+   * @returns {void}
+   */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const filtered = allParcels.filter(parcel => {
+      const name = parcel.nombre_parcela || parcel.name_parcel || parcel.name || '';
+      const matchesName = name.toLowerCase().includes(nameSearch.toLowerCase());
+      const matchesCrop = !selectedOption || selectedOption.value === "" || parcel.id_cultivo === selectedOption.value;
+      return matchesName &amp;&amp; matchesCrop;
+    });
+
+    setParcels(filtered);
+
+    const allowedParcelIds = new Set(filtered.map(p => p.id || p.uid_parcel));
+    setAlerts(prevAlerts => prevAlerts.filter(alert => allowedParcelIds.has(alert.uid_parcel)));
+    havePolygons(filtered);
+  };
+
+    /**
+   * Restablece el formulario y los estados asociados a su valor inicial.
+   *
+   * Limpia los filtros, restaura todas las parcelas y recalcula
+   * los polígonos y alertas visibles.
+   *
+   * @function
+   * @returns {void}
+   */
+  const handleReset = () => {
+    setNameSearch('');
+    setSelectedOption(null);
+    setParcels(allParcels);
+    havePolygons(allParcels);
+    setAlerts([]); // Si quieres restaurar todas las alertas originales, deberías guardar el estado inicial en otro lado
+    setAlertas(alerts.filter(a=>a.alerta_helada || a.alerta_inundacion || a.alerta_plaga || a.alerta_sequia ));
+    setPolygons
+    }
+  
+
+  return (
+    &lt;form onSubmit={handleSubmit} className="filter-form-container" style={{ display: 'flex', gap: '15px', padding: '20px', alignItems: 'center' }}>
+      &lt;div style={{ flex: 1 }}>
+        &lt;input
+          type="text"
+          placeholder="Nombre de parcela"
+          value={nameSearch}
+          onChange={(e) => setNameSearch(e.target.value)}
+          style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+      &lt;/div>
+
+      &lt;div style={{ flex: 1 }}>
+        &lt;Select
+          id="cultivo"
+          options={options}
+          value={selectedOption}
+          onChange={setSelectedOption}
+          placeholder="Selecciona un cultivo"
+          isSearchable={true}
+          isClearable={true}
+        />
+      &lt;/div>
+
+      &lt;button type="submit" className="login-button" style={{ padding: '8px 20px', cursor: 'pointer' }}>
+        Buscar
+      &lt;/button>
+
+      &lt;button type="button" onClick={handleReset} style={{ padding: '8px', background: 'none', border: 'none', color: 'gray', cursor: 'pointer' }}>
+        Limpiar
+      &lt;/button>
+    &lt;/form>
+  );
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contexts_AuthProvider.html">contexts/AuthProvider</a></li><li><a href="module-helpers_firebaseErrorMessages.html">helpers/firebaseErrorMessages</a></li><li><a href="module-hooks_useFetch.html">hooks/useFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddParcel">AddParcel</a></li><li><a href="global.html#AdminDashboard">AdminDashboard</a></li><li><a href="global.html#AdminLayout">AdminLayout</a></li><li><a href="global.html#AdminNav">AdminNav</a></li><li><a href="global.html#AdminUserEdit">AdminUserEdit</a></li><li><a href="global.html#AdminUsers">AdminUsers</a></li><li><a href="global.html#AnalystDashboard">AnalystDashboard</a></li><li><a href="global.html#AnalystLayout">AnalystLayout</a></li><li><a href="global.html#AnaystNav">AnaystNav</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthLayout">AuthLayout</a></li><li><a href="global.html#ChatBot">ChatBot</a></li><li><a href="global.html#ClickablePolygon">ClickablePolygon</a></li><li><a href="global.html#ConsultantDashboard">ConsultantDashboard</a></li><li><a href="global.html#ConsultantFields">ConsultantFields</a></li><li><a href="global.html#ConsultantLayout">ConsultantLayout</a></li><li><a href="global.html#ConsultantNav">ConsultantNav</a></li><li><a href="global.html#ConsultantReports">ConsultantReports</a></li><li><a href="global.html#ConsultantSeeProducerFields">ConsultantSeeProducerFields</a></li><li><a href="global.html#DirectorConsultants">DirectorConsultants</a></li><li><a href="global.html#DirectorDashboard">DirectorDashboard</a></li><li><a href="global.html#DirectorFields">DirectorFields</a></li><li><a href="global.html#DirectorLayout">DirectorLayout</a></li><li><a href="global.html#DirectorNav">DirectorNav</a></li><li><a href="global.html#DirectorReports">DirectorReports</a></li><li><a href="global.html#Disease">Disease</a></li><li><a href="global.html#DistributorDashboard">DistributorDashboard</a></li><li><a href="global.html#DistributorLayout">DistributorLayout</a></li><li><a href="global.html#DistributorNav">DistributorNav</a></li><li><a href="global.html#FieldInfo">FieldInfo</a></li><li><a href="global.html#FilterParcelForm">FilterParcelForm</a></li><li><a href="global.html#Legend">Legend</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MapsContext">MapsContext</a></li><li><a href="global.html#MenuCard">MenuCard</a></li><li><a href="global.html#NavContext">NavContext</a></li><li><a href="global.html#ParcelDetails">ParcelDetails</a></li><li><a href="global.html#PrivateRoutes">PrivateRoutes</a></li><li><a href="global.html#ProducerDashboard">ProducerDashboard</a></li><li><a href="global.html#ProducerLayout">ProducerLayout</a></li><li><a href="global.html#ProducerNav">ProducerNav</a></li><li><a href="global.html#ProducerReports">ProducerReports</a></li><li><a href="global.html#ProducerSeeFields">ProducerSeeFields</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#VegetationIndex">VegetationIndex</a></li><li><a href="global.html#ViewerParcelProducer">ViewerParcelProducer</a></li><li><a href="global.html#ViewerPopup">ViewerPopup</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#normalizeFileData">normalizeFileData</a></li><li><a href="global.html#options">options</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useChatSocket">useChatSocket</a></li><li><a href="global.html#useNav">useNav</a></li><li><a href="global.html#userMap">userMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 29 2026 15:34:36 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

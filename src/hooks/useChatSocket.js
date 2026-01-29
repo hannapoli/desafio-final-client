@@ -4,6 +4,20 @@ import { io } from "socket.io-client";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = BACKEND_URL.replace(/\/api\/v1$/, '');
 
+/**
+ * Hook para gestionar la conexión de WebSockets para el chat.
+ * 
+ * Se encarga de conectar al servidor, registrar al usuario mediante su email 
+ * y escuchar mensajes entrantes en tiempo real.
+ * 
+ * @param {string} email - El email del usuario para registrarlo en el socket.
+ * @param {Function} onNewMessage - Callback que se ejecuta al recibir el evento 'new-message'.
+ * 
+ * @example
+ * useChatSocket('usuario@correo.com', (msg) => {
+ *   console.log("Nuevo mensaje:", msg);
+ * });
+ */
 export const useChatSocket = (email, onNewMessage) => {
   useEffect(() => {
     if (!email) return;

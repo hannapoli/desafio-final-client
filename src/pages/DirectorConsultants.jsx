@@ -4,6 +4,16 @@ import { useFetch } from '../hooks/useFetch';
 import { auth } from '../firebase/firebaseConfig';
 import './DirectorConsultants.css'
 
+/**
+ * DirectorConsultants component.
+ *
+ * Página del rol Director para la gestión
+ * y visualización de consultores asociados.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DirectorConsultants = () => {
     const { user } = useAuth();
     const { fetchData, loading, error } = useFetch();

@@ -7,6 +7,16 @@ import {normalizeFileData} from '../helpers/normalizeFileData';
 import '../components/List.css';
 import { Disease } from '../components/Disease';
 
+/**
+ * ProducerReports component.
+ *
+ * Página del rol Productor dedicada a la
+ * visualización y gestión de reportes propios.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ProducerReports = () => {
     const { user } = useAuth();
     const { fetchData, loading, error, setError } = useFetch();

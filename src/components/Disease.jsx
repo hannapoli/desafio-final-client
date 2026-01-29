@@ -1,5 +1,21 @@
 import React from 'react'
 
+/**
+ * Disease component.
+ *
+ * Muestra el resultado de una predicción de enfermedad vegetal.
+ * Presenta información taxonómica, estado de salud, posibles
+ * enfermedades detectadas y referencias visuales.
+ *
+ * Se renderiza dentro de un popup modal y permite cerrarse
+ * haciendo clic fuera del contenido o en el botón de cierre.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Function} props.setShowDiseasePopup - Controla la visibilidad del popup
+ * @param {Object} props.disease - Datos de la predicción de enfermedad
+ * @returns {JSX.Element} Popup con el resultado de la predicción
+ */
 export const Disease = ({setShowDiseasePopup, disease}) => {
   return (
     <div

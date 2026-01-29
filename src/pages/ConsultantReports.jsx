@@ -6,6 +6,16 @@ import { normalizeFileData } from '../helpers/normalizeFileData';
 import { Disease } from '../components/Disease';
 import '../components/List.css';
 
+/**
+ * ConsultantReports component.
+ *
+ * Página del rol Consultor dedicada a la
+ * visualización y gestión de reportes.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ConsultantReports = () => {
     const { user } = useAuth();
     const { fetchData, loading, error, setError } = useFetch();

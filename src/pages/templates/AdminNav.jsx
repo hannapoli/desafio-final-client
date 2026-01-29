@@ -3,6 +3,16 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
+/**
+ * AdminNav component.
+ *
+ * Barra de navegación específica del rol Administrador.
+ * Proporciona acceso a las secciones de gestión
+ * de usuarios y administración del sistema.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 export const AdminNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();

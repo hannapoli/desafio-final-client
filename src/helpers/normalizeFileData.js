@@ -1,4 +1,13 @@
-//Normalizamos archivos adjuntados adjuntados para poder trabajar con ellos 
+/**
+ * Normaliza los archivos o URLs adjuntas para asegurar un formato manejable.
+ * 
+ * Esta función procesa diferentes entradas (arrays, strings simples o formatos de base de datos)
+ * y los convierte en un array de strings limpio. Es útil para manejar las URLs de imágenes
+ * o documentos que vienen desde PostgreSQL o inputs de archivos.
+ * 
+ * @param {string|Array|null} attached - Los datos originales de los archivos adjuntos.
+ * @returns {Array<string>|null} Un array con las URLs normalizadas o null si no hay datos.
+ */
 export function normalizeFileData(attached) {
     if (!attached) return null;
 

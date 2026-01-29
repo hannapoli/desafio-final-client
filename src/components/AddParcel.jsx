@@ -63,7 +63,16 @@ const options = [
   { value: 55, label: "Judía - Granado" },
 ];
 
-
+/**
+ * Componente que muestra el formulario para registrar una nueva parcela.
+ * 
+ * Se encarga de capturar el nombre, el tipo de cultivo y una imagen,
+ * coordinando la creación tanto en el servicio de mapas externo como en la base de datos local.
+ * 
+ * @component
+ * @param {Object} props
+ * @param {Array} props.polygon - Array de coordenadas que definen la geometría de la parcela.
+ */
 export const AddParcel = ({polygon}) => {
 
     const [selectedOption, setSelectedOption] = useState(null);
@@ -76,7 +85,14 @@ export const AddParcel = ({polygon}) => {
       const [imagen, setImagen] = useState(null);
       const [createdParcel, setCreatedParcel] = useState(false)
 
-    
+    /**
+     * Gestiona el envío del formulario.
+     * 1. Envía la geometría a la API de mapas.
+     * 2. Guarda los metadatos y la imagen en el backend.
+     * 3. Activa las alertas meteorológicas para la nueva parcela.
+     * 
+     * @param {React.FormEvent} e - Evento de envío del formulario.
+     */
       const handleSubmit = async (e) => {
         e.preventDefault();
         setLoadingCreate(true)

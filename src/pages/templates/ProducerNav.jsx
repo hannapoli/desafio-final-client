@@ -3,6 +3,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../contexts/NavContext';
 import './Nav.css'
 
+/**
+ * ProducerNav component.
+ *
+ * Barra de navegación específica del rol Productor.
+ * Permite acceder a parcelas, reportes
+ * y herramientas asociadas a su actividad.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ProducerNav = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();

@@ -6,6 +6,17 @@ import { PopUp } from "../components/PopUp";
 
 import "./LoginPage.css";
 
+/**
+ * LoginPage component.
+ *
+ * Página de inicio de sesión de la aplicación.
+ * Permite a los usuarios autenticarse
+ * y acceder a su área correspondiente.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",

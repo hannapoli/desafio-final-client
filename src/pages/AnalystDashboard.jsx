@@ -2,6 +2,17 @@ import { MenuCard } from '../components/MenuCard';
 import { ChatBot } from '../components/ChatBot';
 import messageImg from '/mensajes.png';
 
+/**
+ * AnalystDashboard component.
+ *
+ * Página principal del panel del rol Analista.
+ * Muestra información agregada y accesos a
+ * herramientas de análisis y visualización de datos.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const AnalystDashboard = () => {
   return (
     <>

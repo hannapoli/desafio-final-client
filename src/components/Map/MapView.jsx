@@ -12,6 +12,21 @@ import '../Map.css'
 import { MapClickHandler } from './MapClickHandler';
 import { FitAllPolygons } from './FitAllPolygons';
 
+/**
+ * MapView component.
+ *
+ * Componente principal de visualización del mapa.
+ * Permite mostrar parcelas agrícolas, alertas, cambiar capas base,
+ * dibujar nuevos polígonos y gestionar la selección de parcelas.
+ *
+ * Utiliza React Leaflet junto con varios controles personalizados
+ * y estado global proporcionado por MapsContext y AuthContext.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array<Object>} props.alertas - Listado de alertas asociadas a parcelas
+ * @returns {JSX.Element} Vista interactiva del mapa
+ */
 export default function MapView({ alertas }) {
   const [polygon, setPolygon] = useState([]);
   const [currentLayer, setCurrentLayer] = useState('osm');
@@ -82,6 +97,16 @@ export default function MapView({ alertas }) {
   iconAnchor: [20, 20] // centrado
 });
   
+  /**
+   * Maneja la creación de un nuevo polígono mediante DrawControl.
+   *
+   * Calcula el centro del polígono para posicionar el popup
+   * de creación de parcela.
+   *
+   * @function
+   * @param {Array<Array<number>>} coords - Coordenadas del polígono creado
+   * @returns {void}
+   */
   const handlePolygonCreated = (coords) => {
     if (!coords || coords.length === 0) return;
 

@@ -3,6 +3,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import './Nav.css'
 
+/**
+ * ConsultantNav component.
+ *
+ * Barra de navegación específica del rol Consultor.
+ * Permite acceder a parcelas, reportes
+ * y vistas relacionadas con productores.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ConsultantNav = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();

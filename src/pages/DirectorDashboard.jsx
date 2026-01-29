@@ -5,6 +5,17 @@ import reportes from '/reportes-agrosync.png'
 import parcelas from '/parcelas-agrosync.png' 
 import productores from '/productores-agrosync.png'
 
+/**
+ * DirectorDashboard component.
+ *
+ * Panel principal del rol Director.
+ * Ofrece una visión global de la actividad,
+ * reportes y equipos gestionados.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const DirectorDashboard = () => {
   return (
     <>

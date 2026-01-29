@@ -12,7 +12,24 @@ import { Report } from '../components/Report'
 import { ViewerParcelProducer } from './ViewerParcelProducer'
 import { useAuth } from '../hooks/useAuth'
 
-
+/**
+ * ParcelDetails component.
+ *
+ * Muestra la información detallada de una parcela seleccionada,
+ * incluyendo:
+ * - Datos generales de la parcela
+ * - Alertas activas
+ * - Información meteorológica
+ * - Índices de vegetación
+ * - Visor 360º de la parcela
+ * - Creación de reportes (solo productores)
+ *
+ * Centraliza la carga de datos relacionados con una parcela
+ * y coordina múltiples componentes especializados.
+ *
+ * @component
+ * @returns {JSX.Element} Vista detallada de la parcela seleccionada
+ */
 export const ParcelDetails = () => {
   const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, setSelectedParcelId, deleteParcel, setParcel} = useContext(MapsContext)
   const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()

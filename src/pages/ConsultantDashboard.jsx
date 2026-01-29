@@ -5,6 +5,17 @@ import reportes from '/reportes-agrosync.png'
 import parcelas from '/parcelas-agrosync.png' 
 import productores from '/productores-agrosync.png'
 
+/**
+ * ConsultantDashboard component.
+ *
+ * Página principal del panel del rol Consultor.
+ * Presenta una visión general de parcelas,
+ * reportes y tareas asociadas a productores.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const ConsultantDashboard = () => {
 
   return (

@@ -1,5 +1,19 @@
 import './Legend.css'
 
+/**
+ * Legend component.
+ *
+ * Muestra una leyenda visual asociada a una capa
+ * de datos (por ejemplo índices de vegetación).
+ *
+ * Recibe una paleta de colores con etiquetas y
+ * valores representativos.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.data - Datos de la leyenda
+ * @returns {JSX.Element|null}
+ */
 export const Legend = ({ data }) => {
   return (
     <div className='legend'>

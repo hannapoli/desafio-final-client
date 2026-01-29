@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/templates/DirectorLayout.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/templates/DirectorLayout.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Outlet } from 'react-router';
+import { Header } from '../../components/Header';
+import { DirectorNav } from './DirectorNav';
+
+/**
+ * DirectorLayout component.
+ *
+ * Layout base para las vistas del rol Director.
+ * Define la estructura común de navegación
+ * y contenido de esta sección.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
+export const DirectorLayout = () => {
+    return (
+        &lt;>
+            &lt;Header>
+                &lt;DirectorNav />
+            &lt;/Header>
+            &lt;main className='flexColumn'>
+                &lt;Outlet />
+            &lt;/main>
+        &lt;/>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contexts_AuthProvider.html">contexts/AuthProvider</a></li><li><a href="module-helpers_firebaseErrorMessages.html">helpers/firebaseErrorMessages</a></li><li><a href="module-hooks_useFetch.html">hooks/useFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddParcel">AddParcel</a></li><li><a href="global.html#AdminDashboard">AdminDashboard</a></li><li><a href="global.html#AdminLayout">AdminLayout</a></li><li><a href="global.html#AdminNav">AdminNav</a></li><li><a href="global.html#AdminUserEdit">AdminUserEdit</a></li><li><a href="global.html#AdminUsers">AdminUsers</a></li><li><a href="global.html#AnalystDashboard">AnalystDashboard</a></li><li><a href="global.html#AnalystLayout">AnalystLayout</a></li><li><a href="global.html#AnaystNav">AnaystNav</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthLayout">AuthLayout</a></li><li><a href="global.html#ChatBot">ChatBot</a></li><li><a href="global.html#ClickablePolygon">ClickablePolygon</a></li><li><a href="global.html#ConsultantDashboard">ConsultantDashboard</a></li><li><a href="global.html#ConsultantFields">ConsultantFields</a></li><li><a href="global.html#ConsultantLayout">ConsultantLayout</a></li><li><a href="global.html#ConsultantNav">ConsultantNav</a></li><li><a href="global.html#ConsultantReports">ConsultantReports</a></li><li><a href="global.html#ConsultantSeeProducerFields">ConsultantSeeProducerFields</a></li><li><a href="global.html#DirectorConsultants">DirectorConsultants</a></li><li><a href="global.html#DirectorDashboard">DirectorDashboard</a></li><li><a href="global.html#DirectorFields">DirectorFields</a></li><li><a href="global.html#DirectorLayout">DirectorLayout</a></li><li><a href="global.html#DirectorNav">DirectorNav</a></li><li><a href="global.html#DirectorReports">DirectorReports</a></li><li><a href="global.html#Disease">Disease</a></li><li><a href="global.html#DistributorDashboard">DistributorDashboard</a></li><li><a href="global.html#DistributorLayout">DistributorLayout</a></li><li><a href="global.html#DistributorNav">DistributorNav</a></li><li><a href="global.html#FieldInfo">FieldInfo</a></li><li><a href="global.html#FilterParcelForm">FilterParcelForm</a></li><li><a href="global.html#Legend">Legend</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MapsContext">MapsContext</a></li><li><a href="global.html#MenuCard">MenuCard</a></li><li><a href="global.html#NavContext">NavContext</a></li><li><a href="global.html#ParcelDetails">ParcelDetails</a></li><li><a href="global.html#PrivateRoutes">PrivateRoutes</a></li><li><a href="global.html#ProducerDashboard">ProducerDashboard</a></li><li><a href="global.html#ProducerLayout">ProducerLayout</a></li><li><a href="global.html#ProducerNav">ProducerNav</a></li><li><a href="global.html#ProducerReports">ProducerReports</a></li><li><a href="global.html#ProducerSeeFields">ProducerSeeFields</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#VegetationIndex">VegetationIndex</a></li><li><a href="global.html#ViewerParcelProducer">ViewerParcelProducer</a></li><li><a href="global.html#ViewerPopup">ViewerPopup</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#normalizeFileData">normalizeFileData</a></li><li><a href="global.html#options">options</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useChatSocket">useChatSocket</a></li><li><a href="global.html#useNav">useNav</a></li><li><a href="global.html#userMap">userMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 29 2026 15:34:36 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ParcelDetails.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ParcelDetails.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useContext, useEffect, useState } from 'react'
+import { MapsContext } from '../contexts/MapsContext'
+import { userMap } from '../hooks/userMap'
+import { useFetch } from '../hooks/useFetch'
+import { auth } from '../firebase/firebaseConfig'
+import { InfoMeteo } from './InfoMeteo'
+import { VegetationIndex } from './Map/VegetationIndex'
+import './ParcelDetails.css'
+import { PopUp } from './PopUp'
+import { ViewerPopup } from './ViewerPopup'
+import { Report } from '../components/Report'
+import { ViewerParcelProducer } from './ViewerParcelProducer'
+import { useAuth } from '../hooks/useAuth'
+
+/**
+ * ParcelDetails component.
+ *
+ * Muestra la información detallada de una parcela seleccionada,
+ * incluyendo:
+ * - Datos generales de la parcela
+ * - Alertas activas
+ * - Información meteorológica
+ * - Índices de vegetación
+ * - Visor 360º de la parcela
+ * - Creación de reportes (solo productores)
+ *
+ * Centraliza la carga de datos relacionados con una parcela
+ * y coordina múltiples componentes especializados.
+ *
+ * @component
+ * @returns {JSX.Element} Vista detallada de la parcela seleccionada
+ */
+export const ParcelDetails = () => {
+  const { parcel,alert, setAlert, infoMeteo, setVegetation, crop, setCrop, selectedParcelId, deleteParcel} = useContext(MapsContext)
+  const { getAlertByParcel, getParcelCrops, getParcelVegetation, deleteParcelApi, deleteParcelBack } = userMap()
+  const { fetchData, loading } = useFetch()
+  const { user } = useAuth();
+  const isProducer = user?.role === 'productor';
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorEliminar, setErrorEliminar] = useState(null)
+  const [reportData, setReportData] = useState({
+      email_creator: '',
+      email_receiver: '',
+      content_message: '',
+      attached: null
+    });
+
+  const [dataPoints, setDataPoints] = useState(null);
+  const [dataPhoto, setDataPhoto] = useState(null);
+  
+  
+
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const infoParcelUrl = import.meta.env.VITE_API_DATA_URL_POINTS;
+
+
+  useEffect(() => {
+    const getDatos = async () => {
+
+      const alerta = await getAlertByParcel(parcel.uid_parcel)
+      // console.log({alerta})
+      setAlert(alerta.data)
+
+      const vegetacion = await getParcelVegetation(parcel.uid_parcel)
+      // console.log({vegetacion})
+      setVegetation(vegetacion.data)
+
+      const cultivo = await getParcelCrops(parcel.uid_parcel)
+      // console.log({cultivo})
+      setCrop(cultivo.data)
+      console.log({ parcel })
+    }
+    getDatos()
+    // return funcionPrueba()
+  }, [parcel])
+
+  // FETCH PARA OBTENER LOS PUNTOS A PINTAR EN EL COMPONENTE DEL VISOR 360º
+  useEffect(() => {
+    const getDataPoints = async () => {
+      if (!parcel?.photo_url) {
+        setDataPoints(null);
+        return;
+      }
+
+      try {
+        // Add a timeout to prevent hanging
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+        const responsePoints = await fetchData(
+          infoParcelUrl,
+          'POST',
+          { image_url: parcel.photo_url }
+        );
+
+        clearTimeout(timeoutId);
+
+        const receivedPoints = responsePoints.data;
+        console.log('Points received:', receivedPoints);
+
+        if (receivedPoints?.error || receivedPoints?.status === 'error') {
+          console.error('Error del servidor:', receivedPoints);
+          throw new Error(receivedPoints.error || receivedPoints.message || 'Error desconocido del servidor');
+        }
+
+        if (!receivedPoints || typeof receivedPoints !== 'object' || Object.keys(receivedPoints).length === 0) {
+          console.warn('No se recibieron puntos válidos del servidor');
+          setDataPoints([]);
+          return;
+        }
+
+        // Convertir a array para mapear
+        const pointsToPrint = Object.entries(receivedPoints)
+          .filter(([key, value]) => value?.aframe_position) 
+          .map(([key, value]) => {
+            const { x, y, z } = value.aframe_position;
+
+            return {
+              id: key,
+              position: `${x} ${y} ${z}`
+            }
+          });
+
+        setDataPoints(pointsToPrint);
+      } catch (err) {
+        console.warn("No se pudieron cargar los puntos de interés - el servidor puede estar caído:", err.message);
+        // Set empty array instead of null so the image still shows
+        setDataPoints([]);
+      }
+    }
+
+    getDataPoints();
+  }, [parcel, infoParcelUrl, fetchData]);
+
+  // FETCH PARA OBTENER DATOS DE LA IMAGEN 360
+  useEffect(() => {
+    const getDataPhoto = async () => {
+      if (!parcel?.uid_parcel) {
+        setDataPhoto(null);
+        return;
+      }
+
+      try {
+        const firebaseUser = auth.currentUser;
+        if (!firebaseUser) {
+          console.error('No hay usuario autenticado');
+          return;
+        }
+
+        const token = await firebaseUser.getIdToken();
+
+        const response = await fetch(
+          `${backendUrl}/producer/parcel/data/${parcel.uid_parcel}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+        const result = await response.json();
+        setDataPhoto(result.data || null);
+      } catch (err) {
+        setDataPhoto(null);
+        console.error("Error al obtener la información de los datos de la parcela:", err);
+      }
+    }
+
+    getDataPhoto();
+  }, [parcel, backendUrl]);
+
+  const handleOpenViewer = () => {
+    if (!parcel) {
+      setError('Por favor, selecciona una parcela en el mapa primero');
+      return;
+    }
+    setIsViewerOpen(true);
+  };
+
+  const handleOpenPopup = () => {
+    if (!selectedParcelId) {
+      alert('Por favor, selecciona una parcela en el mapa primero');
+      return;
+    }
+    setIsPopupOpen(true);
+    setSubmitError(null);
+    setSubmitSuccess(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setReportData(currentData => ({
+      ...currentData,
+      [name]: value
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    setReportData(currentData => ({
+      ...currentData,
+      attached: files &amp;&amp; files.length > 0 ? Array.from(files) : null
+    }));
+  };
+
+  const handleSubmitReport = async (e) => {
+    e.preventDefault();
+
+    if (!selectedParcelId) {
+      setSubmitError('No se ha seleccionado ninguna parcela.');
+      return;
+    }
+    setSubmitLoading(true);
+    setSubmitError(null);
+    setSubmitSuccess(false);
+
+    try {
+      const firebaseUser = auth.currentUser;
+      if (!firebaseUser) {
+        setSubmitError('No hay usuario autenticado');
+        return;
+      }
+
+      const token = await firebaseUser.getIdToken();
+
+      const formData = new FormData();
+      formData.append('email_creator', reportData.email_creator);
+      formData.append('email_receiver', reportData.email_receiver);
+      formData.append('content_message', reportData.content_message);
+      if (reportData.attached) {
+        if (Array.isArray(reportData.attached)) {
+          reportData.attached.forEach((file) => {
+            formData.append('attached', file);
+          });
+        } else {
+          formData.append('attached', reportData.attached);
+        }
+      }
+
+      const response = await fetch(
+        `${backendUrl}/producer/reports/create/${user.email}/${selectedParcelId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error al mandar el reporte: ${response.status}`);
+      }
+
+      const result = await response.json();
+      // console.log('Reporte creado:', result);
+      setSubmitSuccess(true);
+
+      setReportData({
+        email_creator: user.email,
+        email_receiver: '',
+        content_message: '',
+        attached: null
+      });
+
+      // Resetear las entradas del formulario y el archivo
+      e.target.reset();
+      setTimeout(() => {
+        setIsPopupOpen(false);
+        setSubmitSuccess(false);
+      }, 2000);
+    } catch (err) {
+      setSubmitError('Error al crear el reporte. Inténtalo de nuevo.');
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
+
+  const eliminarParcela = async(p) => {
+      if(!p.uid_parcel) return
+      try {
+        // const resp1 = await deleteParcelApi(p.uid_parcel)
+        const resp1= {res: 'ok'}
+        if(resp1.res === 'Error'){
+          setErrorEliminar(resp1.info)}
+        if(!resp1){
+          setErrorEliminar('Error al eliminar la parcela')
+        
+        } else {
+          const resp = await deleteParcelBack(p.uid_parcel)
+          // console.log({resp}, 'delete')
+           if (!resp.ok) {
+              setErrorEliminar(resp.msg);
+            } else {
+              console.log({resp})
+              setErrorEliminar(null);
+              deleteParcel(p)
+              console.log('parcela eliminada' , resp)
+            }
+        }
+        
+      } catch (error) {
+        console.log(error)
+        setErrorEliminar(error)
+      }
+    }
+    
+
+  if (loading) {
+    return &lt;p>Cargando detalles de la parcela...&lt;/p>;
+  }
+
+  return (
+    &lt;section id="parcel-section">
+      &lt;h2 className="parcel-title">{parcel.name_parcel}&lt;/h2>
+
+      &lt;article className="article-card">
+        {alert?.name_user &amp;&amp; &lt;p>👤 Productor: {alert.name_user}&lt;/p>}
+        {crop &amp;&amp; &lt;p className="product-info">Producto: {crop.nombre_cultivo}&lt;/p>}
+        {crop &amp;&amp; &lt;p className="product-info">Variedad: {crop.nombre_variedad}&lt;/p>}
+
+        {alert?.alerta_plaga &amp;&amp; &lt;p className="alert alert-plaga">⚠️ Alerta de plagas: {alert.alerta_plaga}&lt;/p>}
+        {alert?.alerta_inundacion &amp;&amp; &lt;p className="alert alert-inundacion">⚠️ Alerta de inundación: {alert.alerta_inundacion}&lt;/p>}
+        {alert?.alerta_helada &amp;&amp; &lt;p className="alert alert-helada">⚠️ Alerta de helada: {alert.alerta_helada}&lt;/p>}
+        {alert?.alerta_sequia &amp;&amp; &lt;p className="alert alert-sequia">⚠️ Alerta de sequía: {alert.alerta_sequia}&lt;/p>}
+      &lt;/article>
+
+      {infoMeteo &amp;&amp; &lt;article className="article-card" id="meteo-section">
+        &lt;h3 className="meteo-title">Información meteorológica&lt;/h3>
+        &lt;InfoMeteo p={parcel} infoMeteo={infoMeteo} />
+      &lt;/article>}
+
+      &lt;article className="visor-reporte">
+
+        &lt;button
+          className="login-button"
+          onClick={handleOpenViewer}
+          style={{ cursor: parcel ? 'pointer' : 'not-allowed' }}
+          disabled={!parcel}
+        >
+          Ver la parcela 360°
+        &lt;/button>
+
+          
+
+        {/* CREAR UN REPORTE */}
+        {isProducer &amp;&amp; (
+          &lt;>
+            &lt;div className='btn-container'>
+              {/* &lt;p className='description-text'>
+                Selecciona la parcela en el mapa para crear un reporte
+              &lt;/p> */}
+
+              &lt;button
+                onClick={handleOpenPopup}
+                className='login-button'
+                style={{
+                  cursor: selectedParcelId ? 'pointer' : 'not-allowed'
+                }}
+                disabled={!selectedParcelId}
+              >
+                Crear un reporte
+              &lt;/button>
+
+              {selectedParcelId &amp;&amp; (
+                &lt;p className='selectedParcel'>
+                  Parcela seleccionada: {selectedParcelId}
+                &lt;/p>
+              )}
+            &lt;/div>
+
+            &lt;PopUp isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+              &lt;h2>Crear reporte&lt;/h2>
+              {submitSuccess &amp;&amp; (
+                &lt;p className='successMessage'>¡Reporte creado exitosamente!&lt;/p>
+              )}
+              {submitError &amp;&amp; (
+                &lt;p className='errorMessage'>{submitError}&lt;/p>
+              )}
+              &lt;Report
+                reportData={reportData}
+                onChange={handleInputChange}
+                onFileChange={handleFileChange}
+                onSubmit={handleSubmitReport}
+                submitLoading={submitLoading}
+                submitLabel='Crear Reporte'
+                disabledFields={{ email_creator: true }}
+              />
+            &lt;/PopUp>
+          &lt;/>
+        )}
+
+        {/* Visor 360° Popup */}
+        &lt;ViewerPopup isOpen={isViewerOpen} onClose={() => setIsViewerOpen(false)}>
+          &lt;div className='heading-container'>
+            &lt;h2 className='heading2'>
+              Vista 360° - {parcel?.name_parcel || 'Parcela'}
+            &lt;/h2>
+            {parcel &amp;&amp; parcel.photo_url ? (
+              &lt;div className='viewer-container'>
+                &lt;ViewerParcelProducer
+                  imageUrl={parcel.photo_url}
+                  points={dataPoints || []}
+                  dataPhoto={dataPhoto}
+                />
+              &lt;/div>
+            ) : (
+              &lt;p className='loading'>
+                No hay imagen 360° disponible para esta parcela
+              &lt;/p>
+            )}
+          &lt;/div>
+        &lt;/ViewerPopup>
+          {isProducer &amp;&amp; (
+          &lt;button className="eliminar-parcela" id='btn-eliminar-parcela' onClick={()=>eliminarParcela(parcel)}>Eliminar parcela&lt;/button>)}
+  &lt;/article>
+
+
+    &lt;/section>
+
+
+  )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contexts_AuthProvider.html">contexts/AuthProvider</a></li><li><a href="module-helpers_firebaseErrorMessages.html">helpers/firebaseErrorMessages</a></li><li><a href="module-hooks_useFetch.html">hooks/useFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddParcel">AddParcel</a></li><li><a href="global.html#AdminDashboard">AdminDashboard</a></li><li><a href="global.html#AdminLayout">AdminLayout</a></li><li><a href="global.html#AdminNav">AdminNav</a></li><li><a href="global.html#AdminUserEdit">AdminUserEdit</a></li><li><a href="global.html#AdminUsers">AdminUsers</a></li><li><a href="global.html#AnalystDashboard">AnalystDashboard</a></li><li><a href="global.html#AnalystLayout">AnalystLayout</a></li><li><a href="global.html#AnaystNav">AnaystNav</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthLayout">AuthLayout</a></li><li><a href="global.html#ChatBot">ChatBot</a></li><li><a href="global.html#ClickablePolygon">ClickablePolygon</a></li><li><a href="global.html#ConsultantDashboard">ConsultantDashboard</a></li><li><a href="global.html#ConsultantFields">ConsultantFields</a></li><li><a href="global.html#ConsultantLayout">ConsultantLayout</a></li><li><a href="global.html#ConsultantNav">ConsultantNav</a></li><li><a href="global.html#ConsultantReports">ConsultantReports</a></li><li><a href="global.html#ConsultantSeeProducerFields">ConsultantSeeProducerFields</a></li><li><a href="global.html#DirectorConsultants">DirectorConsultants</a></li><li><a href="global.html#DirectorDashboard">DirectorDashboard</a></li><li><a href="global.html#DirectorFields">DirectorFields</a></li><li><a href="global.html#DirectorLayout">DirectorLayout</a></li><li><a href="global.html#DirectorNav">DirectorNav</a></li><li><a href="global.html#DirectorReports">DirectorReports</a></li><li><a href="global.html#Disease">Disease</a></li><li><a href="global.html#DistributorDashboard">DistributorDashboard</a></li><li><a href="global.html#DistributorLayout">DistributorLayout</a></li><li><a href="global.html#DistributorNav">DistributorNav</a></li><li><a href="global.html#FieldInfo">FieldInfo</a></li><li><a href="global.html#FilterParcelForm">FilterParcelForm</a></li><li><a href="global.html#Legend">Legend</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MapsContext">MapsContext</a></li><li><a href="global.html#MenuCard">MenuCard</a></li><li><a href="global.html#NavContext">NavContext</a></li><li><a href="global.html#ParcelDetails">ParcelDetails</a></li><li><a href="global.html#PrivateRoutes">PrivateRoutes</a></li><li><a href="global.html#ProducerDashboard">ProducerDashboard</a></li><li><a href="global.html#ProducerLayout">ProducerLayout</a></li><li><a href="global.html#ProducerNav">ProducerNav</a></li><li><a href="global.html#ProducerReports">ProducerReports</a></li><li><a href="global.html#ProducerSeeFields">ProducerSeeFields</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#VegetationIndex">VegetationIndex</a></li><li><a href="global.html#ViewerParcelProducer">ViewerParcelProducer</a></li><li><a href="global.html#ViewerPopup">ViewerPopup</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#normalizeFileData">normalizeFileData</a></li><li><a href="global.html#options">options</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useChatSocket">useChatSocket</a></li><li><a href="global.html#useNav">useNav</a></li><li><a href="global.html#userMap">userMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 29 2026 15:34:36 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

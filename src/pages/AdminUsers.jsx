@@ -7,6 +7,17 @@ import { InfoList } from '../components/InfoList';
 import '../components/ParcelDetails.css';
 import '../components/InfoList.css';
 
+/**
+ * AdminUsers component.
+ *
+ * Página de listado y gestión de usuarios.
+ * Permite al Administrador visualizar y
+ * acceder a la edición de los usuarios del sistema.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 export const AdminUsers = () => {
     const [email, setEmail] = useState('');
     const [foundUser, setFoundUser] = useState(null);
