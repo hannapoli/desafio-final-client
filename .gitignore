@@ -67,3 +67,4 @@ yarn.lock
 .env
 map.txt
 
+package-lock.json
